@@ -87,6 +87,11 @@
                         }
                         mysqli_close($link);
                     ?>
+                    <!-- <div class = "s-item">
+                        <div style = "background: url('img/90s-anime-aesthetic-wric2do30b1rjds3.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="s-inner">
+                            <p>'.$row["name"].'</p>
+                        </div>
+                    </div> -->
                 </div>
             </div>
         </main>
