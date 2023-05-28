@@ -1,0 +1,538 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Inter";
+    font-size: 15px;
+}
+
+*:before, *:after, * {
+    box-sizing: border-box;
+}
+
+html, body { 
+    height: 100%;
+    min-width: 500px;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+.wrapper {
+    min-height: calc(100% + 250px);
+    display: flex; 
+    flex-direction: column;
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: center;
+    max-width: 1000px;
+}
+
+/* --- Header --- */
+header {
+    height: 60px;
+    width: 100%;
+    background-color: white;
+    /* background-color: rgb(255, 202, 193); */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding: 0 10px;
+    box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.1); 
+    color: black;
+    position: fixed;
+    backdrop-filter: blur(25px);
+}
+
+.header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1015px;
+}
+
+nav a {
+    margin-left: 20px;
+    color: black;
+}
+
+nav a:first-child {
+    margin-left: 0px;
+}
+
+.nav-active {
+    background-color: black;
+    padding: 5px 15px;
+    border-radius: 10px;
+    color: white;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.logo {
+    font-weight: bold;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+}
+
+.user a {
+    color: black;
+}
+
+.user-image {
+    display: none;
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    border-radius: 100%;
+    box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Main --- */
+main {
+    width: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    padding: 0px 25px;
+    min-width: 0;
+}
+
+/* ===== index.php ===== begin */
+.slider-container {
+    display: flex;
+    max-width: 1000px;
+    width: 100%;
+    position: relative;
+    min-width: 0px;    
+}
+
+.slider {
+    overflow: hidden;
+    padding: 0px 45px;
+}
+
+.s-item {
+    height: 300px;
+    padding: 0px 10px;
+}
+
+.s-inner {
+    width: 100%; height: 100%;
+    display: flex;
+    padding: 20px;
+    border-radius: 20px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.s-inner p {
+    margin-top: auto;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    padding: 5px 10px;
+}
+
+.slick-list {
+    overflow: hidden;
+    border-radius: 20px;
+} 
+
+.slick-track {
+    display: flex;
+}
+
+.slider .slick-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    margin: -15px 0px 0px 0px;
+    font-size: 0;
+    width: 30px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.slider .slick-arrow:hover {
+    scale: 1.1;
+}
+
+.slider .slick-arrow.slick-prev {
+    left: 0;
+    background: url('img/angles-left-solid.svg') 0 0 / 100% no-repeat;
+}
+
+.slider .slick-arrow.slick-next {
+    right: 0;
+    background: url('img/angles-right-solid.svg') 0 0 / 100% no-repeat;
+}
+/* ===== index.php ===== end */
+
+/* ===== performances.php ===== begin */
+.catalogue-section {
+    width: 100%;
+    flex: 1 1 auto;
+    padding: 0px 25px;  
+    min-width: 0;
+}
+
+.catalogue-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    justify-items: center;
+    width: 100%;
+    margin-top: 155px;
+}
+
+.filters {
+    max-width: 1000px;
+    display: flex;
+    margin-right: auto;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.filter {
+    color: black;
+    padding: 5px 15px;
+    margin: 0px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.1);
+    user-select: none;
+}
+
+.filter-active {
+    background-color: black;
+    color: white;
+}
+
+.filter:first-child {
+    margin-left: 0px;
+}
+
+.catalogue {
+    max-width: 1110px;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+}
+
+@media screen and (max-width: 1110px) {
+    .catalogue {
+        max-width: 725px;
+    }
+}
+
+@media screen and (max-width: 725px) {
+    .catalogue {
+        max-width: 370px;
+    }
+    .filters {
+        justify-content: center;
+    }
+}
+
+.performance {
+    width: 320px; 
+    height: 175px;
+    box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+    padding: 10px;
+    background-color: black;
+}
+
+.performance p {
+    font-size: 14px;
+    margin-top: auto;
+    font-weight: bold;
+    color: white;
+}
+
+.sub {
+    width: 320px; 
+    height: 175px;
+    box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: none;
+    padding: 10px;
+    background-color: black;
+}
+
+.sub p {
+    font-size: 14px;
+    margin-top: auto;
+    font-weight: bold;
+    color: white;
+}
+
+.show-more-container {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    height: 50px;
+    margin: 50px 0px;
+}
+
+.show-more {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.show-more:hover {
+    cursor: pointer;
+}
+
+.show-more-animation {
+    display: none;
+}
+
+.load-square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    justify-items: center;
+    width: 50px;
+    height: 50px;
+    transform: rotate(135deg);
+    border-radius: 100%;
+    border: 12px dotted black;
+    animation: 0.5s linear infinite rotate;
+}
+
+/* ===== performances.php ===== end */
+
+/* ===== signin.php, signup.php ===== begin */
+.sign-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.message {
+    display: none;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.sign-form-container {
+    display: flex;
+    box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.sign-form {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    padding: 25px 35;
+}
+
+.sign-form p, a {
+    font-size: 15px;
+    text-align: center;
+}
+
+.sign-form a {
+    color: rgb(0, 0, 0);
+}
+
+.sign-special {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url(https://wallpapershome.ru/images/wallpapers/volni-2560x1440-abstrakciya-19717.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+}
+
+.sign-special p {
+    padding: 25px;
+    color: white;
+    font-weight: bold;
+    line-height: 1.5;
+    font-size: 17px;
+}
+
+.sign-button {
+    margin: 0 auto;
+    padding: 5px 20px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-top: 5px;
+}
+
+.sign-button:hover {
+    cursor: pointer;
+}
+
+label {
+    margin-bottom: 3px;
+}
+
+input {
+    margin-bottom: 15px;
+    outline: none;
+    border: 1px solid rgb(0, 0, 0);
+    padding: 2px;
+    border-radius: 5px;
+}
+/* ===== signin.php, signup.php ===== end */
+
+/* --- Footer --- */
+footer {
+    height: 250px;
+    width: 100%;
+    /* background-color: rgb(235, 235, 235); */
+    /* background-color: tomato; */
+    background-color: rgb(206, 220, 251);
+    /* border-top: 2px solid black; */
+    /* box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);  */
+    display: flex;
+    flex-direction: column;
+    color: black;
+}
+
+.footer-info-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-info-subcontainer {
+    display: flex;
+}
+
+.footer-info-item {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    line-height: 1.25em;
+}
+
+.footer-info-item h1 {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.footer-info-item a {
+    margin-right: auto;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.footer-corp-info {
+    padding: 10px 0px;
+    background-color: rgb(206, 220, 251);
+}
+
+.footer-corp-info p {
+    text-align: center;
+    font-size: 12px;
+}
+
+@media screen and (max-width: 660px) {
+    .footer-info-subcontainer {
+        flex-direction: column;
+    }
+}
+
+/* --- Preloader --- */
+.preloader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+    opacity: 1;
+    transition: 0.1s ease-out;
+}
+
+.squares {
+    display: flex;
+}
+
+.square {
+    background-color: black;
+    width: 35px; 
+    height: 35px;
+    margin: 0px 10px;
+    border-radius: 10px;
+}
+
+.first-square {
+    animation: 0.4s ease infinite alternate slidein;
+    animation-delay: 0s;
+}
+
+.second-square {
+    animation: 0.4s ease infinite alternate slidein;
+    animation-delay: 0.1s;
+}
+
+.third-square {
+    animation: 0.4s ease infinite alternate slidein;
+    animation-delay: 0.2s;
+}
+
+@keyframes slidein {
+    from {
+        scale: 1;
+    }
+    to {
+        scale: 1.3;
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(135deg);
+    }
+    to {
+        transform: rotate(495deg);
+    }
+}
