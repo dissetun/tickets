@@ -79,8 +79,8 @@
                             echo 
                             '
                                 <div class = "s-item">
-                                    <div style = "background: url('.$row[path].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="s-inner">
-                                        <p>'.$row[name].'</p>
+                                    <div style = "background: url('.$row["path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="s-inner">
+                                        <p>'.$row["name"].'</p>
                                     </div>
                                 </div>
                             ';
