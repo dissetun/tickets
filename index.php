@@ -45,7 +45,7 @@
         <main>
             <div class="slider-container">
                 <div class="slider single-item">
-                    <div class = "s-item">
+                    <!-- <div class = "s-item">
                         <div style = "background: url('https://a-static.besthdwallpaper.com/balcony-lofi-wallpaper-2880x1800-106546_8.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="s-inner">
                             <p>Название какого-то представления</p>
                         </div>
@@ -69,7 +69,24 @@
                         <div style = "background: url('https://wallpaper-4k-hd.com/wp-content/uploads/2022/05/gray-zip-up-jacket-astronaut-universe-digital-art-artwork-spacesuit-wallpaper-4.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="s-inner">
                             <p>Название какого-то представления</p>
                         </div>
-                    </div>
+                    </div> -->
+                    <?php 
+                        include 'connect.php';
+                        $link = mysqli_connect($host, $user, $password, $db_name); 
+                        $query = "SELECT * FROM performances LIMIT 7";
+                        $result = mysqli_query($link, $query);
+                        foreach($row as $result) {
+                            echo 
+                            '
+                                <div class = "s-item">
+                                    <div style = "background: url('.$row[path].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="s-inner">
+                                        <p>'.$row[name].'</p>
+                                    </div>
+                                </div>
+                            ';
+                        }
+                        mysqli_close($link);
+                    ?>
                 </div>
             </div>
         </main>
