@@ -67,51 +67,21 @@
                         </div>
                     </div>
                     <div class="catalogue">
-                        <div style = "background: url('https://rare-gallery.com/mocahbig/80952-artist-artwork-digital-art-hd-4k-minimalism-minimalist.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
-                            <p>Название какого-то представления</p>
-                        </div>
-                        <div style = "background: url('https://a-static.besthdwallpaper.com/astronaut-in-pink-butterflies-wallpaper-3840x2400-91621_9.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
-                            <p>Название какого-то представления</p>
-                        </div>
-                        <div style = "background: url('https://i.pinimg.com/originals/50/fe/4d/50fe4dc0897b938f8fc2ab8882842c3a.png'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
-                            <p>Название какого-то представления</p>
-                        </div>
-                        <div style = "background: url('https://a-static.besthdwallpaper.com/sleeping-inside-train-wallpaper-2048x1152-80711_49.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
-                            <p>Название какого-то представления</p>
-                        </div>
-                        <div style = "background: url('https://i.pinimg.com/originals/02/6c/61/026c616675614fe5bea7b91a551b71c0.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
-                            <p>Название какого-то представления</p>
-                        </div>
-                        <div style = "background: url('https://images.wallpaperscraft.ru/image/single/vetka_listia_butylka_173191_3840x2400.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
-                            <p>Название какого-то представления</p>
-                        </div>
-                        <div style = "background: url('https://i.pinimg.com/originals/0e/bf/7a/0ebf7a901bbd33a03202d91edd7ecd9c.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
-                            <p>Название какого-то представления</p>
-                        </div>
-                        <div style = "background: url('https://i.pinimg.com/originals/44/9b/93/449b9398ad70f783259f7b7c154e9a49.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
-                            <p>Название какого-то представления</p>
-                        </div>
-                        <div style = "background: url('https://uprostim.com/wp-content/uploads/2021/04/image102-14-scaled.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
-                            <p>Название какого-то представления</p>
-                        </div>
-                        <div style = "display: none; background: url('https://uprostim.com/wp-content/uploads/2021/04/image102-14-scaled.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="sub">
-                            <p>Название какого-то представления</p>
-                        </div>
-                        <div style = "display: none; background: url('https://uprostim.com/wp-content/uploads/2021/04/image102-14-scaled.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="sub">
-                            <p>Название какого-то представления</p>
-                        </div>
-                        <div style = "display: none; background: url('https://uprostim.com/wp-content/uploads/2021/04/image102-14-scaled.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="sub">
-                            <p>Название какого-то представления</p>
-                        </div>
-                        <div style = "display: none; background: url('https://uprostim.com/wp-content/uploads/2021/04/image102-14-scaled.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="sub">
-                            <p>Название какого-то представления</p>
-                        </div>
-                        <div style = "display: none; background: url('https://uprostim.com/wp-content/uploads/2021/04/image102-14-scaled.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="sub">
-                            <p>Название какого-то представления</p>
-                        </div>
-                        <div style = "display: none; background: url('https://uprostim.com/wp-content/uploads/2021/04/image102-14-scaled.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="sub">
-                            <p>Название какого-то представления</p>
-                        </div>
+                        <?php 
+                            include 'connect.php';
+                            $link = mysqli_connect($host, $user, $password, $db_name); 
+                            $query = "SELECT * FROM performances LIMIT 9";
+                            $result = mysqli_query($link, $query);
+                            foreach($result as $row) {
+                                echo 
+                                '
+                                    <div style = "background: url('.$row["path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
+                                        <p>'.$row["name"].'</p>
+                                    </div>
+                                ';
+                            }
+                            mysqli_close($link);
+                        ?>
                     </div>
                 </div>
 

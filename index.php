@@ -45,31 +45,6 @@
         <main>
             <div class="slider-container">
                 <div class="slider single-item">
-                    <!-- <div class = "s-item">
-                        <div style = "background: url('https://a-static.besthdwallpaper.com/balcony-lofi-wallpaper-2880x1800-106546_8.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="s-inner">
-                            <p>Название какого-то представления</p>
-                        </div>
-                    </div>
-                    <div class = "s-item">
-                        <div style = "background: url('https://i.pinimg.com/originals/12/06/c4/1206c4735023fbaee13ad4a8d7802491.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="s-inner">
-                            <p>Название какого-то представления</p>
-                        </div>
-                    </div>
-                    <div class = "s-item">
-                        <div style = "background: url('https://i.pinimg.com/originals/8c/9c/4f/8c9c4f9d9305496ae5164b271ca4be03.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="s-inner">
-                            <p>Название какого-то представления</p>
-                        </div>
-                    </div>
-                    <div class = "s-item">
-                        <div style = "background: url('https://i.pinimg.com/originals/54/ab/2c/54ab2cc173d3b381a0202ef39453d20d.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="s-inner">
-                            <p>Название какого-то представления</p>
-                        </div>
-                    </div>
-                    <div class = "s-item">
-                        <div style = "background: url('https://wallpaper-4k-hd.com/wp-content/uploads/2022/05/gray-zip-up-jacket-astronaut-universe-digital-art-artwork-spacesuit-wallpaper-4.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="s-inner">
-                            <p>Название какого-то представления</p>
-                        </div>
-                    </div> -->
                     <?php 
                         include 'connect.php';
                         $link = mysqli_connect($host, $user, $password, $db_name); 
@@ -87,11 +62,7 @@
                         }
                         mysqli_close($link);
                     ?>
-                    <!-- <div class = "s-item">
-                        <div style = "background: url('img/90s-anime-aesthetic-wric2do30b1rjds3.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="s-inner">
-                            <p>'.$row["name"].'</p>
-                        </div>
-                    </div> -->
+
                 </div>
             </div>
         </main>
