@@ -40,7 +40,7 @@
                     <div class="user-image"></div>
                 </div>
                 <!-- <div style = "position: relative;" class="user">
-                    <?php 
+                    <?php  
                         echo '<p class="user-name" href="">Войти</p>';
                     ?>
                     <div class="user-image"></div>
