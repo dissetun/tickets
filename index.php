@@ -75,7 +75,7 @@
                         $link = mysqli_connect($host, $user, $password, $db_name); 
                         $query = "SELECT * FROM performances LIMIT 7";
                         $result = mysqli_query($link, $query);
-                        foreach($row as $result) {
+                        foreach($result as $row) {
                             echo 
                             '
                                 <div class = "s-item">
