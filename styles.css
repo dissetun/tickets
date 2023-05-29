@@ -331,6 +331,66 @@ main {
 
 /* ===== performances.php ===== end */
 
+/* ===== performances-page.php ===== begin */
+.performance-page-wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 1000px;
+    width: 100%;
+    margin: 100px 0px;
+}
+
+.performance-thumbnail {
+    display: flex;
+    max-width: 1000px;
+    width: 100%;
+    height: 350px;
+    box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.performance-thumbnail-elements {
+    width: 100%;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: left;
+}
+
+.ticket-buy-button {
+    justify-content: center;
+    align-self: flex-start;
+    background-color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.ticket-buy-button p {
+    color: black;
+    text-align: center;
+}
+
+.performance-thumbnail {
+    font-weight: bold;
+}
+
+.performance-description {
+    font-size: 16px;
+    line-height: 1.5;
+    color: black;
+}
+
+@media screen and (max-width: 725px) {
+    .performance-thumbnail p {
+        font-size: 20px;
+    }
+}
+
+/* ===== performances-page.php ===== end */
+
 /* ===== signin.php, signup.php ===== begin */
 .sign-container {
     width: 100%;

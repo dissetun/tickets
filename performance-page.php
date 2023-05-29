@@ -43,9 +43,33 @@
         </header>
 
         <main>
-            <?php 
-                echo $_GET["performance"];
-            ?>
+            <div class="performance-page-wrapper">
+                <?php 
+                    include 'connect.php';
+                    $link = mysqli_connect($host, $user, $password, $db_name); 
+                    $name = $_GET["performance"];
+                    $query = "SELECT * FROM performances WHERE `name` = '$name'";
+                    $result = mysqli_query($link, $query);
+                    if(!$result)
+                        die("error occured");
+                    else 
+                        foreach($result as $row)
+                            echo 
+                            '
+                                <div style = "background: url('.$row["path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance-thumbnail">
+                                    <div class="performance-thumbnail-elements">
+                                        <p style="color: white; margin-right: auto; font-size: 30px;">'.$row["name"].'</p>
+                                        <div class="ticket-buy-button">
+                                            <p>Купить билет</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p style = "font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px;">Описание представления</p>
+                                <p class="performance-description">Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему оратору отточить навык публичных выступлений в домашних условиях. При создании генератора мы использовали небезизвестный универсальный код речей. Текст генерируется абзацами случайным образом от двух до десяти предложений в абзаце, что позволяет сделать текст более привлекательным и живым для визуально-слухового восприятия.</p>
+                            ';
+                    mysqli_close($link);
+                ?>
+            </div>
         </main>
  
         <footer>
