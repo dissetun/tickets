@@ -75,9 +75,9 @@
                             foreach($result as $row) {
                                 echo 
                                 '
-                                    <div style = "background: url('.$row["path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
-                                        <p>'.$row["name"].'</p>
-                                    </div>
+                                    <a href="performance-page.php?performance='.$row["name"].'" style = "background: url('.$row["path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
+                                        <p href="performance-page.php?id='.$row["name"].'">'.$row["name"].'</p>
+                                    </a>
                                 ';
                             }
                             mysqli_close($link);
@@ -131,6 +131,16 @@
 
     window.onload = function() {
         setTimeout(() => disablePreloader(), 500);
+    }
+
+    const windowRedirect = (id) => {
+        $.ajax({
+            url: "https://jsonplaceholder.typicode.com/posts/1",
+            type: "GET",
+            success: function (data) {
+                console.log(data);
+            }
+        });
     }
 
     $(".show-more").click(function() {

@@ -53,11 +53,11 @@
                         foreach($result as $row) {
                             echo 
                             '
-                                <div class = "s-item">
+                                <a href="performance-page.php?performance='.$row["name"].'" class = "s-item">
                                     <div style = "background: url('.$row["path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="s-inner">
                                         <p>'.$row["name"].'</p>
                                     </div>
-                                </div>
+                                </a>
                             ';
                         }
                         mysqli_close($link);

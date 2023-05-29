@@ -4,4 +4,3 @@
 	$password = '';
 	$db_name = 'tickets';
 ?>
- 
