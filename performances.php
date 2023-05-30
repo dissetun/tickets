@@ -70,7 +70,7 @@
                         <?php 
                             include 'connect.php';
                             $link = mysqli_connect($host, $user, $password, $db_name); 
-                            $query = "SELECT * FROM performances LIMIT 9";
+                            $query = "SELECT * FROM performances LIMIT 6";
                             $result = mysqli_query($link, $query);
                             foreach($result as $row) {
                                 echo 

@@ -121,6 +121,7 @@
                 "justify-content": "space-between",
                 "align-items": "center"
             });
+            $(".ticket-buy-button").css({"margin-top": "0px"});
         }
     });
 
