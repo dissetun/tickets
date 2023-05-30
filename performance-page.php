@@ -32,7 +32,7 @@
                     <p class="logo">Билеты</p>
                 </div>
                 <nav>
-                    <a href="index.php" class="new nav-active">Новинки</a>
+                    <a href="index.php" class="new">Новинки</a>
                     <a href="performances.php" class="catalog">Представления</a>
                 </nav>
                 <div class="user">
@@ -56,9 +56,11 @@
                         foreach($result as $row)
                             echo 
                             '
-                                <div style = "background: url('.$row["path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance-thumbnail">
+                                <div class="performance-thumbnail" style = "background: url('.$row["path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;">
                                     <div class="performance-thumbnail-elements">
-                                        <p style="color: white; margin-right: auto; font-size: 30px;">'.$row["name"].'</p>
+                                        <div class="performance-thumbnail-name">
+                                            <p>'.$row["name"].'</p>
+                                        </div>
                                         <div class="ticket-buy-button">
                                             <p>Купить билет</p>
                                         </div>
@@ -100,6 +102,27 @@
         document.querySelector(".preloader").style.opacity = "0";
         document.querySelector(".preloader").style.visibility = "hidden";
     }
+
+    addEventListener("resize", () => {
+        let titleLength = $(".performance-thumbnail-name p").width();
+        let thumbnailWidth = $(".performance-thumbnail").width();
+        let buttonWidth = $(".ticket-buy-button").width();
+        if(titleLength + buttonWidth + 40 >= thumbnailWidth) {
+            $(".performance-thumbnail-elements").css({
+                "flex-direction": "column",
+                "justify-content": "start",
+                "align-items": "start"
+            });
+            $(".ticket-buy-button").css({"margin-top": "10px"});
+        }
+        else {
+            $(".performance-thumbnail-elements").css({
+                "flex-direction": "row",
+                "justify-content": "space-between",
+                "align-items": "center"
+            });
+        }
+    });
 
     window.onload = function() {
         setTimeout(() => disablePreloader(), 500);

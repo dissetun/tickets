@@ -76,7 +76,7 @@
                                 echo 
                                 '
                                     <a href="performance-page.php?performance='.$row["name"].'" style = "background: url('.$row["path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
-                                        <p href="performance-page.php?id='.$row["name"].'">'.$row["name"].'</p>
+                                        <p>'.$row["name"].'</p>
                                     </a>
                                 ';
                             }
