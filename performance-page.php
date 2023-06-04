@@ -45,7 +45,7 @@
         <main>
             <div class="performance-page-wrapper">
                 <?php 
-                    include 'connect.php';
+                    include 'core/connect.php';
                     $link = mysqli_connect($host, $user, $password, $db_name); 
                     $name = $_GET["performance"];
                     $query = "SELECT * FROM performances WHERE `Performance name` = '$name'";
@@ -58,14 +58,14 @@
                                     "Сентября", "Октября", "Ноября", "Декабря"];
                             // отформатированные данные даты начала представления
                             $startDate = new DateTime((string)$row["Start date"]);
-                            $startDay = $startDate->format('m');
-                            $startMonth = $startDate->format('d');
+                            $startDay = $startDate->format('d');
+                            $startMonth = $startDate->format('m');
                             $startHours = $startDate->format('H');
                             $startMinutes = $startDate->format('i');
                             // отформатированные данные даты окончания представления
                             $endDate = new DateTime((string)$row["End date"]);
-                            $endDay = $endDate->format('m');
-                            $endMonth = $endDate->format('d');
+                            $endDay = $endDate->format('d');
+                            $endMonth = $endDate->format('m');
                             $endHours = $endDate->format('H');
                             $endMinutes = $endDate->format('i');
                             echo 

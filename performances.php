@@ -68,7 +68,7 @@
                     </div>
                     <div class="catalogue">
                         <?php 
-                            include 'connect.php';
+                            include 'core/connect.php';
                             $link = mysqli_connect($host, $user, $password, $db_name); 
                             $query = "SELECT * FROM performances LIMIT 9";
                             $result = mysqli_query($link, $query);
@@ -84,14 +84,12 @@
                         ?>
                     </div>
                 </div>
-
                 <div class="show-more-container">
                     <div class="show-more-animation">
                         <div class="load-square"></div>
                     </div>
                     <button class="show-more">Показать еще</button>
                 </div>
-
             </div>
         </section>
 
@@ -133,6 +131,22 @@
         setTimeout(() => disablePreloader(), 500);
     }
 
+    const performancesCalculate = () => {
+        $.ajax({
+            type: "POST",
+            url: "core/performances-calculate.php",
+            data: {pages: $(".performance").length},
+            context: document.body,
+            success: function(result) {
+                console.log(result);
+                if(result == "Hide")
+                    $(".show-more").css({"display":"none"});
+            }
+        });
+    }
+
+    performancesCalculate();
+
     $(".show-more").click(function() {
         $(this).css({
             'display':'none'
@@ -147,12 +161,18 @@
             $(".show-more").css({
                 'display':'block'
             });
-            $(".sub").each(function(index) {
-                $(this).css({
-                    'display':'flex'
-                });
+            $.ajax({
+                type: "POST",
+                url: "core/performances-load-request.php",
+                data: {left: $(".performance").length},
+                context: document.body,
+                success: function(result) {
+                   $(".catalogue").append(result);
+                   performancesCalculate();
+                }
             });
-        }
+        }  
+        performancesCalculate();
         setTimeout(() => loadPages(), 500);
     });
 
