@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -252,6 +254,7 @@ main {
     .catalogue {
         max-width: 370px;
     }
+    
     .filters {
         justify-content: center;
     }
@@ -432,7 +435,8 @@ main {
 }
 
 .sign-form {
-    width: 350px;
+    max-width: 400px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     padding: 25px 35;
@@ -448,7 +452,8 @@ main {
 }
 
 .sign-special {
-    width: 200px;
+    max-width: 200px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -490,9 +495,34 @@ label {
 input {
     margin-bottom: 15px;
     outline: none;
+    border: none;
     border: 1px solid rgb(0, 0, 0);
-    padding: 2px;
+    padding: 5px;
     border-radius: 5px;
+}
+
+.to-main-button {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-left: auto; 
+    margin-top: 15px; 
+}
+
+.to-main-button:after {
+    content: "";
+    display: block;
+    width: 0%;
+    height: 2px;
+    background-color: black;
+    border-radius: 5px;
+    margin-top: 3px;
+    transition: 0.5s ease;
+}
+
+.to-main-button:hover::after {
+    width: 100%;
 }
 /* ===== signin.php, signup.php ===== end */
 

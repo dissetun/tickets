@@ -24,30 +24,64 @@
         </div>
     </div>
 
-    <div class="sign-container">
-        <div class="sign-form-container">
-            <div class="sign-special">
-                <p>Посещайте новинки из мира театра, кино и музыки.</p>
-            </div>
-            <form class="sign-form" action="core/signup-request.php" method="post">
-                <div class="message">
-                    <p>Something</p>
+    <div class="wrapper">
+
+        <main style = "margin-top: 0px;">
+            <div style = "max-width: 510.14px;" class="sign-container">
+                <div class="sign-form-container">
+                    <div class="sign-special">
+                        <p>Посещайте новинки из мира театра, кино и музыки.</p>
+                    </div>
+                    <form class="sign-form" action="core/signup-request.php" method="post">
+                        <div class="message">
+                            <p>Something</p>
+                        </div>
+                        <label for="name">Имя <span style = "color: crimson;">*</span></label>
+                        <input type="text" name="name">
+                        <label for="surname">Фамилия <span style = "color: crimson;">*</span></label>
+                        <input type="text" name="surname">
+                        <label for="login">Логин <span style = "color: crimson;">*</span></label>
+                        <input type="text" name="login">
+                        <label for="email">Почта <span style = "color: crimson;">*</span></label>
+                        <input type="email" name="email">
+                        <label for="password">Пароль <span style = "color: crimson;">*</span></label>
+                        <input type="password" name="password">
+                        <label for="password-confirm">Подтвердите пароль <span style = "color: crimson;">*</span></label>
+                        <input type="password" name="password-confirm">
+                        <button class="sign-button">Зарегистрироваться</button>
+                        <p>Уже зарегистрированы? - <a href="signin.php">Войти</a></p>
+                    </form>
                 </div>
-                <label for="name">Имя</label>
-                <input type="text" name="name">
-                <label for="surname">Фамилия</label>
-                <input type="text" name="surname">
-                <label for="login">Логин</label>
-                <input type="text" name="login">
-                <label for="email">Почта</label>
-                <input type="email" name="email">
-                <label for="password">Пароль</label>
-                <input type="password" name="password">
-                <label for="password-confirm">Подтвердите пароль</label>
-                <input type="password" name="password-confirm">
-                <button class="sign-button">Зарегистрироваться</button>
-                <p>Уже зарегистрированы? - <a href="signin.php">Войти</a></p>
-            </form>
+                <a style="margin-left: auto; margin-top: 15px;" href="index.php" class="to-main-button">Вернуться на главную страницу</a>
+            </div>
+        </main>
+ 
+        <footer>
+            <div class="footer-info-container">
+                <div class="footer-info-subcontainer">
+                    <div class="footer-info-item">
+                        <h1>Организаторам мероприятий</h1>
+                        <a href="#">Отправить заявку на проведение мероприятия</a>
+                        <a href="#">Площадки мероприятий</a>
+                    </div>
+                    <div class="footer-info-item">
+                        <h1>Партнерам</h1>
+                        <a href="#">Заключение сотрудничества</a>
+                        <a href="#">Данные о компании</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-corp-info">
+                <p>@ 2022 - 2023 Tickets Inc.</p>
+            </div>
+        </footer>
+    </div>
+
+    <div class="preloader">
+        <div class="squares">
+            <div class="square first-square"></div>
+            <div class="square second-square"></div>
+            <div class="square third-square"></div>
         </div>
     </div>
 </body>

@@ -24,28 +24,62 @@
         </div>
     </div>
 
-    <div class="sign-container">
-        <div class="sign-form-container">
-            <div class="sign-special">
-                <p>Посещайте новинки из мира театра, кино и музыки.</p>
-            </div>
-            <form class="sign-form" action="core/signin-request.php" method="post">
-                <div class="message">
-                    <p>Something</p>
+    <div class="wrapper">
+
+        <main style = "margin-top: 0px;">
+            <div style = "max-width: 543.39px;" class="sign-container">
+                <div class="sign-form-container">
+                    <div class="sign-special">
+                        <p>Посещайте новинки из мира театра, кино и музыки.</p>
+                    </div>
+                    <form class="sign-form" action="core/signin-request.php" method="post">
+                        <div class="message">
+                            <p>Something</p>
+                        </div>
+                        <label for="login">Логин</label>
+                        <input type="text" name="login">
+                        <label for="password">Пароль</label>
+                        <input type="password" name="password">
+                        <button class="sign-button">Войти</button>
+                        <p>Нет аккаунта? - <a href="signup.php">Зарегистрироваться</a></p>
+                    </form>
                 </div>
-                <label for="login">Логин</label>
-                <input type="text" name="login">
-                <label for="password">Пароль</label>
-                <input type="password" name="password">
-                <button class="sign-button">Войти</button>
-                <p>Нет аккаунта? - <a href="signup.php">Зарегистрироваться</a></p>
-            </form>
+                <a href="index.php" class="to-main-button">Вернуться на главную страницу</a>
+            </div>
+        </main>
+ 
+        <footer>
+            <div class="footer-info-container">
+                <div class="footer-info-subcontainer">
+                    <div class="footer-info-item">
+                        <h1>Организаторам мероприятий</h1>
+                        <a href="#">Отправить заявку на проведение мероприятия</a>
+                        <a href="#">Площадки мероприятий</a>
+                    </div>
+                    <div class="footer-info-item">
+                        <h1>Партнерам</h1>
+                        <a href="#">Заключение сотрудничества</a>
+                        <a href="#">Данные о компании</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-corp-info">
+                <p>@ 2022 - 2023 Tickets Inc.</p>
+            </div>
+        </footer>
+    </div>
+
+    <div class="preloader">
+        <div class="squares">
+            <div class="square first-square"></div>
+            <div class="square second-square"></div>
+            <div class="square third-square"></div>
         </div>
     </div>
 </body>
 
 <script>
-
+    
     const disablePreloader = () => {
         document.querySelector(".preloader").style.opacity = "0";
         document.querySelector(".preloader").style.visibility = "hidden";

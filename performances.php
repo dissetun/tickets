@@ -70,13 +70,13 @@
                         <?php 
                             include 'connect.php';
                             $link = mysqli_connect($host, $user, $password, $db_name); 
-                            $query = "SELECT * FROM performances LIMIT 6";
+                            $query = "SELECT * FROM performances LIMIT 9";
                             $result = mysqli_query($link, $query);
                             foreach($result as $row) {
                                 echo 
                                 '
-                                    <a href="performance-page.php?performance='.$row["name"].'" style = "background: url('.$row["path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
-                                        <p>'.$row["name"].'</p>
+                                    <a href="performance-page.php?performance='.$row["Performance name"].'" style = "background: url('.$row["Image path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
+                                        <p>'.$row["Performance name"].'</p>
                                     </a>
                                 ';
                             }
@@ -131,16 +131,6 @@
 
     window.onload = function() {
         setTimeout(() => disablePreloader(), 500);
-    }
-
-    const windowRedirect = (id) => {
-        $.ajax({
-            url: "https://jsonplaceholder.typicode.com/posts/1",
-            type: "GET",
-            success: function (data) {
-                console.log(data);
-            }
-        });
     }
 
     $(".show-more").click(function() {

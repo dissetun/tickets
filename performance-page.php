@@ -48,7 +48,7 @@
                     include 'connect.php';
                     $link = mysqli_connect($host, $user, $password, $db_name); 
                     $name = $_GET["performance"];
-                    $query = "SELECT * FROM performances WHERE `name` = '$name'";
+                    $query = "SELECT * FROM performances WHERE `Performance name` = '$name'";
                     $result = mysqli_query($link, $query);
                     if(!$result)
                         die("error occured");
@@ -56,10 +56,10 @@
                         foreach($result as $row)
                             echo 
                             '
-                                <div class="performance-thumbnail" style = "background: url('.$row["path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                                <div class="performance-thumbnail" style = "background: url('.$row["Image path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;">
                                     <div class="performance-thumbnail-elements">
                                         <div class="performance-thumbnail-name">
-                                            <p>'.$row["name"].'</p>
+                                            <p>'.$row["Performance name"].'</p>
                                         </div>
                                         <div class="ticket-buy-button">
                                             <p>Купить билет</p>
@@ -68,6 +68,17 @@
                                 </div>
                                 <p style = "font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px;">Описание представления</p>
                                 <p class="performance-description">Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему оратору отточить навык публичных выступлений в домашних условиях. При создании генератора мы использовали небезизвестный универсальный код речей. Текст генерируется абзацами случайным образом от двух до десяти предложений в абзаце, что позволяет сделать текст более привлекательным и живым для визуально-слухового восприятия.</p>
+                                <div class="performance-data">  
+                                    <div class="performance-data-item">
+                                        <p>Жанр: <span style = "color: black; font-weight: bold;">'.$row["Genre"].'</span></p>
+                                    </div>
+                                    <div class="performance-data-item">
+                                        <p>Дата начала: <span style = "color: black; font-weight: bold;">'.$row["Start date"].'</span></p>
+                                    </div>
+                                    <div class="performance-data-item">
+                                        <p>Дата окончания: <span style = "color: black; font-weight: bold;">'.$row["End date"].'</span></p>
+                                    </div>
+                                </div>
                             ';
                     mysqli_close($link);
                 ?>
@@ -100,45 +111,34 @@
 
     const disablePreloader = () => {
         document.querySelector(".preloader").style.opacity = "0";
-        document.querySelector(".preloader").style.visibility = "hidden";
+        document.querySelector(".preloader").style.display = "none";
     }
 
-    addEventListener("resize", () => {
-        let titleLength = $(".performance-thumbnail-name p").width();
-        let thumbnailWidth = $(".performance-thumbnail").width();
-        let buttonWidth = $(".ticket-buy-button").width();
-        if(titleLength + buttonWidth + 40 >= thumbnailWidth) {
-            $(".performance-thumbnail-elements").css({
-                "flex-direction": "column",
-                "justify-content": "start",
-                "align-items": "start"
-            });
-            $(".ticket-buy-button").css({"margin-top": "10px"});
-        }
-        else {
-            $(".performance-thumbnail-elements").css({
-                "flex-direction": "row",
-                "justify-content": "space-between",
-                "align-items": "center"
-            });
-            $(".ticket-buy-button").css({"margin-top": "0px"});
-        }
-    });
+    // addEventListener("resize", () => {
+    //     let titleLength = $(".performance-thumbnail-name p").width();
+    //     let thumbnailWidth = $(".performance-thumbnail").width();
+    //     let buttonWidth = $(".ticket-buy-button").width();
+    //     if(titleLength + buttonWidth + 40 >= thumbnailWidth) {
+    //         $(".performance-thumbnail-elements").css({
+    //             "flex-direction": "column",
+    //             "justify-content": "start",
+    //             "align-items": "start"
+    //         });
+    //         $(".ticket-buy-button").css({"margin-top": "10px"});
+    //     }
+    //     else {
+    //         $(".performance-thumbnail-elements").css({
+    //             "flex-direction": "row",
+    //             "justify-content": "space-between",
+    //             "align-items": "center"
+    //         });
+    //         $(".ticket-buy-button").css({"margin-top": "0px"});
+    //     }
+    // });
 
     window.onload = function() {
         setTimeout(() => disablePreloader(), 500);
     }
-
-    $(document).ready(function() {
-        $(".single-item").slick({
-            dots: false,
-            infinite: true,
-            speed: 500,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            adaptiveWidth: true
-        });
-    });
 
 </script>
 
