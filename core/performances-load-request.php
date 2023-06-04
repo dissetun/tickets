@@ -2,7 +2,7 @@
     include 'connect.php';
     $link = mysqli_connect($host, $user, $password, $db_name); 
     $left = $_POST["left"];
-    $query = "SELECT * FROM performances LIMIT $left, 8";
+    $query = "SELECT * FROM performances LIMIT $left, 6";
     $result = mysqli_query($link, $query);
     foreach($result as $row) {
         echo 
