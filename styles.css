@@ -244,22 +244,6 @@ main {
     gap: 25px;
 }
 
-@media screen and (max-width: 1110px) {
-    .catalogue {
-        max-width: 725px;
-    }
-}
-
-@media screen and (max-width: 725px) {
-    .catalogue {
-        max-width: 370px;
-    }
-    
-    .filters {
-        justify-content: center;
-    }
-}
-
 .performance {
     width: 320px; 
     height: 280px;
@@ -331,6 +315,26 @@ main {
     border-radius: 100%;
     border: 12px dotted black;
     animation: 0.5s linear infinite rotate;
+}
+
+@media screen and (max-width: 1110px) {
+    .catalogue {
+        max-width: 725px;
+    }
+}
+
+@media screen and (max-width: 725px) {
+    .catalogue {
+        max-width: 370px;
+    }
+    
+    .filters {
+        justify-content: center;
+    }
+
+    .s-inner p {
+        font-size: 16px;
+    }
 }
 /* ===== performances.php ===== end */
 
