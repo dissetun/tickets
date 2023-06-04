@@ -55,7 +55,7 @@
                             '
                                 <a href="performance-page.php?performance='.$row["Performance name"].'" class = "s-item">
                                     <div style = "background: url('.$row["Image path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="s-inner">
-                                        <p>'.$row["Performance name"].'</p>
+                                        <p style="text-align: left;">'.$row["Performance name"].'</p>
                                     </div>
                                 </a>
                             ';
