@@ -492,7 +492,9 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: url(https://wallpapershome.ru/images/wallpapers/volni-2560x1440-abstrakciya-19717.jpg);
+    /* background-image: url(https://wallpapershome.ru/images/wallpapers/volni-2560x1440-abstrakciya-19717.jpg); */
+    /* background-color: rgb(206, 220, 251); */
+    background-image: url(https://wp-s.ru/wallpapers/9/10/460293184986657/romanticheskij-pejzazh-chashhe-vsego-predpolagaet-goluboe-nebo-s-oblakami.jpg);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
