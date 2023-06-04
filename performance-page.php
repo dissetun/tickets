@@ -53,7 +53,21 @@
                     if(!$result)
                         die("error occured");
                     else 
-                        foreach($result as $row)
+                        foreach($result as $row) {
+                            $monthName = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа",
+                                    "Сентября", "Октября", "Ноября", "Декабря"];
+                            // отформатированные данные даты начала представления
+                            $startDate = new DateTime((string)$row["Start date"]);
+                            $startDay = $startDate->format('m');
+                            $startMonth = $startDate->format('d');
+                            $startHours = $startDate->format('H');
+                            $startMinutes = $startDate->format('i');
+                            // отформатированные данные даты окончания представления
+                            $endDate = new DateTime((string)$row["End date"]);
+                            $endDay = $endDate->format('m');
+                            $endMonth = $endDate->format('d');
+                            $endHours = $endDate->format('H');
+                            $endMinutes = $endDate->format('i');
                             echo 
                             '
                                 <div class="performance-thumbnail" style = "background: url('.$row["Image path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;">
@@ -61,25 +75,29 @@
                                         <div class="performance-thumbnail-name">
                                             <p>'.$row["Performance name"].'</p>
                                         </div>
-                                        <div class="ticket-buy-button">
-                                            <p>Купить билет</p>
-                                        </div>
                                     </div>
                                 </div>
-                                <p style = "font-weight: bold; font-size: 25px; margin-top: 30px; margin-bottom: 30px;">Описание представления</p>
+                                <p class="performance-description-title">Описание представления</p>
                                 <p class="performance-description">Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему оратору отточить навык публичных выступлений в домашних условиях. При создании генератора мы использовали небезизвестный универсальный код речей. Текст генерируется абзацами случайным образом от двух до десяти предложений в абзаце, что позволяет сделать текст более привлекательным и живым для визуально-слухового восприятия.</p>
                                 <div class="performance-data">  
                                     <div class="performance-data-item">
-                                        <p>Жанр: <span style = "color: black; font-weight: bold;">'.$row["Genre"].'</span></p>
+                                        <p>Жанр </p>
+                                        <div class="performance-data-item-element"><span>'.$row["Genre"].'</span></div>
                                     </div>
                                     <div class="performance-data-item">
-                                        <p>Дата начала: <span style = "color: black; font-weight: bold;">'.$row["Start date"].'</span></p>
+                                        <p>Начало </p>
+                                        <div class="performance-data-item-element"><span>'.(int)$startDay." ".$monthName[(int)$startMonth - 1]." ".$startHours.":".$startMinutes.'</span></div>
                                     </div>
                                     <div class="performance-data-item">
-                                        <p>Дата окончания: <span style = "color: black; font-weight: bold;">'.$row["End date"].'</span></p>
+                                        <p>Окончание </p>
+                                        <div class="performance-data-item-element"><span>'.(int)$endDay." ".$monthName[(int)$endMonth - 1]." ".$endHours.":".$endMinutes.'</span></div>
                                     </div>
                                 </div>
+                                <div class="ticket-buy-button">
+                                    <p>Купить билет</p>
+                                </div>
                             ';
+                        }
                     mysqli_close($link);
                 ?>
             </div>
