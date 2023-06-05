@@ -1,3 +1,12 @@
+<?php 
+
+    session_start();
+    if(isset($_SESSION["login"])) {
+        header("Location: index.php");
+    }
+
+?>
+
 <html>
 
 <!-- Head -->
@@ -32,14 +41,14 @@
                     <div class="sign-special">
                         <p>Посещайте новинки из мира театра, кино и музыки.</p>
                     </div>
-                    <form class="sign-form" action="core/signin-request.php" method="post">
+                    <form class="sign-form">
                         <div class="message">
                             <p>Something</p>
                         </div>
                         <label for="login">Логин</label>
-                        <input type="text" name="login">
+                        <input id="input-1" type="text" name="login">
                         <label for="password">Пароль</label>
-                        <input type="password" name="password">
+                        <input id="input-2" type="password" name="password">
                         <button class="sign-button">Войти</button>
                         <p>Нет аккаунта? - <a href="signup.php">Зарегистрироваться</a></p>
                     </form>
@@ -88,6 +97,47 @@
     window.onload = function() {
         setTimeout(() => disablePreloader(), 500);
     }
+
+    $(".sign-button").click(function(event) {
+        event.preventDefault();
+    });
+
+    $(".sign-button").click(function(event) {
+        let nextStep = true;
+        $("input").each(function(index) {
+            let data = "" + $("#" + this.id.toString()).val();
+            if(data == "") {
+                $("#" + this.id.toString()).css({"border":"1px solid red"});
+                nextStep = false;
+            }
+            else
+                $("#" + this.id.toString()).css({"border":"1px solid black"}); 
+        }); 
+        if(nextStep) {
+            $.ajax({
+                type: "POST",
+                url: "core/signin-request.php",
+                data: {
+                    login: $("input[name='login']").val(),
+                    password: $("input[name='password']").val()
+                },
+                context: document.body,
+                success: function(result) {
+                    if(result == "Авторизация прошла успешно") {
+                        window.location.replace("index.php");
+                    }
+                    else {
+                        $("input[name='login']").css({"border":"1px solid red"});
+                        $("input[name='password']").css({"border":"1px solid red"});
+                        if(document.querySelector(".authorization-error") == null) {
+                            $("<div style = 'color: red; margin-bottom: 15px;' class = 'authorization-error'></div>").insertAfter($("input[name='password']"));
+                            $(".authorization-error").text("Неверные логин или пароль");
+                        }
+                    }
+                }
+            });
+        }
+    });
 
 </script>
 

@@ -1,3 +1,9 @@
+<?php 
+
+    session_start();
+
+?>
+
 <html>
 
 <!-- Head -->
@@ -37,6 +43,7 @@
                 </nav>
                 <div class="user">
                     <a href="signin.php">Войти</a>
+                    <p class="user-login"></p>
                     <div class="user-image"></div>
                 </div>
             </div>
@@ -68,6 +75,21 @@
                             $endMonth = $endDate->format('m');
                             $endHours = $endDate->format('H');
                             $endMinutes = $endDate->format('i');
+                            // получение площадки, на которой будет проведено представление
+                            $hall = $row["Hall ID"];
+                            $getPlatformQuery = "SELECT Platform FROM halls WHERE `Hall ID` = '$hall'";
+                            $getPlatformResult = mysqli_query($link, $getPlatformQuery);
+                            $platform = "";
+                            foreach($getPlatformResult as $getPlatformResultRow) {
+                                $platform = $getPlatformResultRow["Platform"];
+                            }
+                            // поулчение адреса площадки, на которой будет проведено прсдетавление
+                            $getAddressQuery = "SELECT Address from Platforms WHERE `Platform` = '$platform'";
+                            $getAddressResult = mysqli_query($link, $getAddressQuery);
+                            $address = "";
+                            foreach($getAddressResult as $getAddressResultRow) {
+                                $address = $getAddressResultRow["Address"];
+                            }
                             echo 
                             '
                                 <div class="performance-thumbnail" style = "background: url('.$row["Image path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;">
@@ -81,16 +103,21 @@
                                 <p class="performance-description">Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру сгенерировать несколько абзацев более менее осмысленного текста рыбы на русском языке, а начинающему оратору отточить навык публичных выступлений в домашних условиях. При создании генератора мы использовали небезизвестный универсальный код речей. Текст генерируется абзацами случайным образом от двух до десяти предложений в абзаце, что позволяет сделать текст более привлекательным и живым для визуально-слухового восприятия.</p>
                                 <div class="performance-data">  
                                     <div class="performance-data-item">
-                                        <p>Жанр </p>
+                                        <p>Жанр</p>
                                         <div class="performance-data-item-element"><span>'.$row["Genre"].'</span></div>
                                     </div>
                                     <div class="performance-data-item">
-                                        <p>Начало </p>
+                                        <p>Начало</p>
                                         <div class="performance-data-item-element"><span>'.(int)$startDay." ".$monthName[(int)$startMonth - 1]." ".$startHours.":".$startMinutes.'</span></div>
                                     </div>
                                     <div class="performance-data-item">
-                                        <p>Окончание </p>
+                                        <p>Окончание</p>
                                         <div class="performance-data-item-element"><span>'.(int)$endDay." ".$monthName[(int)$endMonth - 1]." ".$endHours.":".$endMinutes.'</span></div>
+                                    </div>
+                                    <div class="performance-data-item">
+                                        <p>Площадка</p>
+                                        <div class="performance-data-item-element"><span>'.$platform.'</span></div>
+                                        <div class="performance-data-item-element"><span>'.$address.'</span></div>
                                     </div>
                                 </div>
                                 <div class="ticket-buy-button">
@@ -156,6 +183,14 @@
 
     window.onload = function() {
         setTimeout(() => disablePreloader(), 500);
+    }
+
+    let sessionLogin = '<?php echo json_encode($_SESSION["login"])?>';
+    sessionLogin = sessionLogin.substring(1, sessionLogin.length - 1);
+    if(sessionLogin != null) {
+        $(".user a").css({"display":"none"});
+        $(".user-login").text(sessionLogin);
+        $(".user-image").css({"display":"block"});
     }
 
 </script>

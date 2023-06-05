@@ -1,3 +1,9 @@
+<?php 
+
+    session_start();
+
+?>
+
 <html>
 
 <!-- Head -->
@@ -37,6 +43,7 @@
                 </nav>
                 <div class="user">
                     <a href="signin.php">Войти</a>
+                    <p class="user-login"></p>
                     <div class="user-image"></div>
                 </div>
             </div>
@@ -110,6 +117,14 @@
             adaptiveWidth: true
         });
     });
+
+    let sessionLogin = '<?php echo json_encode($_SESSION["login"])?>';
+    sessionLogin = sessionLogin.substring(1, sessionLogin.length - 1);
+    if(sessionLogin != null) {
+        $(".user a").css({"display":"none"});
+        $(".user-login").text(sessionLogin);
+        $(".user-image").css({"display":"block"});
+    }
 
 </script>
 

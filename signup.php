@@ -1,3 +1,12 @@
+<?php 
+
+    session_start();
+    if(isset($_SESSION["login"])) {
+        header("Location: index.php");
+    }
+
+?>
+
 <html>
 
 <!-- Head -->
@@ -32,22 +41,22 @@
                     <div class="sign-special">
                         <p>Посещайте новинки из мира театра, кино и музыки.</p>
                     </div>
-                    <form class="sign-form" action="core/signup-request.php" method="post">
+                    <form class="sign-form">
                         <div class="message">
                             <p>Something</p>
                         </div>
                         <label for="name">Имя <span style = "color: crimson;">*</span></label>
-                        <input type="text" name="name">
+                        <input id="input-1" type="text" name="name">
                         <label for="surname">Фамилия <span style = "color: crimson;">*</span></label>
-                        <input type="text" name="surname">
+                        <input id="input-2" type="text" name="surname">
                         <label for="login">Логин <span style = "color: crimson;">*</span></label>
-                        <input type="text" name="login">
+                        <input id="input-3" type="text" name="login">
                         <label for="email">Почта <span style = "color: crimson;">*</span></label>
-                        <input type="email" name="email">
+                        <input id="input-4" type="email" name="email">
                         <label for="password">Пароль <span style = "color: crimson;">*</span></label>
-                        <input type="password" name="password">
+                        <input id="input-5" type="password" name="password">
                         <label for="password-confirm">Подтвердите пароль <span style = "color: crimson;">*</span></label>
-                        <input type="password" name="password-confirm">
+                        <input id="input-6" type="password" name="password-confirm">
                         <button class="sign-button">Зарегистрироваться</button>
                         <p>Уже зарегистрированы? - <a href="signin.php">Войти</a></p>
                     </form>
@@ -96,6 +105,107 @@
     window.onload = function() {
         setTimeout(() => disablePreloader(), 500);
     }
+
+    $(".sign-button").click(function(event) {
+        event.preventDefault();
+    });
+
+    function isEmail(email) {
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        return regex.test(email);
+    }
+
+    $(".sign-button").click(function() {
+        let nextStep = true;
+        $("input").each(function(index) {
+            let data = "" + $("#" + this.id.toString()).val();
+            if(data == "") {
+                $("#" + this.id.toString()).css({"border":"1px solid red"});
+                nextStep = false;
+            }
+            else
+                $("#" + this.id.toString()).css({"border":"1px solid black"}); 
+        }); 
+        // проверка логина
+        if($("input[name='login']").val().length < 8) {
+            $("input[name='login']").css({"border":"1px solid red"});
+            if(document.querySelector(".login-message") == null) {
+                $("<div style = 'color: red; margin-bottom: 15px;' class = 'login-message'></div>").insertAfter($("input[name='login']"));
+                $(".login-message").text("Минимальная длина логина составляет 8 символов");
+            }
+            nextStep = false;
+        }
+        else {
+            if(document.querySelector(".login-message") != null) {
+                $(".login-message").remove();
+                $("input[name='login']").css({"border":"1px solid black"});
+            }
+        }
+        // проверка почты
+        if(!isEmail($("input[name='email']").val())) {
+            $("input[name='email']").css({"border":"1px solid red"});
+            if(document.querySelector(".email-message") == null) {
+                $("<div style = 'color: red; margin-bottom: 15px;' class = 'email-message'></div>").insertAfter($("input[name='email']"));
+                $(".email-message").text("Email указан некорректно");
+            }
+            nextStep = false;
+        }
+        else {
+            if(document.querySelector(".email-message") != null) {
+                $(".email-message").remove();
+                $("input[name='email']").css({"border":"1px solid black"});
+            }
+        }
+        // проверка пароля
+        if($("input[name='password'").val().length < 8) {
+            $("input[name='password']").css({"border":"1px solid red"});
+            if(document.querySelector(".password-message") == null) {
+                $("<div style = 'color: red; margin-bottom: 15px;' class = 'password-message'></div>").insertAfter($("input[name='password']"));
+                $(".password-message").text("Минимальная длина пароля составляет 8 символов");
+            }
+            nextStep = false;
+        }
+        else {
+            if(document.querySelector(".password-message") != null) {
+                $(".password-message").remove();
+                $("input[name='password']").css({"border":"1px solid black"});
+            }
+        }
+        // проверка повтора пароля
+        if($("input[name='password'").val() != $("input[name='password-confirm']").val()) {
+            $("input[name='password-confirm']").css({"border":"1px solid red"});
+            if(document.querySelector(".password-confirm-message") == null) {
+                $("<div style = 'color: red; margin-bottom: 15px;' class = 'password-confirm-message'></div>").insertAfter($("input[name='password-confirm']"));
+                $(".password-confirm-message").text("Пароли не совпадают");
+            }
+            nextStep = false;
+        }
+        else {
+            if(document.querySelector(".password-confirm-message") != null) {
+                $(".password-confirm-message").remove();
+                $("input[name='password-confirm']").css({"border":"1px solid black"});
+            }
+        }
+        // отправка данных на сервер
+        if(nextStep) {
+            $.ajax({
+                type: "POST",
+                url: "core/signup-request.php",
+                data: {
+                    name: $("input[name='name']").val(),
+                    surname: $("input[name='surname']").val(),
+                    login: $("input[name='login']").val(),
+                    email: $("input[name='email']").val(),
+                    password: $("input[name='password']").val(),
+                    passwordConfirm: $("input[name='password-confirm']").val()
+                },
+                context: document.body,
+                success: function(result) {
+                    console.log(result);
+                }
+            });
+        }
+    });
 
 </script>
 

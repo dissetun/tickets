@@ -1,4 +1,5 @@
 <?php 
+    session_start();
     include 'connect.php';
     $link = mysqli_connect($host, $user, $password, $db_name); 
     $left = $_POST["pages"];
