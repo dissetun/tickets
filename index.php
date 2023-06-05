@@ -119,8 +119,8 @@
     });
 
     let sessionLogin = '<?php echo json_encode($_SESSION["login"])?>';
-    sessionLogin = sessionLogin.substring(1, sessionLogin.length - 1);
-    if(sessionLogin != null) {
+    if(sessionLogin != "null") {
+        sessionLogin = sessionLogin.substring(1, sessionLogin.length - 1);
         $(".user a").css({"display":"none"});
         $(".user-login").text(sessionLogin);
         $(".user-image").css({"display":"block"});

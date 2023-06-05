@@ -43,7 +43,7 @@
                 </nav>
                 <div class="user">
                     <a href="signin.php">Войти</a>
-                    <p style = " class="user-login"></p>
+                    <p class="user-login"></p>
                     <div class="user-image"></div>
                 </div>
                 <!-- <div style = "position: relative;" class="user">
@@ -207,8 +207,8 @@
     // }
 
     let sessionLogin = '<?php echo json_encode($_SESSION["login"])?>';
-    sessionLogin = sessionLogin.substring(1, sessionLogin.length - 1);
-    if(sessionLogin != null) {
+    if(sessionLogin != "null") {
+        sessionLogin = sessionLogin.substring(1, sessionLogin.length - 1);
         $(".user a").css({"display":"none"});
         $(".user-login").text(sessionLogin);
         $(".user-image").css({"display":"block"});
