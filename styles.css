@@ -103,6 +103,19 @@ nav a:first-child {
     box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.1);
 }
 
+.nav-burger {
+    display: none;
+}
+
+@media screen and (max-width: 700px) {
+    .nav-burger {
+        display: block;
+    }
+    nav {
+        display: none;
+    }
+}
+
 /* --- Main --- */
 main {
     width: 100%;

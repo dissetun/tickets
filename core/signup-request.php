@@ -21,9 +21,10 @@
         $_SESSION["surname"] = $surname;
         $_SESSION["email"] = $email;
         $_SESSION["roleName"] = $roleName;
+        echo mysqli_error($link);
+        echo "Регистрация прошла успешно";
     }
     else {
-        mysqli_close($link);
         die("Произошла ошибка. Мы уже работаем над ее исправлением :).");
     }
     mysqli_close($link);

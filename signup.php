@@ -202,6 +202,15 @@
                 context: document.body,
                 success: function(result) {
                     console.log(result);
+                    if(result == "Регистрация прошла успешно") {
+                        window.location.replace("index.php");
+                    }
+                    else {
+                        if(document.querySelector(".registration-error") == null) {
+                            $("<div style = 'color: red; margin-bottom: 15px;' class = 'registration-error'></div>").insertAfter($("input[name='password-confirm']"));
+                            $(".registration-error").text("Произошла ошибка");
+                        }
+                    }
                 }
             });
         }

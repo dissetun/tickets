@@ -37,6 +37,9 @@
                     <i style = "margin-right: 10px; font-size: 30px;" class="fa-solid fa-ticket"></i>
                     <p class="logo">Билеты</p>
                 </div>
+                <div class = "nav-burger">
+                    <p>BURGER</p>
+                </div>
                 <nav>
                     <a href="index.php" class="new nav-active">Новинки</a>
                     <a href="performances.php" class="catalog">Представления</a>
