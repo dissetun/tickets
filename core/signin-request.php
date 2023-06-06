@@ -18,6 +18,7 @@
             $_SESSION["surname"] = $resultArray[2];
             $_SESSION["email"] = $resultArray[4];
             $_SESSION["roleName"] = $resultArray[5];
+            $_SESSION["imagePath"] = $resultArray[6];
             mysqli_close($link);
             echo "Авторизация прошла успешно";
         }

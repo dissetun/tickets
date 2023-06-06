@@ -70,4 +70,39 @@
     //     echo "<br>";
     // }
     // mysqli_close($link);
+
+// ------- генерация мест для представлений -------
+    // include "core/connect.php";
+    // $link = mysqli_connect($host, $user, $password, $db_name);
+    // $query = "SELECT * FROM performances";
+    // $result = mysqli_query($link, $query);
+    // foreach($result as $row) {
+    //     $performanceID = $row["Performance ID"];
+    //     $hallID = $row["Hall ID"];
+    //     $getPlaceQuery = "SELECT * FROM Places WHERE `Hall ID` = '$hallID'";
+    //     $getPlaceResult = mysqli_query($link, $getPlaceQuery);
+    //     $priceList = [500, 600, 700, 800, 900, 1000];
+    //     $priceListGaps = [100, 150, 200, 250, 300, 350];
+    //     $price = $priceList[rand(0, 5)];
+    //     $skippedPlaces = 0;
+    //     foreach($getPlaceResult as $getPlaceResultRow) {
+    //         $placeID = $getPlaceResultRow["Place ID"];
+    //         $performancePlaceInsertQuery = "INSERT INTO `performance-places` (`Performance ID`, `Place ID`, `Price`, `Placeholder`, `Status`)
+    //         VALUES ('$performanceID', '$placeID', '$price', 'biboslakaka', 0)";
+    //         // echo $performanceID.' '.$placeID.' '.$price;
+    //         // echo "<br>";
+    //         $performancePlaceInsertQueryResult = mysqli_query($link, $performancePlaceInsertQuery);
+    //         $skippedPlaces++;
+    //         if($skippedPlaces % 10 == 0)
+    //             $price += $priceListGaps[rand(0, 5)];
+    //     }
+    // }
+    // mysqli_close($link); 
+
+// ------- обновление изображения профиля -------
+    include "core/connect.php";
+    $link = mysqli_connect($host, $user, $password, $db_name);
+    $query = "UPDATE users SET `Image path`='img/user-profile.png'";
+    $result = mysqli_query($link, $query);
+    mysqli_close($link);
 ?>

@@ -11,7 +11,8 @@
     $password = $_POST["password"];
     $email = $_POST["email"];
     $roleName = "Пользователь";
-    $insertQuery = "INSERT INTO users (`Login`, `Name`, `Surname`, `Password`, `Email`, `Role name`) VALUES 
+    $imagePath = "img/user-profile.png";
+    $insertQuery = "INSERT INTO users (`Login`, `Name`, `Surname`, `Password`, `Email`, `Role name`, `Image path`) VALUES 
     ('$login', '$name', '$surname', '$password', '$email', '$roleName')";
     $result = mysqli_query($link, $insertQuery);
     if($result) {
@@ -21,6 +22,7 @@
         $_SESSION["surname"] = $surname;
         $_SESSION["email"] = $email;
         $_SESSION["roleName"] = $roleName;
+        $_SESSION["imagePath"] = $imagePath;
         echo mysqli_error($link);
         echo "Регистрация прошла успешно";
     }

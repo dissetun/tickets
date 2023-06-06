@@ -33,12 +33,20 @@
     <div class="wrapper">
         <header>
             <div class="header-wrapper">
+                <div class = "nav-burger">
+                    <div class="burger-icon">
+                        <div class="burger-line"></div>
+                        <div class="burger-line"></div>
+                        <div class="burger-line"></div>
+                    </div>
+                    <div class="burger-list">
+                        <a href="index.php" class="new nav-active">Новинки</a>
+                        <a href="performances.php" class="catalog">Представления</a>
+                    </div>
+                </div>
                 <div class="logo-container">
                     <i style = "margin-right: 10px; font-size: 30px;" class="fa-solid fa-ticket"></i>
                     <p class="logo">Билеты</p>
-                </div>
-                <div class = "nav-burger">
-                    <p>BURGER</p>
                 </div>
                 <nav>
                     <a href="index.php" class="new">Новинки</a>
@@ -193,8 +201,20 @@
         sessionLogin = sessionLogin.substring(1, sessionLogin.length - 1);
         $(".user a").css({"display":"none"});
         $(".user-login").text(sessionLogin);
-        $(".user-image").css({"display":"block"});
+        let imagePath = '<?php echo json_encode($_SESSION["imagePath"])?>';
+        imagePath = "url(" + imagePath.substring(1, imagePath.length - 1) + ")";
+        $(".user-image").css({
+            "display":"block",
+            "background-image":imagePath
+        });
     }
+
+    $(".burger-icon").click(function() {
+        if(!$(".burger-list").hasClass("burger-active")) {
+            $(".burger-list").addClass("burger-active");
+        }
+        else $(".burger-list").removeClass("burger-active");
+    });
 
 </script>
 
