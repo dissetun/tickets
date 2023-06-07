@@ -30,13 +30,4 @@
         die("Произошла ошибка. Мы уже работаем над ее исправлением :).");
     }
     mysqli_close($link);
-    // $lastKey = array_key_last($_POST);
-    // foreach($_POST as $key=>$value) {
-    //     $insertQuery = $insertQuery."'$$value'";
-    //     if($key != $lastKey) {
-    //         $insertQuery = $insertQuery.', ';
-    //     }
-    // }
-    // $insertQuery = $insertQuery.')';
-    // $result = mysqli_query($link, $insertQuery);
 ?>

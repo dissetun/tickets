@@ -93,7 +93,6 @@ nav a:first-child {
     position: relative;
     user-select: none;
     padding: 10px;
-    min-width: 160px;
 }
 
 .user a {
@@ -126,12 +125,10 @@ nav a:first-child {
 .user-menu {
     position: absolute;
     display: none;
-    justify-content: center;
-    flex-direction: column;
     margin-top: 154px;
     background-color: white;
     border-radius: 0px 0px 10px 10px;
-    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.1);
     width: 100%;
     padding: 10px;
     left: 0px;
@@ -148,6 +145,22 @@ nav a:first-child {
 
 .user-menu a:last-child {
     margin-bottom: 0px;
+}
+
+#logout {
+    cursor: pointer;
+    color: crimson;
+}
+
+#personal-area-link {
+    color: white;
+}
+
+.user-menu-link-active {
+    padding: 5px 10px;
+    background-color: black;
+    color: white;
+    border-radius: 10px;
 }
 
 .nav-burger {
@@ -185,7 +198,7 @@ nav a:first-child {
     padding: 10px;
     background-color: white;
     border-radius: 0px 0px 10px 10px;
-    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.1);
 }
 
 .burger-active {
@@ -225,6 +238,99 @@ main {
     padding: 0px 25px;
     min-width: 0;
 }
+/* ===== personal-area.php ===== begin */
+.user-profile-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    max-width: 580px;
+    width: 100%;
+}
+
+.user-profile-title {
+    font-weight: bold;
+    margin-right: auto;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.data-container {
+    display: flex;
+}
+
+.image-login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+    padding-right: 40px;
+}
+
+.user-profile-image {
+    width: 150px; 
+    height: 150px;
+    border-radius: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.user-profile-login {
+    font-weight: bold;
+}
+
+/* user-profile-data-form */
+
+.data-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.data-form input {
+    max-width: 350px;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.user-profile-form-button {
+    align-self: start;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin-left: auto;
+    padding: 5px 15px;
+}
+
+.user-profile-form-button {
+    cursor: pointer;
+}
+
+/* user-profile-password-form */
+
+.password-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.password-form input {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.password-form input:last-child {
+    margin-bottom: 0px;
+}
+
+/* ===== personal-area.php ===== begin */
 
 /* ===== index.php ===== begin */
 .slider-container {

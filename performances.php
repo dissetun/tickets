@@ -59,25 +59,12 @@
                     <div style="left: 0; position: absolute; background-color: transparent; height: 60px; width: 100%; cursor: pointer;" class="user-menu-button"></div>
                     <div class="user-menu">
                         <div style="margin-right: auto; margin-left: auto; align-self: start;">
-                            <a href="#">Личный кабинет</a>
-                            <a href="#">Исторя покупок</a>
-                            <a style = "color: crimson;" href="#">Выйти</a>
+                            <a href="personal-area.php">Личный кабинет</a>
+                            <a href="purchases-history.php">Исторя покупок</a>
+                            <p id="logout">Выйти</p>
                         </div>
                     </div>
                 </div>
-                <!-- <div style = "position: relative;" class="user">
-                    <?php  
-                        echo '<p class="user-name" href="">Войти</p>';
-                    ?>
-                    <div class="user-image"></div>
-                    <div style = "background-color: white; z-index: 99999999; border-radius: 0px 0px 10px 10px; display: none; flex-direction: column; justify-content: center; align-items: center; position: absolute; height: 250px; width: 150px; z-index: -1; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.1);" class="user-nav">
-                        <div style = "margin-top: 145px; display: flex; flex-direction: column;" class="user-nav-items">
-                            <a style = "margin-right: auto;" class="user-nav-item" href = "#">Личный кабинет</a>
-                            <a style = "margin-right: auto; margin-top: 10px;" class="user-nav-item" href = "#">История покупок</a>
-                            <a style = "margin-right: auto; margin-top: 10px;" class="user-nav-item" href = "#">Настройки</a>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </header>
 
@@ -132,11 +119,6 @@
                         <a href="#">Заключение сотрудничества</a>
                         <a href="#">Данные о компании</a>
                     </div>
-                    <!-- <div class="footer-info-item">
-                        <h1>Организаторам мероприятий</h1>
-                        <a href="#">Отправить заявку на проведение мероприятия</a>
-                        <a href="#">Действие, которое могут совершить организаторы</a>
-                    </div> -->
                 </div>
             </div>
             <div class="footer-corp-info">
@@ -202,28 +184,28 @@
         setTimeout(() => loadPages(), 500);
     });
 
-    // $(".user-name").click(function() {
-    //     $(".user-nav").css({
-    //         'display':'flex'
-    //     });
-    // });
+    $(".user-name").click(function() {
+        $(".user-nav").css({
+            'display':'flex'
+        });
+    });
 
-    // const filters = document.querySelectorAll(".filter");
+    const filters = document.querySelectorAll(".filter");
 
-    // for(let filter of filters) {
-    //     filter.addEventListener("click", () => {
-    //         if(!filter.classList.contains("filter-active")) {
-    //             for(let otherFilter of filters) {
-    //                 if(otherFilter.classList.contains("filter-active"))
-    //                     otherFilter.classList.remove("filter-active");
-    //             }
-    //             filter.classList.add("filter-active");
-    //         }
-    //         else {
-    //             filter.classList.remove("filter-active");
-    //         }
-    //     });
-    // }
+    for(let filter of filters) {
+        filter.addEventListener("click", () => {
+            if(!filter.classList.contains("filter-active")) {
+                for(let otherFilter of filters) {
+                    if(otherFilter.classList.contains("filter-active"))
+                        otherFilter.classList.remove("filter-active");
+                }
+                filter.classList.add("filter-active");
+            }
+            else {
+                filter.classList.remove("filter-active");
+            }
+        });
+    }
 
     let sessionLogin = '<?php echo json_encode($_SESSION["login"])?>';
     if(sessionLogin != "null") {
@@ -232,6 +214,7 @@
         $(".user-login").text(sessionLogin);
         let imagePath = '<?php echo json_encode($_SESSION["imagePath"])?>';
         imagePath = "url(" + imagePath.substring(1, imagePath.length - 1) + ")";
+        $(".user").css({"min-width":"160px"});
         $(".user-image").css({
             "display":"block",
             "background-image":imagePath
@@ -253,6 +236,16 @@
             $(".user-menu").addClass("user-menu-active");
         }
         else $(".user-menu").removeClass("user-menu-active");
+    });
+
+    $("#logout").click(function() {
+        $.ajax({
+            type: "POST",
+            url: "core/logout.php",
+            context: document.body,
+            success: function(result) {
+            }
+        });
     });
 
 </script>

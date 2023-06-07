@@ -56,12 +56,12 @@
                     <a class="signin-button" href="signin.php">Войти</a>
                     <p class="user-login"></p>
                     <div class="user-image"></div>
-                    <div class="user-menu-button"></div>
+                    <div style="left: 0; position: absolute; background-color: transparent; height: 60px; width: 100%; cursor: pointer;" class="user-menu-button"></div>
                     <div class="user-menu">
                         <div style="margin-right: auto; margin-left: auto; align-self: start;">
-                            <a href="#">Личный кабинет</a>
-                            <a href="#">Исторя покупок</a>
-                            <a style = "color: crimson;" href="#">Выйти</a>
+                            <a href="personal-area.php">Личный кабинет</a>
+                            <a href="purchases-history.php">Исторя покупок</a>
+                            <p id="logout">Выйти</p>
                         </div>
                     </div>
                 </div>
@@ -144,6 +144,7 @@
         $(".user-login").text(sessionLogin);
         let imagePath = '<?php echo json_encode($_SESSION["imagePath"])?>';
         imagePath = "url(" + imagePath.substring(1, imagePath.length - 1) + ")";
+        $(".user").css({"min-width":"160px"});
         $(".user-image").css({
             "display":"block",
             "background-image":imagePath
@@ -165,6 +166,17 @@
             $(".user-menu").addClass("user-menu-active");
         }
         else $(".user-menu").removeClass("user-menu-active");
+    });
+
+    $("#logout").click(function() {
+        $.ajax({
+            type: "POST",
+            url: "core/logout.php",
+            context: document.body,
+            success: function(result) {
+            }
+        });
+        window.location.reload();
     });
 
 </script>
