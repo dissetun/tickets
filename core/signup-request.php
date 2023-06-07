@@ -13,7 +13,7 @@
     $roleName = "Пользователь";
     $imagePath = "img/user-profile.png";
     $insertQuery = "INSERT INTO users (`Login`, `Name`, `Surname`, `Password`, `Email`, `Role name`, `Image path`) VALUES 
-    ('$login', '$name', '$surname', '$password', '$email', '$roleName')";
+    ('$login', '$name', '$surname', '$password', '$email', '$roleName', '$imagePath')";
     $result = mysqli_query($link, $insertQuery);
     if($result) {
         $_SESSION["login"] = $login;

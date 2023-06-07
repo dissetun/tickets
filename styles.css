@@ -88,10 +88,12 @@ nav a:first-child {
 
 .user {
     display: flex;
+    justify-content: center;
     align-items: center;
     position: relative;
     user-select: none;
     padding: 10px;
+    min-width: 160px;
 }
 
 .user a {
