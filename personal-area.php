@@ -76,7 +76,7 @@
                 echo 
                 "
                     <div class='user-profile-container'>
-                        <p class='user-profile-title'>Данные пользователя</p>
+                        <p class='user-profile-title user-profile-data-title'>Данные пользователя</p>
                         <div class='data-container'>
                             <div class='image-login-container'>
                                 <div style='background-image: url(".$_SESSION["imagePath"].");' class='user-profile-image'></div>

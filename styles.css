@@ -13,7 +13,7 @@
 
 html, body { 
     height: 100%;
-    min-width: 280px;
+    min-width: 380px;
     background-color: white;
 }
  
@@ -238,6 +238,7 @@ main {
     padding: 0px 25px;
     min-width: 0;
 }
+
 /* ===== personal-area.php ===== begin */
 .user-profile-container {
     display: flex;
@@ -267,7 +268,6 @@ main {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 0px;
     padding-right: 40px;
 }
 
@@ -284,6 +284,25 @@ main {
     font-weight: bold;
 }
 
+@media screen and (max-width: 550px) {
+    .data-container {
+        flex-direction: column;
+    }   
+    .image-login-container {
+        padding: 0px;
+    }
+    .user-profile-data-title {
+        margin-right: auto;
+        margin-left: auto;
+    }
+    .user-profile-login {
+        margin: 20px;
+    }
+    .user-profile-image {
+        width: 200px; height: 200px;
+    }
+}
+
 /* user-profile-data-form */
 
 .data-form {
@@ -294,7 +313,6 @@ main {
 }
 
 .data-form input {
-    max-width: 350px;
     width: 100%;
     margin-bottom: 25px;
 }
@@ -329,7 +347,6 @@ main {
 .password-form input:last-child {
     margin-bottom: 0px;
 }
-
 /* ===== personal-area.php ===== begin */
 
 /* ===== index.php ===== begin */
