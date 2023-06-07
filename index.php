@@ -56,7 +56,7 @@
                     <a class="signin-button" href="signin.php">Войти</a>
                     <p class="user-login"></p>
                     <div class="user-image"></div>
-                    <div style="left: 0; position: absolute; background-color: transparent; height: 60px; width: 100%; cursor: pointer;" class="user-menu-button"></div>
+                    <div class="user-menu-button"></div>
                     <div class="user-menu">
                         <div style="margin-right: auto; margin-left: auto; align-self: start;">
                             <a href="#">Личный кабинет</a>
@@ -147,6 +147,9 @@
         $(".user-image").css({
             "display":"block",
             "background-image":imagePath
+        });
+        $(".user-menu-button").css({
+            "display":"block"
         });
     }
 

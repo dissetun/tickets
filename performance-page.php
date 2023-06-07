@@ -215,6 +215,9 @@
             "display":"block",
             "background-image":imagePath
         });
+        $(".user-menu-button").css({
+            "display":"block"
+        });
     }
 
     $(".burger-icon").click(function() {

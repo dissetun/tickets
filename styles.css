@@ -111,6 +111,16 @@ nav a:first-child {
     background-repeat: no-repeat;
 }
 
+.user-menu-button {
+    display: none; 
+    left: 0; 
+    position: absolute; 
+    background-color: transparent; 
+    height: 60px; 
+    width: 100%; 
+    cursor: pointer;
+}
+
 .user-menu {
     position: absolute;
     display: none;
