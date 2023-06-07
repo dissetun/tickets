@@ -53,9 +53,17 @@
                     <a href="performances.php" class="catalog">Представления</a>
                 </nav>
                 <div class="user">
-                    <a href="signin.php">Войти</a>
+                    <a class="signin-button" href="signin.php">Войти</a>
                     <p class="user-login"></p>
                     <div class="user-image"></div>
+                    <div style="left: 0; position: absolute; background-color: transparent; height: 60px; width: 100%; cursor: pointer;" class="user-menu-button"></div>
+                    <div class="user-menu">
+                        <div style="margin-right: auto; margin-left: auto; align-self: start;">
+                            <a href="#">Личный кабинет</a>
+                            <a href="#">Исторя покупок</a>
+                            <a style = "color: crimson;" href="#">Выйти</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
@@ -132,7 +140,7 @@
     let sessionLogin = '<?php echo json_encode($_SESSION["login"])?>';
     if(sessionLogin != "null") {
         sessionLogin = sessionLogin.substring(1, sessionLogin.length - 1);
-        $(".user a").css({"display":"none"});
+        $(".signin-button").css({"display":"none"});
         $(".user-login").text(sessionLogin);
         let imagePath = '<?php echo json_encode($_SESSION["imagePath"])?>';
         imagePath = "url(" + imagePath.substring(1, imagePath.length - 1) + ")";
@@ -147,6 +155,13 @@
             $(".burger-list").addClass("burger-active");
         }
         else $(".burger-list").removeClass("burger-active");
+    });
+
+    $(".user-menu-button").click(function() {
+        if(!$(".user-menu").hasClass("user-menu-active")) {
+            $(".user-menu").addClass("user-menu-active");
+        }
+        else $(".user-menu").removeClass("user-menu-active");
     });
 
 </script>
