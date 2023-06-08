@@ -246,6 +246,7 @@
             success: function(result) {
             }
         });
+        window.location.reload();
     });
 
 </script>
