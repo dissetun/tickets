@@ -1,5 +1,8 @@
 <?php 
     session_start();
+    if(!isset($_POST)) {
+        die("Произошла ошибка. Мы уже работаем над ее исправлением :).");
+    }
     include 'connect.php';
     $link = mysqli_connect($host, $user, $password, $db_name); 
     $left = $_POST["pages"];

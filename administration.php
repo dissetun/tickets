@@ -109,17 +109,15 @@
                                 <th>Surname</th>
                             </tr>
                     ";
-                    for($i = 0; $i < 5; $i++) {
-                        foreach($result as $row) {
-                            echo 
-                            '
-                                <tr>
-                                    <td>'.$row["Login"].'</td>
-                                    <td>'.$row["Name"].'</td>
-                                    <td>'.$row["Surname"].'</td>
-                                </tr>
-                            ';
-                        }
+                    foreach($result as $row) {
+                        echo 
+                        '
+                            <tr>
+                                <td>'.$row["Login"].'</td>
+                                <td>'.$row["Name"].'</td>
+                                <td>'.$row["Surname"].'</td>
+                            </tr>
+                        ';
                     }
                     echo 
                     "
@@ -205,11 +203,21 @@
     });
 
     $(".custom-scroller-list .custom-scroller-option").click(function() {
-        let tableName = $("#" + this.id).text();
+        let tableName = $("#" + this.id).text().trim();
         $(".custom-scroller-selected-option p").text(tableName);
         $(".fa-caret-down").css({"display":"block", "margin-bottom":"4px"});
         $(".fa-caret-up").css({"display":"none"});
         $(".custom-scroller-list").removeClass("custom-scroller-list-active");
+        let query = "SELECT * FROM " + this.id + "";
+        $.ajax({
+            type: "POST",
+            url: "core/table-generate.php",
+            data: {query: query, tableName: this.id},
+            context: document.body,
+            success: function(result) {
+                $(".table-container").html(result);
+            }
+        });
     });
 
     // -------- all burger-menus --------
