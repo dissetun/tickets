@@ -59,8 +59,8 @@
                     <div style="left: 0; position: absolute; background-color: transparent; height: 60px; width: 100%; cursor: pointer;" class="user-menu-button"></div>
                     <div class="user-menu">
                         <div style="margin-right: auto; margin-left: auto; align-self: start;">
-                            <a href="personal-area.php">Личный кабинет</a>
-                            <a href="purchases-history.php">Исторя покупок</a>
+                            <a id="personal-area" href="personal-area.php">Личный кабинет</a>
+                            <a id="purchase-history" href="purchases-history.php">Исторя покупок</a>
                             <p id="logout">Выйти</p>
                         </div>
                     </div>
@@ -142,6 +142,29 @@
         sessionLogin = sessionLogin.substring(1, sessionLogin.length - 1);
         $(".signin-button").css({"display":"none"});
         $(".user-login").text(sessionLogin);
+        let roleName = '<?php echo json_encode($_SESSION["roleName"])?>';
+        roleName = roleName.substring(1, roleName.length - 1);
+        console.log(roleName);
+        if(roleName == "Администратор") {
+            $(".user-login").css({
+                "padding":"3px 10px",
+                "background-color":"crimson",
+                "border-radius":"10px",
+                "color":"white"
+            });
+            $("<a href='administration.php'>Управление</a>").insertAfter("#personal-area");
+            $(".user-menu").css({"margin-top":"180px"});
+        }
+        if(roleName == "Модератор") {
+            $(".user-login").css({
+                "padding":"3px 10px",
+                "background-color":"#cedcfb",
+                "border-radius":"10px",
+                "color":"black"
+            });
+            $("<a href='#'>Модерация</a>").insertAfter("#personal-area");
+            $(".user-menu").css({"margin-top":"180px"});
+        }
         let imagePath = '<?php echo json_encode($_SESSION["imagePath"])?>';
         imagePath = "url(" + imagePath.substring(1, imagePath.length - 1) + ")";
         $(".user").css({"min-width":"160px"});

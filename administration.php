@@ -1,7 +1,7 @@
 <?php 
 
     session_start();
-    if(!isset($_SESSION["login"])) {
+    if(!isset($_SESSION["login"]) or $_SESSION["roleName"] != "Администратор") {
         header("Location: index.php");
     }
 
@@ -61,13 +61,9 @@
                     <div class="user-image"></div>
                     <div style="left: 0; position: absolute; background-color: transparent; height: 60px; width: 100%; cursor: pointer;" class="user-menu-button"></div>
                     <div style = "margin-top: 164px;" class="user-menu">
-                        <!-- <div style="margin-right: auto; margin-left: auto; align-self: start;">
-                            <a style="color: white;" id="personal-area" href="personal-area.php" class="user-menu-link-active">Личный кабинет</a>
-                            <a style="margin-left: 10px;" id="purchase-history" id="purchase-history-link" href="purchases-history.php">Исторя покупок</a>
-                            <p style="margin-left: 10px;" id="logout">Выйти</p>
-                        </div> -->
                         <div style="text-align: left; margin-right: auto; margin-left: auto; align-self: start;">
-                            <a style="text-align: left; color: white;" id="personal-area" href="personal-area.php" class="user-menu-link-active">Личный кабинет</a>
+                            <a style="text-align: left;" id="personal-area" href="personal-area.php">Личный кабинет</a>
+                            <a style="text-align: center; color: white;" id="administration" href="administration.php" class="user-menu-link-active">Управление</a>
                             <a style="text-align: left;" id="purchase-history" id="purchase-history-link" href="purchases-history.php">Исторя покупок</a>
                             <p style="" id="logout">Выйти</p>
                         </div>
@@ -77,46 +73,7 @@
         </header>
 
         <main style="margin-top: 150px; margin-bottom: 90px;">
-            <?php 
-                echo 
-                "
-                    <div class='user-profile-container'>
-                        <p class='user-profile-title user-profile-data-title'>Профиль пользователя</p>
-                        <div class='data-container'>
-                            <div class='image-login-container'>
-                                <div style='background-image: url(".$_SESSION["imagePath"].");' class='user-profile-image'></div>
-                                <p style='margin: 10px 0px;' class='user-profile-login'>".$_SESSION["login"]."</p>
-                            </div>
-                            <form class='data-form'>
-                                <label for='input-1'>Имя</label>
-                                <input value='".$_SESSION["name"]."' id='input-1' type='text' name='name'>
-                                <label for='input-2'>Фамилия</label>
-                                <input value='".$_SESSION["surname"]."' id='input-2' type='text' name='surname'>
-                                <button class='data-form-button user-profile-form-button'>Изменить</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class='user-profile-container'>
-                        <p class='user-profile-title'>Изменение пароля</p>
-                        <form class='password-form'>
-                            <label for='input-3'>Новый пароль</label>
-                            <input id='input-3' type='password' name='new-password'>
-                            <label for='input-4'>Повторите новый пароль</label>
-                            <input id='input-4' type='password' name='new-password-confirm'>
-                            <label for='input-5'>Текущий пароль</label>
-                            <input id='input-5' type='password' name='opld-password-confirm'>
-                            <button class='password-form-button user-profile-form-button'>Изменить</button>
-                        </form>
-                    </div>
-                    <div class='user-profile-container'>
-                        <p class='user-profile-title'>Почта</p>
-                        <form class='email-form'>
-                            <input value='".$_SESSION["email"]."' id='input-6' type='email' name='email'>
-                            <button class='password-form-button user-profile-form-button'>Изменить</button>
-                        </form>
-                    </div>
-                ";
-            ?>
+
         </main>
  
         <footer>
@@ -160,26 +117,13 @@
         let roleName = '<?php echo json_encode($_SESSION["roleName"])?>';
         roleName = roleName.substring(1, roleName.length - 1);
         console.log(roleName);
-        if(roleName == "Администратор") {
-            $(".user-login").css({
-                "padding":"3px 10px",
-                "background-color":"crimson",
-                "border-radius":"10px",
-                "color":"white"
-            });
-            $("<a href='administration.php'>Управление</a>").insertAfter("#personal-area");
-            $(".user-menu").css({"margin-top":"190px"});
-        }
-        if(roleName == "Модератор") {
-            $(".user-login").css({
-                "padding":"3px 10px",
-                "background-color":"#cedcfb",
-                "border-radius":"10px",
-                "color":"black"
-            });
-            $("<a href='#' style='margin-left: 10px;'>Модерация</a>").insertAfter("#personal-area");
-            $(".user-menu").css({"margin-top":"190px"});
-        }
+        $(".user-login").css({
+            "padding":"3px 10px",
+            "background-color":"crimson",
+            "border-radius":"10px",
+            "color":"white"
+        });
+        $(".user-menu").css({"margin-top":"190px"});
         let imagePath = '<?php echo json_encode($_SESSION["imagePath"])?>';
         imagePath = "url(" + imagePath.substring(1, imagePath.length - 1) + ")";
         $(".user").css({"min-width":"165px"});

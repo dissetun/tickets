@@ -152,10 +152,6 @@ nav a:first-child {
     color: crimson;
 }
 
-#personal-area-link {
-    color: white;
-}
-
 .user-menu-link-active {
     padding: 5px 10px;
     background-color: black;
@@ -347,6 +343,24 @@ main {
 .password-form input:last-child {
     margin-bottom: 0px;
 }
+
+/* user-profile-email-form */
+
+.email-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.email-form input {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.email-form input:last-child {
+    margin-bottom: 0px;
+}
+
 /* ===== personal-area.php ===== begin */
 
 /* ===== index.php ===== begin */
