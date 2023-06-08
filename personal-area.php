@@ -177,7 +177,7 @@
                 "border-radius":"10px",
                 "color":"black"
             });
-            $("<a href='#' style='margin-left: 10px;'>Модерация</a>").insertAfter("#personal-area");
+            $("<a href='#' style='margin-left: 10px;'>Модерирование</a>").insertAfter("#personal-area");
             $(".user-menu").css({"margin-top":"190px"});
         }
         let imagePath = '<?php echo json_encode($_SESSION["imagePath"])?>';

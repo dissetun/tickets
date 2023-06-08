@@ -58,10 +58,10 @@
                     <div class="user-image"></div>
                     <div style="left: 0; position: absolute; background-color: transparent; height: 60px; width: 100%; cursor: pointer;" class="user-menu-button"></div>
                     <div class="user-menu">
-                        <div style="margin-right: auto; margin-left: auto; align-self: start;">
-                            <a id="personal-area" href="personal-area.php">Личный кабинет</a>
-                            <a id="purchase-history" href="purchases-history.php">Исторя покупок</a>
-                            <p id="logout">Выйти</p>
+                        <div style="text-align: left; margin-right: auto; margin-left: auto; align-self: start;">
+                            <a style="text-align: left;" id="personal-area" href="personal-area.php">Личный кабинет</a>
+                            <a style="text-align: left;" id="purchase-history" id="purchase-history-link" href="purchases-history.php">Исторя покупок</a>
+                            <p style="" id="logout">Выйти</p>
                         </div>
                     </div>
                 </div>
