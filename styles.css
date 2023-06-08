@@ -360,8 +360,144 @@ main {
 .email-form input:last-child {
     margin-bottom: 0px;
 }
+/* ===== personal-area.php ===== end */
 
-/* ===== personal-area.php ===== begin */
+/* ===== administration.php ===== begin */
+.custom-scroller {
+    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    position: relative;
+    margin-bottom: 20px;
+    user-select: none;
+}
+
+.custom-scroller-selected-option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    border-radius: 10px;
+    background-color: black; 
+    color: white;
+    min-width: 170px;
+    width: 100%;
+    text-align: center;
+    height: 30px;
+}
+
+.custom-scroller-selected-option i {
+    font-size: 20px;
+    margin-left: 10px;
+    margin-top: 6px;
+}
+
+.custom-scroller-selected-option:hover {
+    background-color: black;
+    cursor: pointer;
+    color: white;
+}
+
+.custom-scroller-list {
+    max-height: 200px;
+    overflow: auto;
+    position: absolute;
+    display: none;
+    width: 100%;
+    padding: 10px;
+    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.custom-scroller-list::-webkit-scrollbar {
+    width: 10px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.custom-scroller-list::-webkit-scrollbar-thumb {
+    width: 10px;
+    background-color: black;
+    border-radius: 10px;
+}
+
+.custom-scroller-list-active {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.custom-scroller-option {
+    padding: 5px 10px;
+}
+
+.custom-scroller-list .custom-scroller-option {
+    margin-bottom: 5px;
+}
+
+.custom-scroller-list .custom-scroller-option:last-child {
+    margin-bottom: 0px;
+}
+
+.custom-scroller-option:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+/* table-container */
+.table-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    max-width: 1000px;
+    padding: 20px;
+    border-radius: 10px;
+    /* box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1); */
+}
+
+table {
+    margin-left: auto; margin-right: auto;
+    align-self: start;
+    border-spacing: 0px;
+    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+table tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+table tr:first-child {
+    background-color: black;
+    color: white;
+}
+
+table tr:first-child th:first-child {
+    border-radius: 10px 0px 0px 10px;
+}
+
+table tr:first-child th:last-child {
+    border-radius: 0px 10px 10px 0px;
+}
+
+table tr:last-child td:first-child {
+    border-radius: 0px 0px 0px 10px;
+}
+
+table tr:last-child td:last-child {
+    border-radius: 0px 0px 10px 0px;
+}
+
+table th, td {
+    text-align: left;
+    padding: 10px 20px;
+}
+
+/* ===== administration.php ===== end */
 
 /* ===== index.php ===== begin */
 .slider-container {
@@ -873,7 +1009,7 @@ footer {
         flex-direction: column;
     }
     .wrapper {
-        min-height: calc(100% + 307px);
+        min-height: calc(100% + 308px);
     }
 }
 

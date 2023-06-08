@@ -109,8 +109,8 @@
                 </div>
             </div>
             <div class="footer-corp-info">
-                    <p>@ 2022 - 2023 Tickets Inc.</p>
-                </div>
+                <p>@ 2022 - 2023 Tickets Inc.</p>
+            </div>
         </footer>
     </div>
 </body>

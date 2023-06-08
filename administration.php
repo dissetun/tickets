@@ -73,7 +73,60 @@
         </header>
 
         <main style="margin-top: 150px; margin-bottom: 90px;">
-            
+            <div class="custom-scroller">
+                <div class="custom-scroller-option custom-scroller-selected-option">
+                    <p>Пользователи</p>
+                    <i style="display: none;" class="fa-solid fa-caret-up"></i>
+                    <i style="margin-bottom: 4px;" class="fa-solid fa-caret-down"></i>
+                </div>
+                <div class="custom-scroller-list">
+                    <div id="users" class="custom-scroller-option">
+                        <p>Пользователи</p>
+                    </div>
+                    <div id="performances" class="custom-scroller-option">
+                        <p>Представления</p>
+                    </div>
+                    <div id="platforms" class="custom-scroller-option">
+                        <p>Площадки</p>
+                    </div>
+                    <div id="genres" class="custom-scroller-option">
+                        <p>Жанры</p>
+                    </div>
+                </div>
+            </div>
+            <section class="table-container">
+                <?php 
+                    include "core/connect.php";
+                    $link = mysqli_connect($host, $user, $password, $db_name); 
+                    $query = "SELECT * FROM users";
+                    $result = mysqli_query($link, $query);
+                    echo 
+                    "
+                        <table>
+                            <tr>
+                                <th>Login</th>
+                                <th>Name</th>
+                                <th>Surname</th>
+                            </tr>
+                    ";
+                    for($i = 0; $i < 5; $i++) {
+                        foreach($result as $row) {
+                            echo 
+                            '
+                                <tr>
+                                    <td>'.$row["Login"].'</td>
+                                    <td>'.$row["Name"].'</td>
+                                    <td>'.$row["Surname"].'</td>
+                                </tr>
+                            ';
+                        }
+                    }
+                    echo 
+                    "
+                        </table>
+                    ";
+                ?>
+            </section>
         </main>
  
         <footer>
@@ -135,6 +188,31 @@
             "display":"block"
         });
     }
+
+    // -------- custom-scroller --------
+
+    $(".custom-scroller-selected-option").click(function() {
+        if(!$(".custom-scroller-list").hasClass("custom-scroller-list-active")) {
+            $(".fa-caret-down").css({"display":"none"});
+            $(".fa-caret-up").css({"display":"block"});
+            $(".custom-scroller-list").addClass("custom-scroller-list-active");
+        }
+        else {
+            $(".fa-caret-down").css({"display":"block", "margin-bottom":"4px"});
+            $(".fa-caret-up").css({"display":"none"});
+            $(".custom-scroller-list").removeClass("custom-scroller-list-active");
+        }
+    });
+
+    $(".custom-scroller-list .custom-scroller-option").click(function() {
+        let tableName = $("#" + this.id).text();
+        $(".custom-scroller-selected-option p").text(tableName);
+        $(".fa-caret-down").css({"display":"block", "margin-bottom":"4px"});
+        $(".fa-caret-up").css({"display":"none"});
+        $(".custom-scroller-list").removeClass("custom-scroller-list-active");
+    });
+
+    // -------- all burger-menus --------
 
     $(".burger-icon").click(function() {
         if(!$(".burger-list").hasClass("burger-active")) {
