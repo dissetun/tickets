@@ -40,7 +40,7 @@
                         <div class="burger-line"></div>
                     </div>
                     <div class="burger-list">
-                        <a href="index.php" class="new nav-active">Новинки</a>
+                        <a href="index.php" class="new">Новинки</a>
                         <a href="performances.php" class="catalog">Представления</a>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                     <p class="logo">Билеты</p>
                 </div>
                 <nav>
-                    <a href="index.php" class="new nav-active">Новинки</a>
+                    <a href="index.php" class="new">Новинки</a>
                     <a href="performances.php" class="catalog">Представления</a>
                 </nav>
                 <div class="user">
