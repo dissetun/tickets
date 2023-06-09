@@ -61,15 +61,10 @@
                     <div class="user-image"></div>
                     <div style="left: 0; position: absolute; background-color: transparent; height: 60px; width: 100%; cursor: pointer;" class="user-menu-button"></div>
                     <div style = "margin-top: 164px;" class="user-menu">
-                        <!-- <div style="margin-right: auto; margin-left: auto; align-self: start;">
-                            <a style="color: white;" id="personal-area" href="personal-area.php" class="user-menu-link-active">Личный кабинет</a>
-                            <a style="margin-left: 10px;" id="purchase-history" id="purchase-history-link" href="purchases-history.php">Исторя покупок</a>
-                            <p style="margin-left: 10px;" id="logout">Выйти</p>
-                        </div> -->
                         <div style="text-align: left; margin-right: auto; margin-left: auto; align-self: start;">
                             <a style="text-align: left; color: white;" id="personal-area" href="personal-area.php" class="user-menu-link-active">Личный кабинет</a>
                             <a style="text-align: left;" id="purchase-history" id="purchase-history-link" href="purchases-history.php">Исторя покупок</a>
-                            <p style="" id="logout">Выйти</p>
+                            <p id="logout">Выйти</p>
                         </div>
                     </div>
                 </div>
@@ -92,7 +87,7 @@
                                 <input value='".$_SESSION["name"]."' id='input-1' type='text' name='name'>
                                 <label for='input-2'>Фамилия</label>
                                 <input value='".$_SESSION["surname"]."' id='input-2' type='text' name='surname'>
-                                <button class='data-form-button user-profile-form-button'>Изменить</button>
+                                <button id='data-form-button' class='user-profile-form-button'>Сохранить</button>
                             </form>
                         </div>
                     </div>
@@ -105,14 +100,14 @@
                             <input id='input-4' type='password' name='new-password-confirm'>
                             <label for='input-5'>Текущий пароль</label>
                             <input id='input-5' type='password' name='opld-password-confirm'>
-                            <button class='password-form-button user-profile-form-button'>Изменить</button>
+                            <button id='password-form-button' class='user-profile-form-button'>Сменить пароль</button>
                         </form>
                     </div>
                     <div class='user-profile-container'>
                         <p class='user-profile-title'>Почта</p>
                         <form class='email-form'>
                             <input value='".$_SESSION["email"]."' id='input-6' type='email' name='email'>
-                            <button class='password-form-button user-profile-form-button'>Изменить</button>
+                            <button id='email-form-button' class='user-profile-form-button'>Сменить почту</button>
                         </form>
                     </div>
                 ";
@@ -177,7 +172,7 @@
                 "border-radius":"10px",
                 "color":"black"
             });
-            $("<a href='#' style='margin-left: 10px;'>Модерирование</a>").insertAfter("#personal-area");
+            $("<a href='moderation.php'>Модерация</a>").insertAfter("#personal-area");
             $(".user-menu").css({"margin-top":"190px"});
         }
         let imagePath = '<?php echo json_encode($_SESSION["imagePath"])?>';
@@ -191,6 +186,133 @@
             "display":"block"
         });
     }
+
+    // -------- personal-area buttons events --------
+
+    function isEmail(email) {
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        return regex.test(email);
+    }
+
+    $(".user-profile-form-button").click(function(event) {
+        event.preventDefault();
+        let buttonType = this.id;
+        if(buttonType == "data-form-button") {
+            let send = true;
+            if($("#input-1").val().length == 0 || $("#input-1").val().length > 50) {
+                $("#input-1").css({"border-color":"red"});
+                send = false;
+            }
+            if($("#input-2").val().length == 0 || $("#input-2").val().length > 50) {
+                $("#input-2").css({"border-color":"red"});
+                send = false;
+            }
+            if(send) {
+                $.ajax({
+                    type: "POST",
+                    url: "core/user-profile-change.php",
+                    data: {queryType: "profile", newName: $("#input-1").val(), newSurname: $("#input-2").val()},
+                    context: document.body,
+                    success: function(result) {
+                        if(result == "Успешно") {
+                            window.location.reload();
+                        }
+                    }
+                });
+            }
+        }
+        if(buttonType == "password-form-button") {
+            let send = true;
+            if($("#input-3").val().length < 8 || $("#input-3").val().length > 50) {
+                $("#input-3").css({"border-color":"red"});
+                send = false;
+            }
+            else {
+                $("#input-3").css({"border-color":"black"});
+            }
+            if($("#input-4").val().length < 8 || $("#input-4").val().length > 50) {
+                $("#input-4").css({"border-color":"red"});
+                send = false;
+            }
+            else {
+                $("#input-4").css({"border-color":"black"});
+            }
+            if($("#input-5").val().length == 0) {
+                $("#input-5").css({"border-color":"red"});
+                send = false;
+            }
+            else {
+                if(document.querySelector("#old-password-error-message") == null)
+                    $("#input-5").css({"border-color":"black"});
+            }
+            if($("#input-3").val() != $("#input-4").val()) {
+                if(document.querySelector("#new-password-error-message") == null) {
+                    $("<p id='new-password-error-message' style='color: crimson; margin-bottom: 20px;'>Пароли не совпадают</p>").insertAfter("#input-4");
+                }
+                $("#input-4").css({"border-color":"red"});
+                send = false;
+            }
+            else {
+                if(document.querySelector("#new-password-error-message") != null) {
+                    $("#new-password-error-message").remove();
+                }
+                if($("#input-4").val().length >= 8 && $("#input-4").val().length <= 50)
+                    $("#input-4").css({"border-color":"black"});
+            }
+            if(send) {
+                $.ajax({
+                    type: "POST",
+                    url: "core/user-profile-change.php",
+                    data: {queryType: "password", newPassword: $("#input-3").val(), oldPassword: $("#input-5").val()},
+                    context: document.body,
+                    success: function(result) {
+                        if(result == "Пароли не совпадают") {
+                            if(document.querySelector("#old-password-error-message") == null) {
+                                $("<p id='old-password-error-message' style='color: crimson; margin-bottom: 20px;'>Неправильный пароль</p>").insertAfter("#input-5");
+                            }
+                            $("#input-5").css({"border-color":"red"});
+                        }
+                        if(result == "Успешно") {
+                            window.location.reload();
+                        }
+                    }
+                });
+            }
+        }
+        if(buttonType == "email-form-button") {
+            let send = true;
+            if($("#input-6").val().length == 0) {
+                $("#input-6").css({"border-color":"red"});
+            }
+            else {
+                if(document.querySelector("#email-error-message") == null) {
+                    $("#input-6").css({"border-color":"black"});
+                }
+            }
+            if(!isEmail($("#input-6").val())) {
+                if(document.querySelector("#email-error-message") == null)
+                    $("<p id='email-error-message' style='color: crimson; margin-bottom: 20px;'>Email указан некорректно</p>").insertAfter("#input-6");
+                $("#input-6").css({"border-color":"red"});
+                send = false;
+            }
+            if(send) {
+                $.ajax({
+                    type: "POST",
+                    url: "core/user-profile-change.php",
+                    data: {queryType: "email", newEmail: $("#input-6").val()},
+                    context: document.body,
+                    success: function(result) {
+                        console.log(result);
+                        if(result == "Успешно") {
+                            window.location.reload();
+                        }
+                    }
+                });
+            }
+        }
+    });
+
+    // -------- all burger-menus --------
 
     $(".burger-icon").click(function() {
         if(!$(".burger-list").hasClass("burger-active")) {

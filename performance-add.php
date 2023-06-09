@@ -80,59 +80,107 @@
                         <label for="input-1">Название представления</label>
                         <input id="input-1" type="text" name="name">
                     </div>
-                    <div class="form-element">
-                        <div style="align-self: start;" class="custom-scroller">
-                            <div class="custom-scroller-option custom-scroller-selected-option">
-                                <p>Выберите площадку</p>
-                                <i style="display: none;" class="fa-solid fa-caret-up"></i>
-                                <i style="margin-bottom: 4px;" class="fa-solid fa-caret-down"></i>
+                    <div class="form-elements-container">
+                        <div class="form-elements-subcontainer">
+                            <div class="form-element">
+                                <p class="form-element-title">Площадка</p>
+                                <div style="align-self: start;" class="custom-scroller">
+                                    <div class="custom-scroller-option custom-scroller-selected-option">
+                                        <p>Выберите площадку</p>
+                                        <i style="display: none;" class="fa-solid fa-caret-up"></i>
+                                        <i style="margin-bottom: 4px;" class="fa-solid fa-caret-down"></i>
+                                    </div>
+                                    <div style="z-index: 1000;" class="custom-scroller-list">
+                                        <?php 
+                                            include "core/connect.php";
+                                            $link = mysqli_connect($host, $user, $password, $db_name); 
+                                            $query = "SELECT * FROM platforms";
+                                            $result = mysqli_query($link, $query);
+                                            $platformOptionId = 1;
+                                            foreach($result as $row) {
+                                                echo 
+                                                "
+                                                    <div id='platform-option-".$platformOptionId."' class='custom-scroller-option'>
+                                                        <p>".$row['Platform']."</p>
+                                                    </div>
+                                                ";
+                                                $platformOptionId++;
+                                            }
+                                            mysqli_close($link);
+                                        ?>
+                                    </div>
+                                </div>
                             </div>
-                            <div style="z-index: 1000;" class="custom-scroller-list">
-                                <?php 
-                                    include "core/connect.php";
-                                    $link = mysqli_connect($host, $user, $password, $db_name); 
-                                    $query = "SELECT * FROM platforms";
-                                    $result = mysqli_query($link, $query);
-                                    $platformOptionId = 1;
-                                    foreach($result as $row) {
-                                        echo 
-                                        "
-                                            <div id='platform-option-".$platformOptionId."' class='custom-scroller-option'>
-                                                <p>".$row['Platform']."</p>
-                                            </div>
-                                        ";
-                                        $platformOptionId++;
-                                    }
-                                    mysqli_close($link);
-                                ?>
+                            <div class="form-element">
+                                <p class="form-element-title">Зал</p>
+                                <div style="align-self: start;" class="custom-scroller">
+                                    <div class="custom-scroller-option custom-scroller-selected-option">
+                                        <p>Выберите зал</p>
+                                        <i style="display: none;" class="fa-solid fa-caret-up"></i>
+                                        <i style="margin-bottom: 4px;" class="fa-solid fa-caret-down"></i>
+                                    </div>
+                                    <div style="z-index: 999;" class="custom-scroller-list">
+                                        <?php 
+                                            include "core/connect.php";
+                                            $link = mysqli_connect($host, $user, $password, $db_name); 
+                                            $query = "SELECT * FROM Halls";
+                                            $result = mysqli_query($link, $query);
+                                            $platformOptionId = 1;
+                                            foreach($result as $row) {
+                                                echo 
+                                                "
+                                                    <div id='hallID-option-".$platformOptionId."' class='custom-scroller-option'>
+                                                        <p>".$row['Hall name']."</p>
+                                                    </div>
+                                                ";
+                                                $platformOptionId++;
+                                            }
+                                            mysqli_close($link);
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-element">
+                                <p class="form-element-title">Жанр</p>
+                                <div style="align-self: start;" class="custom-scroller">
+                                    <div class="custom-scroller-option custom-scroller-selected-option">
+                                        <p>Выберите жанр</p>
+                                        <i style="display: none;" class="fa-solid fa-caret-up"></i>
+                                        <i style="margin-bottom: 4px;" class="fa-solid fa-caret-down"></i>
+                                    </div>
+                                    <div style="z-index: 998;" class="custom-scroller-list">
+                                        <?php 
+                                            include "core/connect.php";
+                                            $link = mysqli_connect($host, $user, $password, $db_name); 
+                                            $query = "SELECT * FROM genres";
+                                            $result = mysqli_query($link, $query);
+                                            $platformOptionId = 1;
+                                            foreach($result as $row) {
+                                                echo 
+                                                "
+                                                    <div id='genre-option-".$platformOptionId."' class='custom-scroller-option'>
+                                                        <p>".$row['Genre']."</p>
+                                                    </div>
+                                                ";
+                                                $platformOptionId++;
+                                            }
+                                            mysqli_close($link);
+                                        ?>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-element">
-                        <div style="align-self: start;" class="custom-scroller">
-                            <div class="custom-scroller-option custom-scroller-selected-option">
-                                <p>Выберите жанр</p>
-                                <i style="display: none;" class="fa-solid fa-caret-up"></i>
-                                <i style="margin-bottom: 4px;" class="fa-solid fa-caret-down"></i>
+                        <div class="form-elements-subcontainer">
+                            <div class="form-element">
+                                <label for="input-2">Дата начала</label>
+                                <input style="width: 100%;" id="input-2" type="date" name="name">
                             </div>
-                            <div style="z-index: 999;" class="custom-scroller-list">
-                                <?php 
-                                    include "core/connect.php";
-                                    $link = mysqli_connect($host, $user, $password, $db_name); 
-                                    $query = "SELECT * FROM genres";
-                                    $result = mysqli_query($link, $query);
-                                    $platformOptionId = 1;
-                                    foreach($result as $row) {
-                                        echo 
-                                        "
-                                            <div id='genre-option-".$platformOptionId."' class='custom-scroller-option'>
-                                                <p>".$row['Genre']."</p>
-                                            </div>
-                                        ";
-                                        $platformOptionId++;
-                                    }
-                                    mysqli_close($link);
-                                ?>
+                            <div class="form-element">
+                                <label for="input-3">Дата окончания</label>
+                                <input style="width: 100%;" id="input-3" type="date" name="name">
+                            </div>
+                                <div style="margin-top: auto; margin-bottom: 20px;" class="form-element">
+                                <div class="form-button">Отправить заявку</div>
                             </div>
                         </div>
                     </div>
@@ -241,10 +289,9 @@
 
     $(".custom-scroller-list .custom-scroller-option").click(function() {
         let fieldName = $("#" + this.id).text();
-        $(".custom-scroller-selected-option p").text(fieldName);
+        $(this).parent(".custom-scroller-list").parent().find(".custom-scroller-selected-option p").text(fieldName);;
         $(".fa-caret-down").css({"display":"block", "margin-bottom":"4px"});
         $(".fa-caret-up").css({"display":"none"});
-        $(".custom-scroller-list").removeClass("custom-scroller-list-active");
     });
 
     // -------- all burger-menus --------

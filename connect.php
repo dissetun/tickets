@@ -1,6 +1,6 @@
 <?php 
 	$host = 'localhost';
 	$user = 'root';
-	$password = 'root';
+	$password = '';
 	$db_name = 'tickets-db';
 ?>

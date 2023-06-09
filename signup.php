@@ -207,8 +207,8 @@
                     }
                     else {
                         if(document.querySelector(".registration-error") == null) {
-                            $("<div style = 'color: red; margin-bottom: 15px;' class = 'registration-error'></div>").insertAfter($("input[name='password-confirm']"));
-                            $(".registration-error").text("Произошла ошибка");
+                            $("<div style = 'color: red; margin-bottom: 15px;' class = 'registration-error'></div>").insertAfter($("input[name='login']"));
+                            $(".registration-error").text("Логин занят");
                         }
                     }
                 }

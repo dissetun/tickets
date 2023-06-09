@@ -11,7 +11,8 @@
         "   
             <table>
                 <tr>
-                    <th style='border-radius: 10px;'>Жанр</th>
+                    <th>Жанр</th>
+                    <th></th>
                 </tr>
         ";
     }
@@ -20,13 +21,14 @@
         "
             <table>
                 <tr>
-                    <th>ID Представления</th>
+                    <th>ID</th>
                     <th>Название</th>
                     <th>ID Зала</th>
                     <th>Жанр</th>
                     <th>Дата начала</th>
                     <th>Дата окончания</th>
                     <th>Статус</th>
+                    <th></th>
                 </tr>
         ";
     }
@@ -37,6 +39,7 @@
                 <tr>
                     <th>Название</th>
                     <th>Адрес</th>
+                    <th></th>
                 </tr>
         ";
     }
@@ -50,6 +53,7 @@
                     <th>Фамилия</th>
                     <th>Почта</th>
                     <th>Роль</th>
+                    <th></th>
                 </tr>
         ";
     }
@@ -80,7 +84,8 @@
             ";
         }
         echo 
-        "
+        "   
+                <td class='delete-button' style='text-align: right;'><i class='fa-solid fa-trash-can'></i></td>
             </tr>
         ";
     }

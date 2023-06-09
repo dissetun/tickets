@@ -73,58 +73,86 @@
         </header>
 
         <main style="margin-top: 150px; margin-bottom: 90px;">
-            <div class="custom-scroller">
-                <div class="custom-scroller-option custom-scroller-selected-option">
-                    <p>Пользователи</p>
-                    <i style="display: none;" class="fa-solid fa-caret-up"></i>
-                    <i style="margin-bottom: 4px;" class="fa-solid fa-caret-down"></i>
-                </div>
-                <div class="custom-scroller-list">
-                    <div id="users" class="custom-scroller-option">
+            <div class="admin-panel-container">
+                <div class="custom-scroller">
+                    <div id="users" class="custom-scroller-option custom-scroller-selected-option">
                         <p>Пользователи</p>
+                        <i style="display: none;" class="fa-solid fa-caret-up"></i>
+                        <i style="margin-bottom: 4px;" class="fa-solid fa-caret-down"></i>
                     </div>
-                    <div id="performances" class="custom-scroller-option">
-                        <p>Представления</p>
+                    <div class="custom-scroller-list">
+                        <div id="users" class="custom-scroller-option">
+                            <p>Пользователи</p>
+                        </div>
+                        <div id="performances" class="custom-scroller-option">
+                            <p>Представления</p>
+                        </div>
+                        <div id="platforms" class="custom-scroller-option">
+                            <p>Площадки</p>
+                        </div>
+                        <div id="genres" class="custom-scroller-option">
+                            <p>Жанры</p>
+                        </div>
                     </div>
-                    <div id="platforms" class="custom-scroller-option">
-                        <p>Площадки</p>
-                    </div>
-                    <div id="genres" class="custom-scroller-option">
-                        <p>Жанры</p>
-                    </div>
+                </div>
+                <div class="search-field-container">
+                    <i id="search-field-focus-button" class="fa-solid fa-magnifying-glass"></i>
+                    <input class="search-field" type="text" name="search-field">
+                </div>
+                <section class="table-container">
+                    <?php 
+                        include "core/connect.php";
+                        $link = mysqli_connect($host, $user, $password, $db_name); 
+                        $query = "SELECT * FROM users";
+                        $result = mysqli_query($link, $query);
+                        echo 
+                        "
+                            <table>
+                                <tr>
+                                    <th>Логин</th>
+                                    <th>Имя</th>
+                                    <th>Фамилия</th>
+                                    <th>Почта</th>
+                                    <th>Роль</th>
+                                    <th></th>
+                                </tr>
+                        ";
+                        foreach($result as $row) {
+                            echo 
+                            '
+                                <tr>
+                                    <td>'.$row["Login"].'</td>
+                                    <td>'.$row["Name"].'</td>
+                                    <td>'.$row["Surname"].'</td>
+                                    <td>'.$row["Email"].'</td>
+                                    <td>'.$row["Role name"].'</td>
+                                    <td class="delete-button" style="text-align: right;"><i class="fa-solid fa-trash-can"></i></td>
+                                </tr>
+                            ';
+                        }
+                        echo 
+                        "
+                            </table>
+                        ";
+                    ?>
+                </section>
+                <div class="pagination">
+                    <?php 
+                        include "core/connect.php";
+                        $link = mysqli_connect($host, $user, $password, $db_name);
+                        $query = "SELECT * FROM users";
+                        $result = mysqli_query($link, $query);
+                        $numOfElements = mysqli_num_rows($result);
+                        $numOfPages = $numOfElements / 8 + ($numOfElements % 8 != 0 and $numOfElements > 8);
+                        for($i = 0; $i < $numOfPages; $i++) {
+                            echo 
+                            "   
+                                <div class='pagination-page'>".($i + 1)."</div>
+                            ";
+                        }
+                    ?>
                 </div>
             </div>
-            <section class="table-container">
-                <?php 
-                    include "core/connect.php";
-                    $link = mysqli_connect($host, $user, $password, $db_name); 
-                    $query = "SELECT * FROM users";
-                    $result = mysqli_query($link, $query);
-                    echo 
-                    "
-                        <table>
-                            <tr>
-                                <th>Login</th>
-                                <th>Name</th>
-                                <th>Surname</th>
-                            </tr>
-                    ";
-                    foreach($result as $row) {
-                        echo 
-                        '
-                            <tr>
-                                <td>'.$row["Login"].'</td>
-                                <td>'.$row["Name"].'</td>
-                                <td>'.$row["Surname"].'</td>
-                            </tr>
-                        ';
-                    }
-                    echo 
-                    "
-                        </table>
-                    ";
-                ?>
-            </section>
         </main>
  
         <footer>
@@ -205,10 +233,11 @@
     $(".custom-scroller-list .custom-scroller-option").click(function() {
         let tableName = $("#" + this.id).text().trim();
         $(".custom-scroller-selected-option p").text(tableName);
+        $(".custom-scroller-selected-option").attr('id', this.id);
         $(".fa-caret-down").css({"display":"block", "margin-bottom":"4px"});
         $(".fa-caret-up").css({"display":"none"});
         $(".custom-scroller-list").removeClass("custom-scroller-list-active");
-        let query = "SELECT * FROM " + this.id + "";
+        let query = "SELECT * FROM " + this.id + " LIMIT 0, 8";
         $.ajax({
             type: "POST",
             url: "core/table-generate.php",
@@ -218,8 +247,43 @@
                 $(".table-container").html(result);
             }
         });
+        $.ajax({
+            type: "POST",
+            url: "core/pagination-generate.php",
+            data: {tableName: this.id},
+            context: document.body,
+            success: function(result) {
+                $(".pagination").html(result);
+            }
+        });
     });
 
+    // -------- search-bar --------
+
+    $("#search-field-focus-button").click(function() {
+        $(".search-field").trigger("focus");
+    });
+
+    // -------- pagination --------
+
+    $(".pagination").on('click', '.pagination-page', function() {
+        $(".pagination").on('load', $('.pagination-page').each(function() {
+            $(this).css({"background-color":"black", "color":"white"});
+        }));
+        $(this).css({"background-color":"#cedcfb", "color":"black"});
+        let pageNumber = parseInt($(this).text());
+        let tableName = $(".custom-scroller-selected-option").attr("id");
+        let query = "SELECT * FROM " + tableName + " LIMIT " + ((pageNumber - 1) * 8).toString() + ", 8";
+        $.ajax({
+            type: "POST",
+            url: "core/table-generate.php",
+            data: {query: query, tableName: tableName},
+            context: document.body,
+            success: function(result) {
+                $(".table-container").html(result);
+            }
+        });
+    });
     // -------- all burger-menus --------
 
     $(".burger-icon").click(function() {
@@ -250,5 +314,6 @@
     $(".user-profile-form-button").click(function(event) {
         event.preventDefault();
     });
+
 
 </script>

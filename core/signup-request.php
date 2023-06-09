@@ -6,6 +6,13 @@
     include 'connect.php';
     $link = mysqli_connect($host, $user, $password, $db_name); 
     $login = $_POST["login"];
+    $getUsersQuery = "SELECT * FROM users WHERE `Login` = '$login'";
+    $getUsersResult = mysqli_query($link, $getUsersQuery);
+    if(mysqli_num_rows($getUsersResult)) {
+        echo "Логин занят";
+        mysqli_close($link);
+        die();
+    }
     $name = $_POST["name"];
     $surname = $_POST["surname"];
     $password = $_POST["password"];
