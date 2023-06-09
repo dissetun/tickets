@@ -1,9 +1,6 @@
 <?php 
 
     session_start();
-    if(!isset($_SESSION["login"])) {
-        header("Location: index.php");
-    }
 
 ?>
 
@@ -43,16 +40,16 @@
                         <div class="burger-line"></div>
                     </div>
                     <div class="burger-list">
-                        <a href="index.php" class="new">Новинки</a>
+                        <a href="index.php" class="new nav-active">Новинки</a>
                         <a href="performances.php" class="catalog">Представления</a>
                     </div>
                 </div>
                 <div class="logo-container">
-                    <i style="margin-right: 10px; font-size: 30px;" class="fa-solid fa-ticket"></i>
+                    <i style = "margin-right: 10px; font-size: 30px;" class="fa-solid fa-ticket"></i>
                     <p class="logo">Билеты</p>
                 </div>
                 <nav>
-                    <a href="index.php" class="new">Новинки</a>
+                    <a href="index.php" class="new nav-active">Новинки</a>
                     <a href="performances.php" class="catalog">Представления</a>
                 </nav>
                 <div class="user">
@@ -60,14 +57,9 @@
                     <p class="user-login"></p>
                     <div class="user-image"></div>
                     <div style="left: 0; position: absolute; background-color: transparent; height: 60px; width: 100%; cursor: pointer;" class="user-menu-button"></div>
-                    <div style = "margin-top: 164px;" class="user-menu">
-                        <!-- <div style="margin-right: auto; margin-left: auto; align-self: start;">
-                            <a style="color: white;" id="personal-area" href="personal-area.php" class="user-menu-link-active">Личный кабинет</a>
-                            <a style="margin-left: 10px;" id="purchase-history" id="purchase-history-link" href="purchases-history.php">Исторя покупок</a>
-                            <p style="margin-left: 10px;" id="logout">Выйти</p>
-                        </div> -->
+                    <div class="user-menu">
                         <div style="text-align: left; margin-right: auto; margin-left: auto; align-self: start;">
-                            <a style="text-align: left; color: white;" id="personal-area" href="personal-area.php" class="user-menu-link-active">Личный кабинет</a>
+                            <a style="text-align: left;" id="personal-area" href="personal-area.php">Личный кабинет</a>
                             <a style="text-align: left;" id="purchase-history" id="purchase-history-link" href="purchases-history.php">Исторя покупок</a>
                             <p style="" id="logout">Выйти</p>
                         </div>
@@ -77,46 +69,75 @@
         </header>
 
         <main style="margin-top: 150px; margin-bottom: 90px;">
-            <?php 
-                echo 
-                "
-                    <div class='user-profile-container'>
-                        <p class='user-profile-title user-profile-data-title'>Профиль пользователя</p>
-                        <div class='data-container'>
-                            <div class='image-login-container'>
-                                <div style='background-image: url(".$_SESSION["imagePath"].");' class='user-profile-image'></div>
-                                <p style='margin: 10px 0px;' class='user-profile-login'>".$_SESSION["login"]."</p>
+            <section class="form-container">
+                <div class="image-field">
+                    <div class="image-field-button">
+                        <p>Выбрать изображение</p>
+                    </div>
+                </div>
+                <form>
+                    <div class="form-element">
+                        <label for="input-1">Название представления</label>
+                        <input id="input-1" type="text" name="name">
+                    </div>
+                    <div class="form-element">
+                        <div style="align-self: start;" class="custom-scroller">
+                            <div class="custom-scroller-option custom-scroller-selected-option">
+                                <p>Выберите площадку</p>
+                                <i style="display: none;" class="fa-solid fa-caret-up"></i>
+                                <i style="margin-bottom: 4px;" class="fa-solid fa-caret-down"></i>
                             </div>
-                            <form class='data-form'>
-                                <label for='input-1'>Имя</label>
-                                <input value='".$_SESSION["name"]."' id='input-1' type='text' name='name'>
-                                <label for='input-2'>Фамилия</label>
-                                <input value='".$_SESSION["surname"]."' id='input-2' type='text' name='surname'>
-                                <button class='data-form-button user-profile-form-button'>Изменить</button>
-                            </form>
+                            <div style="z-index: 1000;" class="custom-scroller-list">
+                                <?php 
+                                    include "core/connect.php";
+                                    $link = mysqli_connect($host, $user, $password, $db_name); 
+                                    $query = "SELECT * FROM platforms";
+                                    $result = mysqli_query($link, $query);
+                                    $platformOptionId = 1;
+                                    foreach($result as $row) {
+                                        echo 
+                                        "
+                                            <div id='platform-option-".$platformOptionId."' class='custom-scroller-option'>
+                                                <p>".$row['Platform']."</p>
+                                            </div>
+                                        ";
+                                        $platformOptionId++;
+                                    }
+                                    mysqli_close($link);
+                                ?>
+                            </div>
                         </div>
                     </div>
-                    <div class='user-profile-container'>
-                        <p class='user-profile-title'>Изменение пароля</p>
-                        <form class='password-form'>
-                            <label for='input-3'>Новый пароль</label>
-                            <input id='input-3' type='password' name='new-password'>
-                            <label for='input-4'>Повторите новый пароль</label>
-                            <input id='input-4' type='password' name='new-password-confirm'>
-                            <label for='input-5'>Текущий пароль</label>
-                            <input id='input-5' type='password' name='opld-password-confirm'>
-                            <button class='password-form-button user-profile-form-button'>Изменить</button>
-                        </form>
+                    <div class="form-element">
+                        <div style="align-self: start;" class="custom-scroller">
+                            <div class="custom-scroller-option custom-scroller-selected-option">
+                                <p>Выберите жанр</p>
+                                <i style="display: none;" class="fa-solid fa-caret-up"></i>
+                                <i style="margin-bottom: 4px;" class="fa-solid fa-caret-down"></i>
+                            </div>
+                            <div style="z-index: 999;" class="custom-scroller-list">
+                                <?php 
+                                    include "core/connect.php";
+                                    $link = mysqli_connect($host, $user, $password, $db_name); 
+                                    $query = "SELECT * FROM genres";
+                                    $result = mysqli_query($link, $query);
+                                    $platformOptionId = 1;
+                                    foreach($result as $row) {
+                                        echo 
+                                        "
+                                            <div id='genre-option-".$platformOptionId."' class='custom-scroller-option'>
+                                                <p>".$row['Genre']."</p>
+                                            </div>
+                                        ";
+                                        $platformOptionId++;
+                                    }
+                                    mysqli_close($link);
+                                ?>
+                            </div>
+                        </div>
                     </div>
-                    <div class='user-profile-container'>
-                        <p class='user-profile-title'>Почта</p>
-                        <form class='email-form'>
-                            <input value='".$_SESSION["email"]."' id='input-6' type='email' name='email'>
-                            <button class='password-form-button user-profile-form-button'>Изменить</button>
-                        </form>
-                    </div>
-                ";
-            ?>
+                </form>
+            </section>
         </main>
  
         <footer>
@@ -152,6 +173,17 @@
         setTimeout(() => disablePreloader(), 500);
     }
 
+    $(document).ready(function() {
+        $(".single-item").slick({
+            dots: false,
+            infinite: true,
+            speed: 500,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            adaptiveWidth: true
+        });
+    });
+
     let sessionLogin = '<?php echo json_encode($_SESSION["login"])?>';
     if(sessionLogin != "null") {
         sessionLogin = sessionLogin.substring(1, sessionLogin.length - 1);
@@ -168,7 +200,7 @@
                 "color":"white"
             });
             $("<a href='administration.php'>Управление</a>").insertAfter("#personal-area");
-            $(".user-menu").css({"margin-top":"190px"});
+            $(".user-menu").css({"margin-top":"180px"});
         }
         if(roleName == "Модератор") {
             $(".user-login").css({
@@ -177,12 +209,12 @@
                 "border-radius":"10px",
                 "color":"black"
             });
-            $("<a href='#' style='margin-left: 10px;'>Модерирование</a>").insertAfter("#personal-area");
-            $(".user-menu").css({"margin-top":"190px"});
+            $("<a href='#'>Модерация</a>").insertAfter("#personal-area");
+            $(".user-menu").css({"margin-top":"180px"});
         }
         let imagePath = '<?php echo json_encode($_SESSION["imagePath"])?>';
         imagePath = "url(" + imagePath.substring(1, imagePath.length - 1) + ")";
-        $(".user").css({"min-width":"165px"});
+        $(".user").css({"min-width":"160px"});
         $(".user-image").css({
             "display":"block",
             "background-image":imagePath
@@ -191,6 +223,31 @@
             "display":"block"
         });
     }
+
+    // -------- custom scrollbar --------
+
+    $(".custom-scroller").click(function() {
+        if(!$(this).find(".custom-scroller-list").hasClass("custom-scroller-list-active")) {
+            $(this).find(".fa-caret-down").css({"display":"none"});
+            $(this).find(".fa-caret-up").css({"display":"block"});
+            $(this).find(".custom-scroller-list").addClass("custom-scroller-list-active");
+        }
+        else {
+            $(this).find(".fa-caret-down").css({"display":"block", "margin-bottom":"4px"});
+            $(this).find(".fa-caret-up").css({"display":"none"});
+            $(this).find(".custom-scroller-list").removeClass("custom-scroller-list-active");
+        }
+    });
+
+    $(".custom-scroller-list .custom-scroller-option").click(function() {
+        let fieldName = $("#" + this.id).text();
+        $(".custom-scroller-selected-option p").text(fieldName);
+        $(".fa-caret-down").css({"display":"block", "margin-bottom":"4px"});
+        $(".fa-caret-up").css({"display":"none"});
+        $(".custom-scroller-list").removeClass("custom-scroller-list-active");
+    });
+
+    // -------- all burger-menus --------
 
     $(".burger-icon").click(function() {
         if(!$(".burger-list").hasClass("burger-active")) {
@@ -217,8 +274,6 @@
         window.location.reload();
     });
 
-    $(".user-profile-form-button").click(function(event) {
-        event.preventDefault();
-    });
-
 </script>
+
+</html>
