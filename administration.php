@@ -115,6 +115,7 @@
                                     <th>Почта</th>
                                     <th>Роль</th>
                                     <th></th>
+                                    <th></th>
                                 </tr>
                         ";
                         foreach($result as $row) {
@@ -127,6 +128,7 @@
                                     <td>'.$row["Email"].'</td>
                                     <td>'.$row["Role name"].'</td>
                                     <td class="delete-button" style="text-align: right;"><i class="fa-solid fa-trash-can"></i></td>
+                                    <td class="edit-button" style="text-align: right;"><i class="fa-solid fa-pencil"></i></td>
                                 </tr>
                             ';
                         }
@@ -231,26 +233,31 @@
     });
 
     $(".custom-scroller-list .custom-scroller-option").click(function() {
-        let tableName = $("#" + this.id).text().trim();
-        $(".custom-scroller-selected-option p").text(tableName);
+        let tableNameText = $("#" + this.id).text().trim();
+        $(".custom-scroller-selected-option p").text(tableNameText);
         $(".custom-scroller-selected-option").attr('id', this.id);
         $(".fa-caret-down").css({"display":"block", "margin-bottom":"4px"});
         $(".fa-caret-up").css({"display":"none"});
         $(".custom-scroller-list").removeClass("custom-scroller-list-active");
-        let query = "SELECT * FROM " + this.id + " LIMIT 0, 8";
+        let pageNumber = parseInt($(this).text());
+        let tableName = $(".custom-scroller-selected-option").attr("id");
+        let searchField = $(".search-field").val();
         $.ajax({
             type: "POST",
             url: "core/table-generate.php",
-            data: {query: query, tableName: this.id},
+            data: {tableName: tableName, pageNumber: pageNumber, searchField: searchField},
             context: document.body,
             success: function(result) {
                 $(".table-container").html(result);
+                if(result == "Ничего не найдено") {
+                    $(".table-container").html("<div><p style='text-align: center;'>Ничего не найдено</p></div>");
+                }
             }
         });
         $.ajax({
             type: "POST",
             url: "core/pagination-generate.php",
-            data: {tableName: this.id},
+            data: {tableName: tableName, pageNumber: pageNumber, searchField: searchField},
             context: document.body,
             success: function(result) {
                 $(".pagination").html(result);
@@ -264,6 +271,34 @@
         $(".search-field").trigger("focus");
     });
 
+    $(".search-field").on("input", function() {
+        console.log($(".search-field").val());
+        let pageNumber = parseInt($(this).text());
+        let tableName = $(".custom-scroller-selected-option").attr("id");
+        let searchField = $(".search-field").val();
+        $.ajax({
+            type: "POST",
+            url: "core/table-generate.php",
+            data: {tableName: tableName, pageNumber: pageNumber, searchField: searchField},
+            context: document.body,
+            success: function(result) {
+                $(".table-container").html(result);
+                if(result == "Ничего не найдено") {
+                    $(".table-container").html("<div><p style='text-align: center;'>Ничего не найдено</p></div>");
+                }
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: "core/pagination-generate.php",
+            data: {tableName: tableName, pageNumber: pageNumber, searchField: searchField},
+            context: document.body,
+            success: function(result) {
+                $(".pagination").html(result);
+            }
+        });
+    });
+
     // -------- pagination --------
 
     $(".pagination").on('click', '.pagination-page', function() {
@@ -273,17 +308,21 @@
         $(this).css({"background-color":"#cedcfb", "color":"black"});
         let pageNumber = parseInt($(this).text());
         let tableName = $(".custom-scroller-selected-option").attr("id");
-        let query = "SELECT * FROM " + tableName + " LIMIT " + ((pageNumber - 1) * 8).toString() + ", 8";
+        let searchField = $(".search-field").val();
         $.ajax({
             type: "POST",
             url: "core/table-generate.php",
-            data: {query: query, tableName: tableName},
+            data: {tableName: tableName, pageNumber: pageNumber, searchField: searchField},
             context: document.body,
             success: function(result) {
                 $(".table-container").html(result);
+                if(result == "Ничего не найдено") {
+                    $(".table-container").html("<div><p style='text-align: center;'>Ничего не найдено</p></div>");
+                }
             }
         });
     });
+
     // -------- all burger-menus --------
 
     $(".burger-icon").click(function() {

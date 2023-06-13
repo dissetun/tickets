@@ -6,12 +6,43 @@
     include "connect.php";
     $link = mysqli_connect($host, $user, $password, $db_name); 
     $tableName = $_POST["tableName"];
+    $columnNamesQuery = "SHOW COLUMNS FROM ".$_POST["tableName"];
+    $columnNamesResult = mysqli_query($link, $columnNamesQuery);
+    if(!$columnNamesResult) {
+        mysqli_close($link);
+        die("Произошла ошибка. Мы уже работаем над ее исправлением :).");
+    }
+    $query = "SELECT * FROM ".$_POST["tableName"];
+    $columnNames = [];
+    while ($row = mysqli_fetch_array($columnNamesResult)) {
+        array_push($columnNames, $row["Field"]);
+    }
+    if(count($columnNames)) {
+        $query = $query." WHERE ";
+        for($i = 0; $i < count($columnNames); $i++) {
+            $searchField = $_POST["searchField"];
+            $query = $query."`".$columnNames[$i]."` LIKE '%$searchField%'";
+            if($i < count($columnNames) - 1) {
+                $query = $query." OR ";
+            }
+        }
+    }
+    $pageNumber = (int)$_POST["pageNumber"];
+    if($_POST["pageNumber"] >= 1)
+        $pageNumber -= 1;
+    $query = $query." LIMIT ".($pageNumber * 8).", 8";
+    $result = mysqli_query($link, $query);
+    if(!mysqli_num_rows($result)) {
+        mysqli_close($link);
+        die("Ничего не найдено");
+    }
     if($tableName == "genres") {
         echo 
         "   
             <table>
                 <tr>
                     <th>Жанр</th>
+                    <th></th>
                     <th></th>
                 </tr>
         ";
@@ -29,6 +60,7 @@
                     <th>Дата окончания</th>
                     <th>Статус</th>
                     <th></th>
+                    <th></th>
                 </tr>
         ";
     }
@@ -39,6 +71,7 @@
                 <tr>
                     <th>Название</th>
                     <th>Адрес</th>
+                    <th></th>
                     <th></th>
                 </tr>
         ";
@@ -54,11 +87,10 @@
                     <th>Почта</th>
                     <th>Роль</th>
                     <th></th>
+                    <th></th>
                 </tr>
         ";
     }
-    $query = $_POST["query"];
-    $result = mysqli_query($link, $query);
     $blockedKeys = ["Image path", "Password"];
     foreach($result as $row) {
         echo
@@ -86,6 +118,7 @@
         echo 
         "   
                 <td class='delete-button' style='text-align: right;'><i class='fa-solid fa-trash-can'></i></td>
+                <td class='edit-button' style='text-align: right;'><i class='fa-solid fa-pencil'></i></td>
             </tr>
         ";
     }
