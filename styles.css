@@ -377,6 +377,7 @@ main {
     border-radius: 10px;
     position: relative;
     margin-bottom: 20px;
+    /* width: 100%; */
     user-select: none;
     align-self: center;
 }
@@ -387,32 +388,37 @@ main {
     justify-content: center;
     align-items: center;
     align-content: center;
-    border-radius: 10px;
-    background-color: black; 
     color: white;
-    min-width: 170px;
-    width: 100%;
     text-align: center;
-    height: 30px;
+    overflow-wrap: break-word;
+    min-width: 250px;
+}
+
+.custom-scroller-selected-option-container {
+    padding: 8px 15px;
+    display: flex;
+    background-color: black;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
 .custom-scroller-selected-option i {
     font-size: 20px;
     margin-left: 10px;
     margin-top: 6px;
+    text-align: center;
 }
 
 .custom-scroller-selected-option:hover {
-    background-color: black;
-    cursor: pointer;
+    /* background-color: black; */
     color: white;
 }
 
 .custom-scroller-list {
     max-height: 200px;
-    overflow: auto;
     position: absolute;
     display: none;
+    overflow-y: auto;
     width: 100%;
     padding: 10px;
     box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1);
@@ -420,6 +426,19 @@ main {
     border-radius: 10px;
     z-index: 1001;
     background-color: white;
+}
+
+.custom-scroller-list-caret {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding-left: 10px;
+    font-size: 25px;
+}
+
+.customs-croller-list-caret i {
+    font-size: 3em;
 }
 
 .custom-scroller-list::-webkit-scrollbar {
@@ -441,6 +460,8 @@ main {
 }
 
 .custom-scroller-option {
+    display: inline-block;
+    overflow-wrap: break-word;
     padding: 5px 10px;
 }
 
@@ -457,6 +478,24 @@ main {
     color: white;
     cursor: pointer;
     border-radius: 10px;
+}
+
+@media screen and (max-width: 602.52px) {
+    #platform-scroller {
+        max-width: 100%;
+    }
+
+    #platform-scroller .custom-scroller-selected-option {
+        display: inline-block;
+        height: auto;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 725px) {
+    .form-elements-container {
+        flex-direction: column;
+    }
 }
 
 /* search-field */
@@ -487,26 +526,36 @@ main {
 /* table-container */
 
 .table-container {
-    display: flex;
-    justify-content: center;
+    /* display: flex;
+    justify-content: space-around;
     align-items: center;
-    align-content: center;
+    align-content: center; */
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
     max-width: 1000px;
+    width: 100%;
     border-radius: 10px;
     box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
+    overflow: auto;
     min-height: 680px;
 }
 
 table {
-    margin-left: auto; 
-    margin-right: auto;
-    align-self: start;
+    /* display: flex;  */
+    /* margin-left: auto;  */
+    /* margin-right: auto; */
+    /* align-self: start; */
+    /* flex-direction: column;
+    justify-content: space-between; */
     border-spacing: 0px;
     border-radius: 10px;
-    max-width: 1000px;
-    width: 100%;
+    width: 1000px;
     height: 680px;
+}
+
+.table-container div {
+    margin-left: auto; margin-right: auto;
 }
 
 table tbody tr:first-child {
@@ -967,7 +1016,6 @@ table th, td {
 .form-element {
     display: flex;
     flex-direction: column;
-    /* align-self: start; */
     margin-top: 10px;
 }
 
@@ -976,7 +1024,7 @@ table th, td {
 }
 
 .form-element-title {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .form-elements-container {
@@ -992,6 +1040,17 @@ table th, td {
     /* background-color: red; */
 }
 
+textarea {
+    border: none;
+    resize: vertical;
+    min-height: 100px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    outline: none;
+    padding: 5px;
+}
+
 .form-button {
     background-color: black;
     color: white;
@@ -1005,11 +1064,11 @@ table th, td {
     cursor: pointer;
 }
 
-@media screen and (max-width: 725px) {
+/* @media screen and (max-width: 725px) {
     .form-elements-container {
         flex-direction: column;
     }
-}
+} */
 
 /* ===== performance-add.php ===== end */
 
@@ -1092,10 +1151,11 @@ table th, td {
 }
 
 label {
-    margin-bottom: 3px;
+   margin-bottom: 5px;
 }
 
 input {
+    margin: 0px;
     margin-bottom: 15px;
     outline: none;
     border: none;

@@ -33,8 +33,9 @@
     $query = $query." LIMIT ".($pageNumber * 8).", 8";
     $result = mysqli_query($link, $query);
     if(!mysqli_num_rows($result)) {
+        echo("<div style=''><p>Ничего не найдено</p></div>");
         mysqli_close($link);
-        die("Ничего не найдено");
+        die();
     }
     if($tableName == "genres") {
         echo 

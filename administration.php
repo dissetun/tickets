@@ -75,9 +75,9 @@
         <main style="margin-top: 150px; margin-bottom: 90px;">
             <div class="admin-panel-container">
                 <div class="custom-scroller">
-                    <div id="users" class="custom-scroller-option custom-scroller-selected-option">
+                    <div id="users" class="custom-scroller-selected-option">
                         <p>Пользователи</p>
-                        <i style="display: none;" class="fa-solid fa-caret-up"></i>
+                        <!-- <i style="display: none;" class="fa-solid fa-caret-up"></i> -->
                         <i style="margin-bottom: 4px;" class="fa-solid fa-caret-down"></i>
                     </div>
                     <div class="custom-scroller-list">
@@ -221,13 +221,11 @@
 
     $(".custom-scroller-selected-option").click(function() {
         if(!$(".custom-scroller-list").hasClass("custom-scroller-list-active")) {
-            $(".fa-caret-down").css({"display":"none"});
-            $(".fa-caret-up").css({"display":"block"});
+            $(".fa-caret-down").css({"transform":"rotate(180deg)"});
             $(".custom-scroller-list").addClass("custom-scroller-list-active");
         }
         else {
-            $(".fa-caret-down").css({"display":"block", "margin-bottom":"4px"});
-            $(".fa-caret-up").css({"display":"none"});
+            $(".fa-caret-down").css({"transform":"rotate(0deg)"});
             $(".custom-scroller-list").removeClass("custom-scroller-list-active");
         }
     });
@@ -236,8 +234,9 @@
         let tableNameText = $("#" + this.id).text().trim();
         $(".custom-scroller-selected-option p").text(tableNameText);
         $(".custom-scroller-selected-option").attr('id', this.id);
-        $(".fa-caret-down").css({"display":"block", "margin-bottom":"4px"});
-        $(".fa-caret-up").css({"display":"none"});
+        // $(".fa-caret-down").css({"display":"block", "margin-bottom":"4px"});
+        $(".fa-caret-down").css({"transform":"rotate(0deg)"});
+        // $(".fa-caret-up").css({"display":"none"});
         $(".custom-scroller-list").removeClass("custom-scroller-list-active");
         let pageNumber = parseInt($(this).text());
         let tableName = $(".custom-scroller-selected-option").attr("id");
@@ -316,9 +315,6 @@
             context: document.body,
             success: function(result) {
                 $(".table-container").html(result);
-                if(result == "Ничего не найдено") {
-                    $(".table-container").html("<div><p style='text-align: center;'>Ничего не найдено</p></div>");
-                }
             }
         });
     });
@@ -354,5 +350,6 @@
         event.preventDefault();
     });
 
-
 </script>
+
+</html>

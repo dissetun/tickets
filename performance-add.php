@@ -68,11 +68,14 @@
             </div>
         </header>
 
-        <main style="margin-top: 150px; margin-bottom: 90px;">
+        <main style="margin-top: 150px; margin-bottom: 90px; overflow-x: none;">
             <section class="form-container">
                 <div class="image-field">
-                    <div class="image-field-button">
-                        <p>Выбрать изображение</p>
+                    <div style="background-color: white; color: black; font-weight: bold; padding: 0px;" class="image-field-button">
+                        <form id="file-form">
+                            <input name="performance-img" type="file" style="display: none;"></input>
+                            <p style="padding: 5px 10px;" class="select-image-button">Выбрать изображение</p>
+                        </form>
                     </div>
                 </div>
                 <form>
@@ -84,11 +87,14 @@
                         <div class="form-elements-subcontainer">
                             <div class="form-element">
                                 <p class="form-element-title">Площадка</p>
-                                <div style="align-self: start;" class="custom-scroller">
-                                    <div class="custom-scroller-option custom-scroller-selected-option">
-                                        <p>Выберите площадку</p>
-                                        <i style="display: none;" class="fa-solid fa-caret-up"></i>
-                                        <i style="margin-bottom: 4px;" class="fa-solid fa-caret-down"></i>
+                                <div id="platform-scroller" style="align-self: start;" class="custom-scroller">
+                                    <div class="custom-scroller-selected-option-container">
+                                        <div class="custom-scroller-selected-option">
+                                            <p>Выберите площадку</p>
+                                        </div>
+                                        <div class="custom-scroller-list-caret">
+                                            <i class="fa-solid fa-caret-down"></i>
+                                        </div>
                                     </div>
                                     <div style="z-index: 1000;" class="custom-scroller-list">
                                         <?php 
@@ -111,13 +117,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-element">
+                            <div style="display: none;" id="hall-scroller" class="form-element">
                                 <p class="form-element-title">Зал</p>
-                                <div style="align-self: start;" class="custom-scroller">
-                                    <div class="custom-scroller-option custom-scroller-selected-option">
-                                        <p>Выберите зал</p>
-                                        <i style="display: none;" class="fa-solid fa-caret-up"></i>
-                                        <i style="margin-bottom: 4px;" class="fa-solid fa-caret-down"></i>
+                                <div id="hall-custom-scroller" style="align-self: start;" class="custom-scroller">
+                                    <div class="custom-scroller-selected-option-container">
+                                        <div class="custom-scroller-selected-option">
+                                            <p>Выберите зал</p>
+                                        </div>
+                                        <div class="custom-scroller-list-caret">
+                                            <i class="fa-solid fa-caret-down"></i>
+                                        </div>
                                     </div>
                                     <div style="z-index: 999;" class="custom-scroller-list">
                                         <?php 
@@ -142,11 +151,14 @@
                             </div>
                             <div class="form-element">
                                 <p class="form-element-title">Жанр</p>
-                                <div style="align-self: start;" class="custom-scroller">
-                                    <div class="custom-scroller-option custom-scroller-selected-option">
-                                        <p>Выберите жанр</p>
-                                        <i style="display: none;" class="fa-solid fa-caret-up"></i>
-                                        <i style="margin-bottom: 4px;" class="fa-solid fa-caret-down"></i>
+                                <div id="genre-scroller" style="align-self: start;" class="custom-scroller">
+                                    <div class="custom-scroller-selected-option-container">
+                                        <div class="custom-scroller-selected-option">
+                                            <p>Выберите жанр</p>
+                                        </div>
+                                        <div class="custom-scroller-list-caret">
+                                            <i class="fa-solid fa-caret-down"></i>
+                                        </div>
                                     </div>
                                     <div style="z-index: 998;" class="custom-scroller-list">
                                         <?php 
@@ -170,19 +182,23 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-elements-subcontainer">
+                        <div style="display: flex;" class="form-elements-subcontainer">
                             <div class="form-element">
-                                <label for="input-2">Дата начала</label>
-                                <input style="width: 100%;" id="input-2" type="date" name="name">
+                                <label style="margin-bottom: 0px;" for="input-2">Дата начала</label>
+                                <input style="width: 100%; margin-top: 10px; margin-bottom: 22px;" id="input-2" type="datetime-local" name="name">
                             </div>
                             <div class="form-element">
-                                <label for="input-3">Дата окончания</label>
-                                <input style="width: 100%;" id="input-3" type="date" name="name">
-                            </div>
-                                <div style="margin-top: auto; margin-bottom: 20px;" class="form-element">
-                                <div class="form-button">Отправить заявку</div>
+                                <label style="margin-bottom: 0px;" for="input-3">Дата окончания</label>
+                                <input style="width: 100%; margin-top: 10px;" id="input-3" type="datetime-local" name="name">
                             </div>
                         </div>
+                    </div>
+                    <div class="form-element">
+                        <p style="margin-bottom: 5px;">Описание</p>
+                        <textarea></textarea>
+                    </div>
+                    <div style="margin-top: 30px; margin-bottom: 20px;" class="form-element">
+                        <div class="form-button">Отправить заявку</div>
                     </div>
                 </form>
             </section>
@@ -239,7 +255,6 @@
         $(".user-login").text(sessionLogin);
         let roleName = '<?php echo json_encode($_SESSION["roleName"])?>';
         roleName = roleName.substring(1, roleName.length - 1);
-        console.log(roleName);
         if(roleName == "Администратор") {
             $(".user-login").css({
                 "padding":"3px 10px",
@@ -272,26 +287,141 @@
         });
     }
 
+    // -------- choose file --------
+
+    $(".select-image-button").click(function() {
+        $("input[name='performance-img']").click();
+        $("input[name='performance-img']").change(function() {
+            let form = document.querySelector("#file-form");
+            $.ajax({
+                type: "POST",
+                url: "core/tmp-img.php",
+                data: new FormData(form),
+                processData: false,
+                contentType: false,
+                context: document.body,
+                success: function(result) {
+                    let url = result.replace("%20", ' ');
+                    $('.image-field').css({
+                        "background-image":"url(" + result + ")"
+                    });
+                }
+            });
+        });
+    });
+
     // -------- custom scrollbar --------
 
-    $(".custom-scroller").click(function() {
-        if(!$(this).find(".custom-scroller-list").hasClass("custom-scroller-list-active")) {
-            $(this).find(".fa-caret-down").css({"display":"none"});
-            $(this).find(".fa-caret-up").css({"display":"block"});
-            $(this).find(".custom-scroller-list").addClass("custom-scroller-list-active");
+    $(".custom-scroller").on('click', '.custom-scroller-selected-option-container', function() {
+        if(!$(this).parent().find(".custom-scroller-list").hasClass("custom-scroller-list-active")) {
+            $(this).parent().find(".fa-caret-down").css({"transform":"rotate(180deg)"});
+            $(this).parent().find(".custom-scroller-list").addClass("custom-scroller-list-active");
         }
         else {
-            $(this).find(".fa-caret-down").css({"display":"block", "margin-bottom":"4px"});
-            $(this).find(".fa-caret-up").css({"display":"none"});
-            $(this).find(".custom-scroller-list").removeClass("custom-scroller-list-active");
+            $(this).parent().find(".fa-caret-down").css({"transform":"rotate(0deg)"});
+            $(this).parent().find(".custom-scroller-list").removeClass("custom-scroller-list-active");
         }
     });
 
-    $(".custom-scroller-list .custom-scroller-option").click(function() {
-        let fieldName = $("#" + this.id).text();
-        $(this).parent(".custom-scroller-list").parent().find(".custom-scroller-selected-option p").text(fieldName);;
-        $(".fa-caret-down").css({"display":"block", "margin-bottom":"4px"});
-        $(".fa-caret-up").css({"display":"none"});
+    $(".custom-scroller").on('click', '.custom-scroller-list .custom-scroller-option', function() {
+        let fieldNameUntrimmed = $("#" + this.id).text();
+        let fieldName = $.trim(fieldNameUntrimmed);
+        if($(this).parent().parent().attr("id") == "platform-scroller") {
+            if(fieldName.length > 30) {
+                $(".form-elements-container").css({"flex-direction":"column"});
+            }
+            else if($(window).width() > 725) {
+                $(".form-elements-container").css({"flex-direction":"row"});
+            }
+            $.ajax({
+                type: "POST",
+                url: "core/halls-scroller-change.php",
+                data: {platform: fieldName},
+                context: document.body,
+                success: function(result) {
+                    $("#hall-custom-scroller").html(result);
+                }
+            });
+            $("#hall-scroller").css({"display":"flex"});
+        }
+        $(this).parent().removeClass("custom-scroller-list-active");
+        $(this).parent().parent().find(".custom-scroller-selected-option-container").css({"background-color":"black"});
+        $(this).parent(".custom-scroller-list").parent().find(".custom-scroller-selected-option p").text(fieldName);
+        $(this).find(".fa-caret-down").css({"transform":"rotate(180deg)"});
+    });
+
+    if($(window).width() <= 725) {
+        $(".form-elements-container").css({"flex-direction":"column"});
+    }
+
+    $(window).on("resize", function() {
+        let fieldNameUntrimmed = $("#platform-scroller .custom-scroller-selected-option p").text();
+        let fieldName = $.trim(fieldNameUntrimmed);
+        if($(this).width() <= 725) {
+            $(".form-elements-container").css({"flex-direction":"column"});
+        }
+        else {
+            if(fieldName.length <= 30)
+                $(".form-elements-container").css({"flex-direction":"row"});
+        }
+    });
+
+    // -------- send request --------
+
+    $(".form-button").click(function() {
+        let next = true;
+        if($("#input-1").val().length == 0) {
+            $('#input-1').css({"border":"1px solid red"});
+            next = false;
+        }
+        if($("#input-1").val().length > 50) {
+            if(document.querySelector('#input1-error') == null) {
+                $("<p style='color: red;' id='input1-error'>Длина названия превышает 50 символов</p>").insertAfter('#input-1');
+                $('#input-1').css({"border":"1px solid red"});
+            }
+            next = false;
+        }
+        else if($("#input-1").val().length > 0) {
+            if(document.querySelector('#input1-error') != null) {
+                $("#input1-error").remove();
+            }
+            $('#input-1').css({"border":"1px solid black"});
+        }
+        $(".custom-scroller-selected-option").each(function() {
+            if($(this).text().trim() == "Выберите площадку" || $(this).text().trim() == "Выберите зал" || $(this).text().trim() == "Выберите жанр") {
+                $(this).parent().css({"background-color":"red"});
+                next = false;
+            }
+            else {
+                $(this).parent().css({"background-color":"black"});
+            }
+        });
+        if($("#input-2").val().length == 0) {
+            $('#input-2').css({"border":"1px solid red"});
+            next = false;
+        }
+        if($("#input-3").val().length == 0) {
+            $('#input-3').css({"border":"1px solid red"});
+            next = false;
+        }
+        if($("textarea").val().length == 0) {
+            $($("textarea")).css({"border":"1px solid red"});
+            next = false;
+        }
+        if($("textarea").val().length > 350) {
+            if(document.querySelector('#textarea-error') == null) {
+                $("<p style='color: red; margin-top: 15px;' id='textarea-error'>Длина описания превышает 350 символов</p>").insertAfter('textarea');
+                $('textarea').css({"border":"1px solid red"});
+            }
+            next = false;
+        }
+        else if($("textarea").val().length > 0) {
+            if(document.querySelector('#input1-error') != null) {
+                $("#textarea-error").remove();
+            }
+            $("textarea").css({"border":"1px solid black"});
+        }
+        console.log(next);
     });
 
     // -------- all burger-menus --------
