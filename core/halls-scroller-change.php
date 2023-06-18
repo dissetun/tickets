@@ -25,7 +25,7 @@
         echo 
         "
             <div id='hallID-option-".$platformOptionId."' class='custom-scroller-option'>
-                <p>".$row['Hall name']."</p>
+                <p id='hallID=".$row["Hall ID"]."'>".$row['Hall name']."</p>
             </div>
         ";
         $platformOptionId++;

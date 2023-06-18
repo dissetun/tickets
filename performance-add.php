@@ -197,6 +197,79 @@
                         <p style="margin-bottom: 5px;">Описание</p>
                         <textarea></textarea>
                     </div>
+                    <div id="places-config-menu-container" style="margin-top: 30px; display: none;" class="form-element">
+                        <p class="form-element-title">Настройка мест</p>
+                        <div class="places-config-menu">
+                            <div class="places-config-menu-wrapper">
+                                <div class="places-row">
+                                    <div class="place">
+                                        <div class="place-info">
+                                            <p class="place-info-title">А13-П28</p>
+                                            <label>Цена</label>
+                                            <div style="display: flex; justify-content: center; align-items: center; align-content: center;">
+                                                <input name="place-price" type="text"></input>
+                                                <p style="margin-left: 5px;">руб.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="place">
+                                        <div class="place-info"></div>
+                                    </div>
+                                    <div class="place">
+                                        <div class="place-info"></div>
+                                    </div>
+                                    <div class="place">
+                                        <div class="place-info"></div>
+                                    </div>
+                                    <div class="place">
+                                        <div class="place-info"></div>
+                                    </div>
+                                    <div class="place">
+                                        <div class="place-info"></div>
+                                    </div>
+                                    <div class="place">
+                                        <div class="place-info"></div>
+                                    </div>
+                                    <div class="place">
+                                        <div class="place-info"></div>
+                                    </div>
+                                    <div class="place">
+                                        <div class="place-info"></div>
+                                    </div>
+                                    <div class="place">
+                                        <div class="place-info"></div>
+                                    </div>
+                                </div>
+                                <div class="places-row">
+                                    <div class="place"></div>
+                                    <div class="place"></div>
+                                    <div class="place"></div>
+                                    <div class="place"></div>
+                                    <div class="place"></div>
+                                    <div class="place"></div>
+                                    <div class="place"></div>
+                                    <div class="place"></div>
+                                    <div class="place"></div>
+                                    <div class="place"></div>
+                                </div>
+                                <div class="places-row">
+                                    <div class="place"></div>
+                                    <div class="place"></div>
+                                    <div class="place"></div>
+                                    <div class="place"></div>
+                                    <div class="place"></div>
+                                    <div class="place"></div>
+                                    <div class="place"></div>
+                                    <div class="place"></div>
+                                    <div class="place"></div>
+                                    <div class="place"></div>
+                                </div>
+                                <div class="scene">
+                                    <p>Сцена</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div style="margin-top: 30px; margin-bottom: 20px;" class="form-element">
                         <div class="form-button">Отправить заявку</div>
                     </div>
@@ -302,6 +375,9 @@
                 context: document.body,
                 success: function(result) {
                     let url = result.replace("%20", ' ');
+                    if(url.length == 0 || url[0] == '%') {
+                        url = "https://xphoto.name/uploads/posts/2021-10/1633427996_2-xphoto-name-p-paid-porn-pitykitty-pk-15.jpg";
+                    }
                     $('.image-field').css({
                         "background-image":"url(" + result + ")"
                     });
@@ -344,6 +420,21 @@
             });
             $("#hall-scroller").css({"display":"flex"});
         }
+        else if($(this).parent().parent().attr("id") == "hall-custom-scroller") {
+            $("#places-config-menu-container").css({"display":"flex"});
+            let hallID = $(this).find("p").attr("id");
+            hallID = hallID.replace("hallID=", "");
+            $.ajax({
+                type: "POST",
+                url: "core/places-menu-output.php",
+                data: {hallID: hallID},
+                context: document.body,
+                success: function(result) {
+                    $(".places-config-menu-wrapper").html(result);
+                    // console.log(result);
+                }
+            });
+        }
         $(this).parent().removeClass("custom-scroller-list-active");
         $(this).parent().parent().find(".custom-scroller-selected-option-container").css({"background-color":"black"});
         $(this).parent(".custom-scroller-list").parent().find(".custom-scroller-selected-option p").text(fieldName);
@@ -365,6 +456,53 @@
                 $(".form-elements-container").css({"flex-direction":"row"});
         }
     });
+
+    // -------- place-config --------
+
+    $(".places-config-menu-wrapper").on("click", ".places-row .place", function(event) {
+        console.log("something");
+        if(event.target != event.currentTarget) {
+            return;
+        }
+        let current = $(this);
+        if(!current.hasClass("place-active")) {
+            current.find(".place-info").css({"display":"flex"});
+            current.addClass("place-active");
+        }
+        else {
+            current.removeClass("place-active");
+            current.find(".place-info").css({"display":"none"});
+        }
+    }); 
+
+    $(".places-config-menu-wrapper").on("input", ".places-row .place .place-info input", function() {
+        let price = parseInt($(this).val());
+        console.log(price);
+        if(price <= 249 || price == NaN) {
+            $(this).parent().parent().parent().css({"background-color":"gray"});
+        }
+        else if(price <= 450) {
+            $(this).parent().parent().parent().css({"background-color":"#8aff73"});
+        }
+        else if(price <= 650) {
+            $(this).parent().parent().parent().css({"background-color":"#80b1ff"});
+        }
+        else if(price <= 1000) {
+            $(this).parent().parent().parent().css({"background-color":"#2e6dff"});
+        }
+        else if(price <= 1300) {
+            $(this).parent().parent().parent().css({"background-color":"#ffe873"});
+        }
+        else if(price <= 1700) {
+            $(this).parent().parent().parent().css({"background-color":"#ff9c38"});
+        }
+        else if(price <= 2000) {
+            $(this).parent().parent().parent().css({"background-color":"#ff6363"});
+        }
+        else if(price <= 2500) {
+            $(this).parent().parent().parent().css({"background-color":"crimson"});
+        }
+    });  
 
     // -------- send request --------
 

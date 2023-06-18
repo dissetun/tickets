@@ -1064,11 +1064,121 @@ textarea {
     cursor: pointer;
 }
 
-/* @media screen and (max-width: 725px) {
-    .form-elements-container {
-        flex-direction: column;
+.places-config-menu {
+    display: flex;
+    /* justify-content: center; */
+    max-width: 1000px;
+    width: 100%;
+    overflow: auto;
+    box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.1);
+    min-height: 100px;
+    /* border: 1px solid black; */
+    border-radius: 15px;
+    padding: 150px 100px;
+    background-color: white;
+}
+
+.places-config-menu-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    width: 1000px;
+    background-color: white;
+}
+
+.places-row {
+    display: flex;
+    margin-top: 30px; 
+}
+
+.places-row:first-child {
+    margin-top: 0px;
+}
+
+.place {
+    display: flex;
+    margin-left: 30px;
+    width: 40px; 
+    height: 40px;
+    border-radius: 100%;
+    background-color: gray;
+    position: relative;
+    justify-content: center;
+}
+
+.place:hover {
+    cursor: pointer;
+}
+
+.place-active {
+    border: 5px solid white;
+}
+
+.place-info {
+    display: none;
+    flex-direction: column;
+    padding: 10px;
+    position: absolute;
+    min-width: 170px; 
+    background-color: white;
+    box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.1);
+    margin-top: -120px;
+    border-radius: 10px;
+}
+
+.place-info-title {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.place-info input {
+    width: 100%;
+    margin: 0px;
+}
+
+.scene {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    width: 400px;
+    height: 50px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: white;
+    background-color: gray;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.places-row .place:first-child {
+    margin-left: 0px;
+}
+
+/* @media screen and (max-width: 800px) {
+    .place {
+        margin-left: 30px;
+        width: 30px; 
+        height: 30px;
+    }
+}
+
+@media screen and (max-width: 725px) {
+    .place {
+        margin-left: 15px;
+        width: 30px; 
+        height: 30px;
+    }
+
+    .scene {
+        max-width: 300px;
+        height: 30px;
     }
 } */
+
 
 /* ===== performance-add.php ===== end */
 
