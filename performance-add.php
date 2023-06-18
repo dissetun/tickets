@@ -1,6 +1,9 @@
 <?php 
 
     session_start();
+    if(!isset($_SESSION["login"])) {
+        header("Location: signin.php");
+    }
 
 ?>
 
@@ -201,7 +204,7 @@
                         <p class="form-element-title">Настройка мест</p>
                         <div class="places-config-menu">
                             <div class="places-config-menu-wrapper">
-                                <div class="places-row">
+                                <!-- <div class="places-row">
                                     <div class="place">
                                         <div class="place-info">
                                             <p class="place-info-title">А13-П28</p>
@@ -266,7 +269,7 @@
                                 </div>
                                 <div class="scene">
                                     <p>Сцена</p>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -345,7 +348,7 @@
                 "border-radius":"10px",
                 "color":"black"
             });
-            $("<a href='#'>Модерация</a>").insertAfter("#personal-area");
+            $("<a href='moderation.php'>Модерация</a>").insertAfter("#personal-area");
             $(".user-menu").css({"margin-top":"180px"});
         }
         let imagePath = '<?php echo json_encode($_SESSION["imagePath"])?>';

@@ -75,10 +75,13 @@
         <main style="margin-top: 150px; margin-bottom: 90px;">
             <div class="admin-panel-container">
                 <div class="custom-scroller">
-                    <div id="users" class="custom-scroller-selected-option">
-                        <p>Пользователи</p>
-                        <!-- <i style="display: none;" class="fa-solid fa-caret-up"></i> -->
-                        <i style="margin-bottom: 4px;" class="fa-solid fa-caret-down"></i>
+                    <div class="custom-scroller-selected-option-container">
+                        <div id="users" class="custom-scroller-selected-option">
+                            <p>Пользователи</p>
+                        </div>
+                        <div class="custom-scroller-list-caret">
+                            <i class="fa-solid fa-caret-down"></i>
+                        </div>
                     </div>
                     <div class="custom-scroller-list">
                         <div id="users" class="custom-scroller-option">
@@ -219,14 +222,25 @@
 
     // -------- custom-scroller --------
 
-    $(".custom-scroller-selected-option").click(function() {
-        if(!$(".custom-scroller-list").hasClass("custom-scroller-list-active")) {
-            $(".fa-caret-down").css({"transform":"rotate(180deg)"});
-            $(".custom-scroller-list").addClass("custom-scroller-list-active");
+    // $(".custom-scroller-selected-option").click(function() {
+    //     if(!$(".custom-scroller-list").hasClass("custom-scroller-list-active")) {
+    //         $(".fa-caret-down").css({"transform":"rotate(180deg)"});
+    //         $(".custom-scroller-list").addClass("custom-scroller-list-active");
+    //     }
+    //     else {
+    //         $(".fa-caret-down").css({"transform":"rotate(0deg)"});
+    //         $(".custom-scroller-list").removeClass("custom-scroller-list-active");
+    //     }
+    // });
+
+    $(".custom-scroller").on('click', '.custom-scroller-selected-option-container', function() {
+        if(!$(this).parent().find(".custom-scroller-list").hasClass("custom-scroller-list-active")) {
+            $(this).parent().find(".fa-caret-down").css({"transform":"rotate(180deg)"});
+            $(this).parent().find(".custom-scroller-list").addClass("custom-scroller-list-active");
         }
         else {
-            $(".fa-caret-down").css({"transform":"rotate(0deg)"});
-            $(".custom-scroller-list").removeClass("custom-scroller-list-active");
+            $(this).parent().find(".fa-caret-down").css({"transform":"rotate(0deg)"});
+            $(this).parent().find(".custom-scroller-list").removeClass("custom-scroller-list-active");
         }
     });
 

@@ -39,7 +39,6 @@ header {
     height: 60px;
     width: 100%;
     background-color: white;
-    /* background-color: rgb(255, 202, 193); */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1262,6 +1261,7 @@ textarea {
 
 label {
    margin-bottom: 5px;
+   color: black;
 }
 
 input {
@@ -1273,6 +1273,7 @@ input {
     padding: 5px;
     border-radius: 5px;
     background-color: white;
+    color: black;
 }
 
 .to-main-button {
@@ -1381,7 +1382,7 @@ footer {
     height: 100vh;
     width: 100%;
     position: fixed;
-    z-index: 1000;
+    z-index: 999999;
     opacity: 1;
     transition: 0.1s ease-out;
 }

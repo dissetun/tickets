@@ -162,7 +162,7 @@
                 "border-radius":"10px",
                 "color":"black"
             });
-            $("<a href='#'>Модерация</a>").insertAfter("#personal-area");
+            $("<a href='moderation.php'>Модерация</a>").insertAfter("#personal-area");
             $(".user-menu").css({"margin-top":"180px"});
         }
         let imagePath = '<?php echo json_encode($_SESSION["imagePath"])?>';
