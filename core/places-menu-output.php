@@ -23,7 +23,7 @@
                     <p class='place-info-title'>".$row["Place name"]."</p>
                     <label>Цена</label>
                     <div style='display: flex; justify-content: center; align-items: center; align-content: center;'>
-                        <input name='place-price' type='text'></input>
+                        <input value='0' name='place-price' type='number' min='0'></input>
                         <p style='margin-left: 5px;'>руб.</p>
                     </div>
                 </div>

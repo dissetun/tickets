@@ -8,6 +8,11 @@
     $platform = $_POST["platform"];
     $query = "SELECT * FROM Halls WHERE `Platform` = '$platform'";
     $result = mysqli_query($link, $query);
+    if(mysqli_num_rows($result) == 0) {
+        echo "Залов нет";
+        mysqli_close($link);
+        die();
+    }
     echo
     '
         <div class="custom-scroller-selected-option-container">

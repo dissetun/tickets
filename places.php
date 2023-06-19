@@ -100,9 +100,19 @@
     // mysqli_close($link); 
 
 // ------- обновление изображения профиля -------
-    include "core/connect.php";
-    $link = mysqli_connect($host, $user, $password, $db_name);
-    $query = "UPDATE users SET `Image path`='img/user-profile.png'";
-    $result = mysqli_query($link, $query);
-    mysqli_close($link);
+    // include "core/connect.php";
+    // $link = mysqli_connect($host, $user, $password, $db_name);
+    // $query = "SELECT * FROM platforms";
+    // $result = mysqli_query($link, $query);
+    // foreach($result as $row) {
+    //     $platform = $row["Platform"];
+    //     $otherQuery = "SELECT * FROM halls WHERE `Platform` = '$platform'";
+    //     $otherResult = mysqli_query($link, $otherQuery);
+    //     if(mysqli_num_rows($otherResult) > 0) {
+    //         $updateQuery = "UPDATE platforms SET `Halls existence` = '1' WHERE `Platform` = '$platform'";
+    //         $updateResult = mysqli_query($link, $updateQuery);
+    //         echo "updated";
+    //     }
+    // }
+    // mysqli_close($link);
 ?>

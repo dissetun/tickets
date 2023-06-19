@@ -120,6 +120,13 @@
                                     </div>
                                 </div>
                             </div>
+                            <div id="custom-option" style="display: none;" class="form-element">
+                                <div class="form-element-title">Выбрать зал?</div>
+                                <div class="custom-option-container">
+                                    <div id="custom-option-element-yes" class="custom-option-element">Да</div>
+                                    <div id="custom-option-element-no" class="custom-option-element custom-option-element-active">Нет</div>
+                                </div>
+                            </div>
                             <div style="display: none;" id="hall-scroller" class="form-element">
                                 <p class="form-element-title">Зал</p>
                                 <div id="hall-custom-scroller" style="align-self: start;" class="custom-scroller">
@@ -188,11 +195,11 @@
                         <div style="display: flex;" class="form-elements-subcontainer">
                             <div class="form-element">
                                 <label style="margin-bottom: 0px;" for="input-2">Дата начала</label>
-                                <input style="width: 100%; margin-top: 10px; margin-bottom: 22px;" id="input-2" type="datetime-local" name="name">
+                                <input style="width: 100%; margin-top: 10px; margin-bottom: 22px;" id="input-2" type="datetime-local" name="begin-date">
                             </div>
                             <div class="form-element">
                                 <label style="margin-bottom: 0px;" for="input-3">Дата окончания</label>
-                                <input style="width: 100%; margin-top: 10px;" id="input-3" type="datetime-local" name="name">
+                                <input style="width: 100%; margin-top: 10px;" id="input-3" type="datetime-local" name="end-date">
                             </div>
                         </div>
                     </div>
@@ -200,76 +207,17 @@
                         <p style="margin-bottom: 5px;">Описание</p>
                         <textarea></textarea>
                     </div>
+                    <div id="price-input" class="form-element">
+                        <label style="margin-bottom: 5px; margin-top: 15px;" for="input-4">Цена билета</label>
+                        <div style='display: flex; align-items: center; align-content: center;'>
+                            <input value="0" min="0" style="max-width: 300px; width: 100%; margin-bottom: 0px;" id="input-4" type="number" name="place-price">
+                            <p style="margin-left: 5px;">руб.</p>
+                        </div>
+                    </div>
                     <div id="places-config-menu-container" style="margin-top: 30px; display: none;" class="form-element">
                         <p class="form-element-title">Настройка мест</p>
                         <div class="places-config-menu">
                             <div class="places-config-menu-wrapper">
-                                <!-- <div class="places-row">
-                                    <div class="place">
-                                        <div class="place-info">
-                                            <p class="place-info-title">А13-П28</p>
-                                            <label>Цена</label>
-                                            <div style="display: flex; justify-content: center; align-items: center; align-content: center;">
-                                                <input name="place-price" type="text"></input>
-                                                <p style="margin-left: 5px;">руб.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="place">
-                                        <div class="place-info"></div>
-                                    </div>
-                                    <div class="place">
-                                        <div class="place-info"></div>
-                                    </div>
-                                    <div class="place">
-                                        <div class="place-info"></div>
-                                    </div>
-                                    <div class="place">
-                                        <div class="place-info"></div>
-                                    </div>
-                                    <div class="place">
-                                        <div class="place-info"></div>
-                                    </div>
-                                    <div class="place">
-                                        <div class="place-info"></div>
-                                    </div>
-                                    <div class="place">
-                                        <div class="place-info"></div>
-                                    </div>
-                                    <div class="place">
-                                        <div class="place-info"></div>
-                                    </div>
-                                    <div class="place">
-                                        <div class="place-info"></div>
-                                    </div>
-                                </div>
-                                <div class="places-row">
-                                    <div class="place"></div>
-                                    <div class="place"></div>
-                                    <div class="place"></div>
-                                    <div class="place"></div>
-                                    <div class="place"></div>
-                                    <div class="place"></div>
-                                    <div class="place"></div>
-                                    <div class="place"></div>
-                                    <div class="place"></div>
-                                    <div class="place"></div>
-                                </div>
-                                <div class="places-row">
-                                    <div class="place"></div>
-                                    <div class="place"></div>
-                                    <div class="place"></div>
-                                    <div class="place"></div>
-                                    <div class="place"></div>
-                                    <div class="place"></div>
-                                    <div class="place"></div>
-                                    <div class="place"></div>
-                                    <div class="place"></div>
-                                    <div class="place"></div>
-                                </div>
-                                <div class="scene">
-                                    <p>Сцена</p>
-                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -418,10 +366,14 @@
                 data: {platform: fieldName},
                 context: document.body,
                 success: function(result) {
-                    $("#hall-custom-scroller").html(result);
+                    if(result != "Залов нет") {
+                        $("#custom-option").css({"display":"flex"});
+                        $("#hall-custom-scroller").html(result);
+                    }
+                    else
+                        $("#custom-option").css({"display":"none"});
                 }
             });
-            $("#hall-scroller").css({"display":"flex"});
         }
         else if($(this).parent().parent().attr("id") == "hall-custom-scroller") {
             $("#places-config-menu-container").css({"display":"flex"});
@@ -434,7 +386,6 @@
                 context: document.body,
                 success: function(result) {
                     $(".places-config-menu-wrapper").html(result);
-                    // console.log(result);
                 }
             });
         }
@@ -457,6 +408,29 @@
         else {
             if(fieldName.length <= 30)
                 $(".form-elements-container").css({"flex-direction":"row"});
+        }
+    });
+
+    // -------- custom option --------
+
+    $(".custom-option-element").click(function() {
+        if($(this).attr("id") == "custom-option-element-yes") {
+            $("#hall-scroller").css({"display":"flex"});
+            $("#custom-option-element-yes").addClass("custom-option-element-active");
+            $("#custom-option-element-no").removeClass("custom-option-element-active");
+            $("#price-input").css({"display":"none"});
+            if($("#hall-scroller").find(".custom-scroller-selected-option").text().trim() != "Выберите зал") {
+                console.log($("#hall-scroller").find(".custom-scroller-selected-option").text().trim());
+                $("#places-config-menu-container").css({"display":"flex"});
+            }
+        } 
+        else {
+            $("#hall-scroller").css({"display":"none"});
+            $("#custom-option-element-no").addClass("custom-option-element-active");
+            $("#custom-option-element-yes").removeClass("custom-option-element-active");
+            $("#places-config-menu-container").css({"display":"none"});
+            $("#price-input").css({"display":"flex"});
+            console.log($("#hall-scroller").find(".custom-scroller-selected-option").text().trim());
         }
     });
 
@@ -502,7 +476,7 @@
         else if(price <= 2000) {
             $(this).parent().parent().parent().css({"background-color":"#ff6363"});
         }
-        else if(price <= 2500) {
+        else if(price <= 2500 || price > 2500) {
             $(this).parent().parent().parent().css({"background-color":"crimson"});
         }
     });  
@@ -529,7 +503,7 @@
             $('#input-1').css({"border":"1px solid black"});
         }
         $(".custom-scroller-selected-option").each(function() {
-            if($(this).text().trim() == "Выберите площадку" || $(this).text().trim() == "Выберите зал" || $(this).text().trim() == "Выберите жанр") {
+            if($(this).text().trim() == "Выберите площадку" || $(this).text().trim() == "Выберите жанр") {
                 $(this).parent().css({"background-color":"red"});
                 next = false;
             }
@@ -537,6 +511,19 @@
                 $(this).parent().css({"background-color":"black"});
             }
         });
+        if($("#custom-option-element-no").hasClass("custom-option-element-active")) {
+            // do nothing 
+            true;
+        }
+        else {
+            if($("#hall-scroller").find(".custom-scroller-selected-option").text().trim() == "Выберите зал") {
+                $("#hall-scroller").find(".custom-scroller-selected-option-container").css({"background-color":"red"});
+                next = false;
+            }
+            else {
+                $("#hall-scroller").find(".custom-scroller-selected-option-container").css({"background-color":"black"});
+            }
+        }
         if($("#input-2").val().length == 0) {
             $('#input-2').css({"border":"1px solid red"});
             next = false;
@@ -562,7 +549,7 @@
             }
             $("textarea").css({"border":"1px solid black"});
         }
-        console.log(next);
+        console.log(next ? "success" : "failure");
     });
 
     // -------- all burger-menus --------
@@ -595,3 +582,14 @@
 </script>
 
 </html>
+
+
+<!-- что осталось сделать:
+
+1) добавить дефолтное изображение в папку с изображениями
+
+2) добавить попуп виндоу (или че-нибудь похожее) при нажатии на кнопку отправить заявку, которое будет спрашивать пользователя, хочет ли он ее отправить
+
+[опционально] 3) выделение групп мест
+
+-->
