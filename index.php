@@ -153,7 +153,7 @@
                 "color":"white"
             });
             $("<a href='administration.php'>Управление</a>").insertAfter("#personal-area");
-            $(".user-menu").css({"margin-top":"180px"});
+            $(".user-menu").css({"margin-top":"211px"});
         }
         if(roleName == "Модератор") {
             $(".user-login").css({
@@ -163,7 +163,7 @@
                 "color":"black"
             });
             $("<a href='moderation.php'>Модерация</a>").insertAfter("#personal-area");
-            $(".user-menu").css({"margin-top":"180px"});
+            $(".user-menu").css({"margin-top":"211px"});
         }
         let imagePath = '<?php echo json_encode($_SESSION["imagePath"])?>';
         imagePath = "url(" + imagePath.substring(1, imagePath.length - 1) + ")";

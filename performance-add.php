@@ -287,7 +287,7 @@
                 "color":"white"
             });
             $("<a href='administration.php'>Управление</a>").insertAfter("#personal-area");
-            $(".user-menu").css({"margin-top":"180px"});
+            $(".user-menu").css({"margin-top":"211px"});
         }
         if(roleName == "Модератор") {
             $(".user-login").css({
@@ -297,7 +297,7 @@
                 "color":"black"
             });
             $("<a href='moderation.php'>Модерация</a>").insertAfter("#personal-area");
-            $(".user-menu").css({"margin-top":"180px"});
+            $(".user-menu").css({"margin-top":"211px"});
         }
         let imagePath = '<?php echo json_encode($_SESSION["imagePath"])?>';
         imagePath = "url(" + imagePath.substring(1, imagePath.length - 1) + ")";
@@ -366,12 +366,17 @@
                 data: {platform: fieldName},
                 context: document.body,
                 success: function(result) {
+                    $("#places-config-menu-container").css({"display":"none"});
                     if(result != "Залов нет") {
                         $("#custom-option").css({"display":"flex"});
                         $("#hall-custom-scroller").html(result);
+                        if($("#custom-option-element-yes").hasClass("custom-option-element-active"))
+                            $("#hall-scroller").css({"display":"flex"});
                     }
-                    else
+                    else {
+                        $("#hall-scroller").css({"display":"none"});
                         $("#custom-option").css({"display":"none"});
+                    }
                 }
             });
         }

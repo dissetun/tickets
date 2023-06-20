@@ -122,7 +122,7 @@
             "border-radius":"10px",
             "color":"black"
         });
-        $(".user-menu").css({"margin-top":"190px"});
+        $(".user-menu").css({"margin-top":"211px"});
         let imagePath = '<?php echo json_encode($_SESSION["imagePath"])?>';
         imagePath = "url(" + imagePath.substring(1, imagePath.length - 1) + ")";
         $(".user").css({"min-width":"165px"});
