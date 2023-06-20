@@ -75,11 +75,13 @@
             <section class="form-container">
                 <div class="image-field">
                     <div style="background-color: white; color: black; font-weight: bold; padding: 0px;" class="image-field-button">
-                        <form id="file-form">
-                            <input name="performance-img" type="file" style="display: none;"></input>
+                        <form id="file-form" enctype="multipart/form-data">
+                            <input id='file-input' name="performance-img" type="file" allow="image/png, image/gif, image/jpeg" style="display: none;"></input>
                             <p style="padding: 5px 10px;" class="select-image-button">Выбрать изображение</p>
                         </form>
                     </div>
+                    <img src="" id="image-field-img">
+                    <!-- <img src="img/50fe4dc0897b938f8fc2ab8882842c3a.png" id="image-field-img"> -->
                 </div>
                 <form>
                     <div class="form-element">
@@ -316,24 +318,30 @@
     $(".select-image-button").click(function() {
         $("input[name='performance-img']").click();
         $("input[name='performance-img']").change(function() {
-            let form = document.querySelector("#file-form");
-            $.ajax({
-                type: "POST",
-                url: "core/tmp-img.php",
-                data: new FormData(form),
-                processData: false,
-                contentType: false,
-                context: document.body,
-                success: function(result) {
-                    let url = result.replace("%20", ' ');
-                    if(url.length == 0 || url[0] == '%') {
-                        url = "https://xphoto.name/uploads/posts/2021-10/1633427996_2-xphoto-name-p-paid-porn-pitykitty-pk-15.jpg";
-                    }
-                    $('.image-field').css({
-                        "background-image":"url(" + result + ")"
-                    });
+            let input = document.querySelector("#file-input");
+            if(input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    $("#image-field-img").attr('src', event.target.result);
                 }
-            });
+                reader.readAsDataURL(input.files[0]);
+            }
+            // let form = document.querySelector("#file-form");
+            // $.ajax({
+            //     type: "POST",
+            //     url: "core/tmp-img.php",
+            //     data: new FormData(form),
+            //     processData: false,
+            //     contentType: false,
+            //     context: document.body,
+            //     success: function(result) {
+            //         console.log(result);
+            //         let url = result.replace("%20", ' ');
+            //         if(url.length == 0 || url[0] == '%') {
+            //             url = "https://xphoto.name/uploads/posts/2021-10/1633427996_2-xphoto-name-p-paid-porn-pitykitty-pk-15.jpg";
+            //         }
+            //     }
+            // });
         });
     });
 
@@ -372,6 +380,9 @@
                         $("#hall-custom-scroller").html(result);
                         if($("#custom-option-element-yes").hasClass("custom-option-element-active"))
                             $("#hall-scroller").css({"display":"flex"});
+                        else {
+                            $("#hall-scroller").css({"display":"none"});
+                        }
                     }
                     else {
                         $("#hall-scroller").css({"display":"none"});
@@ -381,8 +392,9 @@
             });
         }
         else if($(this).parent().parent().attr("id") == "hall-custom-scroller") {
-            $("#places-config-menu-container").css({"display":"flex"});
             let hallID = $(this).find("p").attr("id");
+            $(this).parent().parent().find(".custom-scroller-selected-option").attr("id", "selected-" + hallID);
+            $("#places-config-menu-container").css({"display":"flex"});
             hallID = hallID.replace("hallID=", "");
             $.ajax({
                 type: "POST",
@@ -425,7 +437,7 @@
             $("#custom-option-element-no").removeClass("custom-option-element-active");
             $("#price-input").css({"display":"none"});
             if($("#hall-scroller").find(".custom-scroller-selected-option").text().trim() != "Выберите зал") {
-                console.log($("#hall-scroller").find(".custom-scroller-selected-option").text().trim());
+                // console.log($("#hall-scroller").find(".custom-scroller-selected-option").text().trim());
                 $("#places-config-menu-container").css({"display":"flex"});
             }
         } 
@@ -435,14 +447,14 @@
             $("#custom-option-element-yes").removeClass("custom-option-element-active");
             $("#places-config-menu-container").css({"display":"none"});
             $("#price-input").css({"display":"flex"});
-            console.log($("#hall-scroller").find(".custom-scroller-selected-option").text().trim());
+            // console.log($("#hall-scroller").find(".custom-scroller-selected-option").text().trim());
         }
     });
 
     // -------- place-config --------
 
     $(".places-config-menu-wrapper").on("click", ".places-row .place", function(event) {
-        console.log("something");
+        // console.log("something");
         if(event.target != event.currentTarget) {
             return;
         }
@@ -459,7 +471,7 @@
 
     $(".places-config-menu-wrapper").on("input", ".places-row .place .place-info input", function() {
         let price = parseInt($(this).val());
-        console.log(price);
+        // console.log(price);
         if(price <= 249 || price == NaN) {
             $(this).parent().parent().parent().css({"background-color":"gray"});
         }
@@ -489,6 +501,7 @@
     // -------- send request --------
 
     $(".form-button").click(function() {
+        $("#add-confirm").remove();
         let next = true;
         if($("#input-1").val().length == 0) {
             $('#input-1').css({"border":"1px solid red"});
@@ -533,9 +546,26 @@
             $('#input-2').css({"border":"1px solid red"});
             next = false;
         }
+        else {
+            $("#input-2").css({"border":"1px solid black"});
+        }
         if($("#input-3").val().length == 0) {
             $('#input-3').css({"border":"1px solid red"});
             next = false;
+        }
+        if($("#input-3").val() <= $("#input-2").val()) {
+            if(document.querySelector("#date-error") == null) {
+                $("<p style='color: red;' id='date-error'>Дата окончания не может быть раньше даты начала</p>").insertAfter('#input-3');
+                $("#input-3").css({"border":"1px solid red"});
+            }
+            next = false;
+        }
+        else {
+            if(document.querySelector("#date-error") != null) {
+                $("#date-error").remove();
+            }
+            if($("#input-3").val().length != 0)
+                $("#input-3").css({"border":"1px solid black"});
         }
         if($("textarea").val().length == 0) {
             $($("textarea")).css({"border":"1px solid red"});
@@ -554,7 +584,81 @@
             }
             $("textarea").css({"border":"1px solid black"});
         }
-        console.log(next ? "success" : "failure");
+        if(next) {
+            let performanceName = $("#input-1").val();
+            let platform = $("#platform-scroller").find(".custom-scroller-selected-option").text().trim();
+            let hallExistence = 0;
+            if($("#custom-option-element-yes").hasClass("custom-option-element-active")) {
+                hallExistence = 1;
+            }
+            // let hallExistence = ($("#custom-option-element-yes").hasClass("custom-option-element-active") ? 1 : 0);
+            let genre = $("#genre-scroller").find(".custom-scroller-selected-option").text().trim();
+            let hallID = "undefined";
+            let description = $("textarea").val();
+            let beginDate = $("#input-2").val();
+            let endDate = $("#input-3").val();
+            var placesArray = ["undefined"];
+            let ticketCost = "undefined";
+            if(hallExistence) {
+                hallID = $("#hall-scroller").find(".custom-scroller-selected-option").attr("id");
+                hallID = hallID.replace("selected-hallID-", '');
+                placesArray = [];
+                $(".place").each(function() {
+                    let placeName = $(this).find(".place-info-title").text().trim();
+                    let placePrice = $(this).find("input[name='place-price']").val();
+                    if(placePrice == null || placePrice == NaN || placePrice == "")
+                        placePrice = 0;
+                    placesArray.push([placeName, placePrice]);
+                });
+                console.log(placesArray);
+            }
+            else {
+                ticketCost = $("#input-4").val();
+            }
+            // console.log(performanceName + "\n" + platform + "\n" + hallExistence + "\n" + genre + "\n" + hallID + "\n" + description + "\n" + beginDate + "\n" + endDate + "\n" + ticketCost + "\n" + placesArray + "\n");
+            if(document.querySelector("#add-confirm") == null)
+                $("<div id='add-confirm' style='margin-left: auto; margin-top: 20px;'><p>Вы уверены?</p><div style='display: flex; margin-top: 10px; justify-content: space-between;'><p id='add-confirm-yes' style='padding: 5px 10px; background-color: black; color: white; cursor: pointer; border-radius: 10px; margin-right: 10px;'>Да</p><p id='add-confirm-no' style='padding: 5px 10px; background-color: black; color: white; cursor: pointer; border-radius: 10px;'>Нет</p></div></div>").insertAfter(".form-button");
+            let form = document.querySelector("#file-form");
+            $("#add-confirm-yes").click(function() {
+                $.ajax({
+                    type: "POST",
+                    url: "core/performance-add-image-request.php",
+                    data: new FormData(form),
+                    processData: false,
+                    contentType: false,
+                    context: document.body,
+                    success: function(result) {
+                        console.log(result);
+                    }
+                });
+            });
+            $("#add-confirm-no").click(function() {
+                $("#add-confirm").remove();
+            }); 
+
+            // let form = document.querySelector("#file-form");
+            // $.ajax({
+            //     type: "POST",
+            //     url: "core/tmp-img.php",
+            //     data: new FormData(form),
+            //     processData: false,
+            //     contentType: false,
+            //     context: document.body,
+            //     success: function(result) {
+            //         console.log(result);
+            //         let url = result.replace("%20", ' ');
+            //         if(url.length == 0 || url[0] == '%') {
+            //             url = "https://xphoto.name/uploads/posts/2021-10/1633427996_2-xphoto-name-p-paid-porn-pitykitty-pk-15.jpg";
+            //         }
+            //     }
+            // });
+        }
+        else {
+            $("html, body").animate({
+                scrollTop: $("#input-1").offset().top - 100
+            }, 500);
+        }
+        // console.log(next ? "success" : "failure");
     });
 
     // -------- all burger-menus --------
