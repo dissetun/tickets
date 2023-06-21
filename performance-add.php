@@ -326,22 +326,6 @@
                 }
                 reader.readAsDataURL(input.files[0]);
             }
-            // let form = document.querySelector("#file-form");
-            // $.ajax({
-            //     type: "POST",
-            //     url: "core/tmp-img.php",
-            //     data: new FormData(form),
-            //     processData: false,
-            //     contentType: false,
-            //     context: document.body,
-            //     success: function(result) {
-            //         console.log(result);
-            //         let url = result.replace("%20", ' ');
-            //         if(url.length == 0 || url[0] == '%') {
-            //             url = "https://xphoto.name/uploads/posts/2021-10/1633427996_2-xphoto-name-p-paid-porn-pitykitty-pk-15.jpg";
-            //         }
-            //     }
-            // });
         });
     });
 
@@ -648,23 +632,6 @@
             $("#add-confirm-no").click(function() {
                 $("#add-confirm").remove();
             }); 
-
-            // let form = document.querySelector("#file-form");
-            // $.ajax({
-            //     type: "POST",
-            //     url: "core/tmp-img.php",
-            //     data: new FormData(form),
-            //     processData: false,
-            //     contentType: false,
-            //     context: document.body,
-            //     success: function(result) {
-            //         console.log(result);
-            //         let url = result.replace("%20", ' ');
-            //         if(url.length == 0 || url[0] == '%') {
-            //             url = "https://xphoto.name/uploads/posts/2021-10/1633427996_2-xphoto-name-p-paid-porn-pitykitty-pk-15.jpg";
-            //         }
-            //     }
-            // });
         }
         else {
             $("html, body").animate({
