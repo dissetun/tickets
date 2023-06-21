@@ -88,7 +88,7 @@
                             foreach($result as $row) {
                                 echo 
                                 '
-                                    <a href="performance-page.php?performance='.$row["Performance name"].'" style = "background: url('.$row["Image path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
+                                    <a href="performance-page.php?performance='.$row["Performance ID"].'" style = "background: url('.$row["Image path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
                                         <p>'.$row["Performance name"].'</p>
                                     </a>
                                 ';
@@ -111,8 +111,8 @@
                 <div class="footer-info-subcontainer">
                     <div class="footer-info-item">
                         <h1>Организаторам мероприятий</h1>
-                        <a href="performance-add.php">Отправить заявку на проведение мероприятия</a>
-                        <a href="#">Площадки мероприятий</a>
+                        <a href="performance-add.php">Оставить заявку на проведение представления</a>
+                        <a href="#">Площадки представлений</a>
                     </div>
                     <div class="footer-info-item">
                         <h1>Партнерам</h1>

@@ -73,6 +73,42 @@
         </header>
 
         <main style="margin-top: 150px; margin-bottom: 90px;">
+            <div class="requests-container">
+                <p class="requests-logo">Заявки</p>
+                <?php 
+                    include "connect.php";
+                    $link = mysqli_connect($host, $user, $password, $db_name);
+                    $today = date("Y-m-d H:i:s");
+                    $query = "SELECT * FROM performances WHERE `Start date` > '$today'";
+                    $result = mysqli_query($link, $query);
+                    foreach($result as $row) {
+                        $subclass = "";
+                        $status = "";
+                        if($row["Approved"] == -1) {
+                            $subclass = "declined-request";
+                            $status = "Отклонена";
+                        }
+                        else if($row["Approved"] == 1) {
+                            $subclass = "accepted-request";
+                            $status = "Одобрена";
+                        }
+                        else {
+                            $subclass = "unapproved-request";
+                            $status = "Не проверена";
+                            $customStyle = "style='font-size: 13px;'";
+                        }
+                        echo 
+                        "
+                            <div class='request ".$subclass."'>
+                                <p class='request-title'>Заявка - ".$row['Performance ID']."</p>
+                                <p class='request-status'>".$status."</p>
+                                <a href='moderation-page.php?performance=".$row['Performance ID']."' class='request-button'>Просмотр</a>
+                            </div>
+                        ";
+                    }
+                    mysqli_close($link);
+                ?>
+            </div>
         </main>
  
         <footer>
@@ -80,8 +116,8 @@
                 <div class="footer-info-subcontainer">
                     <div class="footer-info-item">
                         <h1>Организаторам мероприятий</h1>
-                        <a href="performance-add.php">Отправить заявку на проведение мероприятия</a>
-                        <a href="#">Площадки мероприятий</a>
+                        <a href="performance-add.php">Оставить заявку на проведение представления</a>
+                        <a href="#">Площадки представлений</a>
                     </div>
                     <div class="footer-info-item">
                         <h1>Партнерам</h1>

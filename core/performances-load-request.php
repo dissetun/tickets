@@ -11,7 +11,7 @@
     foreach($result as $row) {
         echo 
         '
-            <a href="performance-page.php?performance='.$row["Performance name"].'" style = "background: url('.$row["Image path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
+            <a href="performance-page.php?performance='.$row["Performance ID"].'" style = "background: url('.$row["Image path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
                 <p>'.$row["Performance name"].'</p>
             </a>
         ';

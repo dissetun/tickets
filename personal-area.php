@@ -119,8 +119,8 @@
                 <div class="footer-info-subcontainer">
                     <div class="footer-info-item">
                         <h1>Организаторам мероприятий</h1>
-                        <a href="performance-add.php">Отправить заявку на проведение мероприятия</a>
-                        <a href="#">Площадки мероприятий</a>
+                        <a href="performance-add.php">Оставить заявку на проведение представления</a>
+                        <a href="#">Площадки представлений</a>
                     </div>
                     <div class="footer-info-item">
                         <h1>Партнерам</h1>

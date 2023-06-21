@@ -139,8 +139,9 @@
                                         <div class="performance-data-item-element"><span>'.$address.'</span></div>
                                     </div>
                                 </div>
-                                <div class="ticket-buy-button">
-                                    <p>Купить билет</p>
+                                <div class="moderation-verdict-buttons">
+                                    <p>Отклонить заявку</p>
+                                    <p>Одобрить заявку</p>
                                 </div>
                             ';
                         }
@@ -190,16 +191,6 @@
         let roleName = '<?php echo json_encode($_SESSION["roleName"])?>';
         roleName = roleName.substring(1, roleName.length - 1);
         console.log(roleName);
-        if(roleName == "Администратор") {
-            $(".user-login").css({
-                "padding":"3px 10px",
-                "background-color":"crimson",
-                "border-radius":"10px",
-                "color":"white"
-            });
-            $("<a href='administration.php'>Управление</a>").insertAfter("#personal-area");
-            $(".user-menu").css({"margin-top":"211px"});
-        }
         if(roleName == "Модератор") {
             $(".user-login").css({
                 "padding":"3px 10px",
