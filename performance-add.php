@@ -77,10 +77,10 @@
                     <div style="background-color: white; color: black; font-weight: bold; padding: 0px;" class="image-field-button">
                         <form id="file-form" enctype="multipart/form-data">
                             <input id='file-input' name="performance-img" type="file" allow="image/png, image/gif, image/jpeg" style="display: none;"></input>
-                            <p style="padding: 5px 10px;" class="select-image-button">Выбрать изображение</p>
+                            <p style="border-radius: 10px; box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1); padding: 5px 10px;" class="select-image-button">Выбрать изображение</p>
                         </form>
                     </div>
-                    <img src="" id="image-field-img">
+                    <img src="img/default-image.jpg" id="image-field-img">
                     <!-- <img src="img/50fe4dc0897b938f8fc2ab8882842c3a.png" id="image-field-img"> -->
                 </div>
                 <form>
@@ -595,13 +595,13 @@
             let genre = $("#genre-scroller").find(".custom-scroller-selected-option").text().trim();
             let hallID = "undefined";
             let description = $("textarea").val();
-            let beginDate = $("#input-2").val();
+            let startDate = $("#input-2").val();
             let endDate = $("#input-3").val();
             var placesArray = ["undefined"];
-            let ticketCost = "undefined";
+            let ticketPrice = "undefined";
             if(hallExistence) {
                 hallID = $("#hall-scroller").find(".custom-scroller-selected-option").attr("id");
-                hallID = hallID.replace("selected-hallID-", '');
+                hallID = hallID.replace("selected-hallID=", '');
                 placesArray = [];
                 $(".place").each(function() {
                     let placeName = $(this).find(".place-info-title").text().trim();
@@ -610,15 +610,16 @@
                         placePrice = 0;
                     placesArray.push([placeName, placePrice]);
                 });
-                console.log(placesArray);
+                // console.log(placesArray);
             }
             else {
-                ticketCost = $("#input-4").val();
+                ticketPrice = $("#input-4").val();
             }
             // console.log(performanceName + "\n" + platform + "\n" + hallExistence + "\n" + genre + "\n" + hallID + "\n" + description + "\n" + beginDate + "\n" + endDate + "\n" + ticketCost + "\n" + placesArray + "\n");
             if(document.querySelector("#add-confirm") == null)
                 $("<div id='add-confirm' style='margin-left: auto; margin-top: 20px;'><p>Вы уверены?</p><div style='display: flex; margin-top: 10px; justify-content: space-between;'><p id='add-confirm-yes' style='padding: 5px 10px; background-color: black; color: white; cursor: pointer; border-radius: 10px; margin-right: 10px;'>Да</p><p id='add-confirm-no' style='padding: 5px 10px; background-color: black; color: white; cursor: pointer; border-radius: 10px;'>Нет</p></div></div>").insertAfter(".form-button");
             let form = document.querySelector("#file-form");
+            let imagePath = "undefined";
             $("#add-confirm-yes").click(function() {
                 $.ajax({
                     type: "POST",
@@ -628,7 +629,19 @@
                     contentType: false,
                     context: document.body,
                     success: function(result) {
-                        console.log(result);
+                        imagePath = result;
+                        if(imagePath == "Изображение не выбрано") {
+                            imagePath = "img/default-image.jpg";
+                        }
+                        $.ajax({
+                            type: "POST",
+                            url: "core/performance-add-request.php",
+                            data: {performanceName: performanceName, hallID: hallID, hallExistence: hallExistence, genre: genre, description: description, startDate: startDate, endDate: endDate, placesArray: JSON.stringify(placesArray), ticketPrice: ticketPrice, imagePath: imagePath},
+                            context: document.body,
+                            success: function(otherResult) {
+                                console.log(otherResult);
+                            }
+                        });
                     }
                 });
             });
