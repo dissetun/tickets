@@ -102,7 +102,7 @@
                             <div class='request ".$subclass."'>
                                 <p class='request-title'>Заявка - ".$row['Performance ID']."</p>
                                 <p class='request-status'>".$status."</p>
-                                <a href='moderation-page.php?performance=".$row['Performance ID']."' class='request-button'>Просмотр</a>
+                                <a href='moderation-page.php?performance=".$row['Performance ID']."&status=".$status."' class='request-button'>Просмотр</a>
                             </div>
                         ";
                     }

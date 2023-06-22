@@ -115,4 +115,33 @@
     //     }
     // }
     // mysqli_close($link);
+
+// ------- рандомный статус заявки -------
+    // include "core/connect.php";
+    // $link = mysqli_connect($host, $user, $password, $db_name);
+    // $query = "SELECT * FROM performances";
+    // $result = mysqli_query($link, $query);
+    // foreach($result as $row) {
+    //     $performanceID = $row["Performance ID"];
+    //     $approvedList = [-1, 0, 1];
+    //     $approved = $approvedList[rand(0, 2)];
+    //     $otherQuery = "UPDATE performances SET `Approved` = '$approved' WHERE `Performance ID` = '$performanceID'";
+    //     $otherResult = mysqli_query($link, $otherQuery);
+    //     echo mysqli_error($link);
+    // }
+    // mysqli_close($link);
+
+// ------- (текущая дата) + (1 год) -------
+    include "core/connect.php";
+    $link = mysqli_connect($host, $user, $password, $db_name);
+    $query = "SELECT * FROM performances";
+    $result = mysqli_query($link, $query);
+    foreach($result as $row) {
+        $performanceID = $row["Performance ID"];
+        $today = date("Y-m-d H:i:s", strtotime("+1 year"));
+        $otherQuery = "UPDATE performances SET `Start date` = '$today', `End date` = '$today'";
+        $otherResult = mysqli_query($link, $otherQuery);
+        echo mysqli_error($link);
+    }
+    mysqli_close($link);
 ?>

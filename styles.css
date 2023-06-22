@@ -691,7 +691,7 @@ table th, td {
 
 .declined-request {
     background-color: #ff3d6e;
-    color: white;
+    color: black;
 }
 
 .accepted-request {
@@ -756,6 +756,57 @@ table th, td {
     border-radius: 10px;
     padding: 5px 10px;
     cursor: pointer;
+}
+
+.moderation-page-status {
+    margin-bottom: 10px;
+}
+
+.moderation-page-status-declined {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: #ff3d6e;
+    color: white;
+}
+
+.moderation-page-status-accepted {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: #67ff45;
+    color: black;
+}
+
+.moderation-page-status-unapproved {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: rgb(205, 205, 205);
+    color: black;
+}
+
+.go-back-to-requests {
+    margin-bottom: 10px;
+    align-self: flex-start;
+    margin-left: 15px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.go-back-to-requests:after {
+    display: block;
+    content: "";
+    width: 0%;
+    margin-top: 3px;
+    height: 2px;
+    background-color: black;
+}
+
+.go-back-to-requests:hover:after {
+    width: 100%;
 }
 
 /* ===== moderation.php ===== end */
@@ -1066,9 +1117,6 @@ table th, td {
     margin-left: 10px;
     padding: 5px 10px;
     border-radius: 10px;
-}
-
-.performance-data-item-element {
     background-color: rgb(206, 220, 251);
 }
 

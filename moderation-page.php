@@ -60,6 +60,7 @@
                     <div class="user-menu">
                         <div style="text-align: left; margin-right: auto; margin-left: auto; align-self: start;">
                             <a style="text-align: left;" id="personal-area" href="personal-area.php">Личный кабинет</a>
+                            <a style="text-align: center; color: white;" id="moderation" href="moderation.php" class="user-menu-link-active">Модерация</a>
                             <a style="text-align: left;" id="purchase-history" id="purchase-history-link" href="purchases-history.php">Исторя покупок</a>
                             <p style="" id="logout">Выйти</p>
                         </div>
@@ -109,8 +110,19 @@
                             foreach($getAddressResult as $getAddressResultRow) {
                                 $address = $getAddressResultRow["Address"];
                             }
+                            $statusSubclass = "";
+                            if($_GET["status"] == "Одобрена") {
+                                $statusSubclass = "moderation-page-status-accepted";
+                            }
+                            else if($_GET["status"] == "Отклонена") {
+                                $statusSubclass = "moderation-page-status-declined";
+                            }
+                            else {
+                                $statusSubclass = "moderation-page-status-unapproved";
+                            }
                             echo 
                             '
+                                <a href="moderation.php" class="go-back-to-requests">Вернуться к заявкам</a>
                                 <div class="performance-thumbnail" style = "background: url('.$row["Image path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;">
                                     <div class="performance-thumbnail-elements">
                                         <div class="performance-thumbnail-name">
@@ -138,12 +150,37 @@
                                         <div class="performance-data-item-element"><span>'.$platform.'</span></div>
                                         <div class="performance-data-item-element"><span>'.$address.'</span></div>
                                     </div>
-                                </div>
-                                <div class="moderation-verdict-buttons">
-                                    <p>Отклонить заявку</p>
-                                    <p>Одобрить заявку</p>
+                                    <div class="performance-data-item">
+                                        <p>Статус заявки</p>
+                                        <div class="'.$statusSubclass.'"><span>'.$_GET["status"].'</span></div>
+                                    </div>
                                 </div>
                             ';
+                            if($_GET["status"] == "Одобрена") {
+                                echo 
+                                '
+                                    <div id="performance-id='.$_GET["performance"].'" class="moderation-verdict-buttons">
+                                        <p style="margin-left: auto;" id="moderation-decline-button">Отклонить заявку</p>
+                                    </div>
+                                ';
+                            }
+                            else if($_GET["status"] == "Отклонена") {
+                                echo 
+                                '
+                                    <div id="performance-id='.$_GET["performance"].'" class="moderation-verdict-buttons">
+                                        <p style="margin-left: auto;" id="moderation-approve-button">Одобрить заявку</p>
+                                    </div>
+                                ';
+                            }
+                            else {
+                                echo 
+                                '
+                                    <div id="performance-id='.$_GET["performance"].'" class="moderation-verdict-buttons">
+                                        <p id="moderation-decline-button">Отклонить заявку</p>
+                                        <p id="moderation-approve-button">Одобрить заявку</p>
+                                    </div>
+                                ';
+                            }
                         }
                     mysqli_close($link);
                 ?>
@@ -198,7 +235,7 @@
                 "border-radius":"10px",
                 "color":"black"
             });
-            $("<a href='moderation.php'>Модерация</a>").insertAfter("#personal-area");
+            // $("<a href='moderation.php'>Модерация</a>").insertAfter("#personal-area");
             $(".user-menu").css({"margin-top":"211px"});
         }
         let imagePath = '<?php echo json_encode($_SESSION["imagePath"])?>';
@@ -212,6 +249,42 @@
             "display":"block"
         });
     }
+
+    // -------- click events --------
+
+    $("#moderation-approve-button").click(function() {
+        let performanceID = $(this).parent().attr("id");
+        performanceID = performanceID.replace("performance-id=", "");
+        let query = "UPDATE performances SET `Approved` = '1' WHERE `Performance ID` = " + "'" + performanceID + "'";
+        $.ajax({
+            type: "POST",
+            url: "core/moderation-verdict-query.php",
+            context: document.body,
+            data: {query: query},
+            success: function(result) {
+                console.log(result);
+            }
+        });
+        window.location.replace("moderation-page.php?performance=" + performanceID + "&status=" + "Одобрена");
+    });
+
+    $("#moderation-decline-button").click(function() {
+        let performanceID = $(this).parent().attr("id");
+        performanceID = performanceID.replace("performance-id=", "");
+        let query = "UPDATE performances SET `Approved` = '0' WHERE `Performance ID` = " + "'" + performanceID + "'";
+        $.ajax({
+            type: "POST",
+            url: "core/moderation-verdict-query.php",
+            context: document.body,
+            data: {query: query},
+            success: function(result) {
+                console.log(result);
+            }
+        });
+        window.location.replace("moderation-page.php?performance=" + performanceID + "&status=" + "Отклонена");
+    });
+
+    // -------- all burger-menus --------
 
     $(".burger-icon").click(function() {
         if(!$(".burger-list").hasClass("burger-active")) {
