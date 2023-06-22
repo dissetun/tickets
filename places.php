@@ -137,9 +137,9 @@
     $query = "SELECT * FROM performances";
     $result = mysqli_query($link, $query);
     foreach($result as $row) {
-        $performanceID = $row["Performance ID"];
-        $today = date("Y-m-d H:i:s", strtotime("+1 year"));
-        $otherQuery = "UPDATE performances SET `Start date` = '$today', `End date` = '$today'";
+        // $today = date("Y-m-d H:i:s", strtotime("+1 year"));
+        $description = "There is a species of humans called hobbits which were very short and lived on an island in Indonesia thousands of years ago. Our house is a historic building and protected monument. Lets all just take a moment to breathe, please!";
+        $otherQuery = "UPDATE performances SET `Description` = '$description'";
         $otherResult = mysqli_query($link, $otherQuery);
         echo mysqli_error($link);
     }

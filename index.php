@@ -79,7 +79,7 @@
                         foreach($result as $row) {
                             echo 
                             '
-                                <a href="performance-page.php?performance='.$row["Performance name"].'" class = "s-item">
+                                <a href="performance-page.php?performance='.$row["Performance ID"].'" class = "s-item">
                                     <div style = "background: url('.$row["Image path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="s-inner">
                                         <p style="text-align: left;">'.$row["Performance name"].'</p>
                                     </div>

@@ -10,7 +10,8 @@
         $newName = $_POST["newName"];
         $newSurname = $_POST["newSurname"];
         $login = $_SESSION["login"];
-        $query = "UPDATE users SET `Name` = '$newName', `Surname` = '$newSurname' WHERE `Login` = '$login'";
+        $newImage = $_POST["newImage"];
+        $query = "UPDATE users SET `Name` = '$newName', `Surname` = '$newSurname', `Image path` = '$newImage' WHERE `Login` = '$login'";
         $result = mysqli_query($link, $query);
         if(!$result) {
             die("Произошла ошибка. Мы уже работаем над ее исправлением :).");
@@ -18,6 +19,7 @@
         echo "Успешно";
         $_SESSION["name"] = $newName;
         $_SESSION["surname"] = $newSurname;
+        $_SESSION["imagePath"] = $newImage;
         mysqli_close($link);
     }
     if($queryType == "password") {
@@ -37,7 +39,7 @@
             }
             else {
                 echo "Успешно";
-                $updateQuery = "UPDATE users SET `Password` = '$newPassword'";
+                $updateQuery = "UPDATE users SET `Password` = '$newPassword' WHERE `Login` = '$login'";
                 $updateQueryResult = mysqli_query($link, $updateQuery);
                 $_SESSION["password"] = $newPassword;
             }

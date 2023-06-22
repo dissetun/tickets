@@ -18,14 +18,12 @@
     $placesArray = json_decode($_POST["placesArray"]);
     $imagePath = $_POST["imagePath"];
     if(!$hallExistence) {
-        $query = "INSERT INTO performances (`Performance name`, `Hall existence`, `Genre`, `Description` `Start date`, `End date`, `Status`, `Approved`, `Ticket price`, `Image path`) VALUES 
-        ('$performanceName', '$hallExistence', '$genre', '$description', '$startDate', '$endDate', '$status', '$approved', '$ticketPrice', '$imagePath')";
+        $query = "INSERT INTO performances (`Performance name`, `Hall existence`, `Genre`, `Description`, `Start date`, `End date`, `Status`, `Approved`, `Ticket price`, `Image path`) VALUES ('$performanceName', '$hallExistence', '$genre', '$description', '$startDate', '$endDate', '$status', '$approved', '$ticketPrice', '$imagePath')";
         $result = mysqli_query($link, $query);
         echo mysqli_error($link);
     }
     else {
-        $query = "INSERT INTO performances (`Performance name`, `Hall existence`, `Hall ID`, `Genre`, `Description`, `Start date`, `End date`, `Status`, `Approved`, `Ticket price`, `Image path`) VALUES 
-        ('$performanceName', '$hallExistence', '$hallID', '$genre', '$description', '$startDate', '$endDate', '$status', '$approved', '-1', '$imagePath')";
+        $query = "INSERT INTO performances (`Performance name`, `Hall existence`, `Hall ID`, `Genre`, `Description`, `Start date`, `End date`, `Status`, `Approved`, `Ticket price`, `Image path`) VALUES ('$performanceName', '$hallExistence', '$hallID', '$genre', '$description', '$startDate', '$endDate', '$status', '$approved', '-1', '$imagePath')";
         $result = mysqli_query($link, $query);
         echo mysqli_error($link);
 

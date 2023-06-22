@@ -130,8 +130,8 @@
                                     <td>'.$row["Surname"].'</td>
                                     <td>'.$row["Email"].'</td>
                                     <td>'.$row["Role name"].'</td>
-                                    <td class="delete-button" style="text-align: right;"><i class="fa-solid fa-trash-can"></i></td>
-                                    <td class="edit-button" style="text-align: right;"><i class="fa-solid fa-pencil"></i></td>
+                                    <td id="delete-users" class="delete-button" style="text-align: right;"><i class="fa-solid fa-trash-can"></i></td>
+                                    <td id="edit-users" class="edit-button" style="text-align: right;"><i class="fa-solid fa-pencil"></i></td>
                                 </tr>
                             ';
                         }
@@ -158,6 +158,21 @@
                     ?>
                 </div>
             </div>
+            <dialog id='delete-dialog' class="dialog">
+                <div class='dialog-wrapper'>
+                    <div class='dialog-header'>
+                        <p>Подтвердите действие</p>
+                        <i class="fa-solid fa-xmark hide-dialog"></i>
+                    </div>
+                    <div class='dialog-content'>
+                        <p>Вы уверены, что хотите удалить запись из таблицы?</p>
+                        <div style="display: flex; margin-top: 20px; margin-left: auto;">
+                            <div style="padding: 5px 10px; background-color: black; color: white; border-radius: 10px; cursor: pointer;" id='confirm-delete'>Да</div>
+                            <div style="margin-left: 20px; padding: 5px 10px; background-color: black; color: white; border-radius: 10px; cursor: pointer;" id='decline-delete'>Нет</div>
+                        <div>
+                    </div>
+                </div>
+            </dialog>
         </main>
  
         <footer>
@@ -222,17 +237,6 @@
 
     // -------- custom-scroller --------
 
-    // $(".custom-scroller-selected-option").click(function() {
-    //     if(!$(".custom-scroller-list").hasClass("custom-scroller-list-active")) {
-    //         $(".fa-caret-down").css({"transform":"rotate(180deg)"});
-    //         $(".custom-scroller-list").addClass("custom-scroller-list-active");
-    //     }
-    //     else {
-    //         $(".fa-caret-down").css({"transform":"rotate(0deg)"});
-    //         $(".custom-scroller-list").removeClass("custom-scroller-list-active");
-    //     }
-    // });
-
     $(".custom-scroller").on('click', '.custom-scroller-selected-option-container', function() {
         if(!$(this).parent().find(".custom-scroller-list").hasClass("custom-scroller-list-active")) {
             $(this).parent().find(".fa-caret-down").css({"transform":"rotate(180deg)"});
@@ -276,6 +280,52 @@
                 $(".pagination").html(result);
             }
         });
+    });
+
+    // -------- table-events --------
+
+    $(document).on("click", ".delete-button", function() {
+        document.getElementById("delete-dialog").showModal();
+        // let tableName = $(this).attr("id").replace("delete-", "");
+        // let tableMainColumnValue = $(this).parent().find("td:first-child").text().trim();
+        // let query = "";
+        // if(tableName == "users") {
+        //     query = "DELETE FROM users WHERE `Login` = '" + tableMainColumnValue + "'"; 
+        // }
+        // else if(tableName == "performances") {
+        //     query = "DELETE FROM users WHERE `Login` = '" + tableMainColumnValue + "'"; 
+        // }
+        // else if(tableName == "platforms") {
+        //     query = "DELETE FROM users WHERE `Login` = '" + tableMainColumnValue + "'"; 
+        // }
+        // else if(tableName == "genres") {
+        //     query = "DELETE FROM users WHERE `Login` = '" + tableMainColumnValue + "'"; 
+        // }
+        // $.ajax({
+        //     type: "POST",
+        //     url: "core/table-delete-request.php",
+        //     data: {query: query},
+        //     context: document.body,
+        //     success: function(result) {
+        //         console.log(result);
+        //     }
+        // });
+    });
+
+    $(".hide-dialog").click(function() {
+        let dialogID = $(this).parent().parent().parent().attr("id");
+        document.getElementById(dialogID).close();
+    });
+
+    $("#decline-delete").click(function() {
+        let dialogID = $(this).parent().parent().parent().parent().attr("id");
+        document.getElementById(dialogID).close();
+    });
+
+    $(document).on("click", ".edit-button", function() {
+        let tableName = $(this).attr("id").replace("edit-", "");
+        let tableMainColumnValue = $(this).parent().find("td:first-child").text().trim();
+        console.log(tableMainColumnValue);
     });
 
     // -------- search-bar --------

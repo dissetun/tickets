@@ -71,6 +71,8 @@
             </div>
         </header>
 
+        <!-- <img style='background-image: url(".$_SESSION["imagePath"].");' class='user-profile-image'> -->
+
         <main style="margin-top: 150px; margin-bottom: 90px;">
             <?php 
                 echo 
@@ -79,7 +81,10 @@
                         <p class='user-profile-title user-profile-data-title'>Профиль пользователя</p>
                         <div class='data-container'>
                             <div class='image-login-container'>
-                                <div style='background-image: url(".$_SESSION["imagePath"].");' class='user-profile-image'></div>
+                                <img src='".$_SESSION["imagePath"]."' class='user-profile-image'>
+                                <form id='file-form' enctype='multipart/form-data'>
+                                    <input id='file-input' name='user-profile-image' type='file' allow='image/png, image/gif, image/jpeg' style='display: none;'></input>
+                                </form>
                                 <p style='margin: 10px 0px;' class='user-profile-login'>".$_SESSION["login"]."</p>
                             </div>
                             <form class='data-form'>
@@ -187,6 +192,22 @@
         });
     }
 
+    // -------- choose file --------
+
+    $(".user-profile-image").click(function() {
+        $("input[name='user-profile-image']").click();
+        $("input[name='user-profile-image']").change(function() {
+            let input = document.querySelector("#file-input");
+            if(input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    $(".user-profile-image").attr('src', event.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+    });
+
     // -------- personal-area buttons events --------
 
     function isEmail(email) {
@@ -208,15 +229,31 @@
                 send = false;
             }
             if(send) {
+                let form = document.querySelector("#file-form");
                 $.ajax({
                     type: "POST",
-                    url: "core/user-profile-change.php",
-                    data: {queryType: "profile", newName: $("#input-1").val(), newSurname: $("#input-2").val()},
+                    url: "core/user-add-image-request.php",
+                    data: new FormData(form),
+                    processData: false,
+                    contentType: false,
                     context: document.body,
                     success: function(result) {
-                        if(result == "Успешно") {
-                            window.location.reload();
+                        let imagePath = result;
+                        console.log(imagePath);
+                        if(imagePath == "Изображение не выбрано") {
+                            imagePath = "img/default-image.jpg";
                         }
+                        $.ajax({
+                            type: "POST",
+                            url: "core/user-profile-change.php",
+                            data: {queryType: "profile", newName: $("#input-1").val(), newSurname: $("#input-2").val(), newImage: imagePath},
+                            context: document.body,
+                            success: function(result) {
+                                if(result == "Успешно") {
+                                    window.location.reload();
+                                }
+                            }
+                        });
                     }
                 });
             }

@@ -45,17 +45,17 @@
                         <div class="message">
                             <p>Something</p>
                         </div>
-                        <label for="name">Имя <span style = "color: crimson;">*</span></label>
+                        <label for="input-1">Имя <span style = "color: crimson;">*</span></label>
                         <input id="input-1" type="text" name="name">
-                        <label for="surname">Фамилия <span style = "color: crimson;">*</span></label>
+                        <label for="input-2">Фамилия <span style = "color: crimson;">*</span></label>
                         <input id="input-2" type="text" name="surname">
-                        <label for="login">Логин <span style = "color: crimson;">*</span></label>
+                        <label for="input-3">Логин <span style = "color: crimson;">*</span></label>
                         <input id="input-3" type="text" name="login">
-                        <label for="email">Почта <span style = "color: crimson;">*</span></label>
+                        <label for="input-4">Почта <span style = "color: crimson;">*</span></label>
                         <input id="input-4" type="email" name="email">
-                        <label for="password">Пароль <span style = "color: crimson;">*</span></label>
+                        <label for="input-5">Пароль <span style = "color: crimson;">*</span></label>
                         <input id="input-5" type="password" name="password">
-                        <label for="password-confirm">Подтвердите пароль <span style = "color: crimson;">*</span></label>
+                        <label for="input-6">Подтвердите пароль <span style = "color: crimson;">*</span></label>
                         <input id="input-6" type="password" name="password-confirm">
                         <button class="sign-button">Зарегистрироваться</button>
                         <p>Уже зарегистрированы? - <a href="signin.php">Войти</a></p>

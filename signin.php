@@ -45,9 +45,9 @@
                         <div class="message">
                             <p>Something</p>
                         </div>
-                        <label for="login">Логин</label>
+                        <label for="input-1">Логин</label>
                         <input id="input-1" type="text" name="login">
-                        <label for="password">Пароль</label>
+                        <label for="input-2">Пароль</label>
                         <input id="input-2" type="password" name="password">
                         <button class="sign-button">Войти</button>
                         <p>Нет аккаунта? - <a href="signup.php">Зарегистрироваться</a></p>

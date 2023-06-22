@@ -8,6 +8,9 @@
     $hallID = $_POST["hallID"];
     $query = "SELECT * FROM places WHERE `Hall ID` = '$hallID'";
     $result = mysqli_query($link, $query);
+    if(!$result) {
+        die("Произошла ошибка. Мы уже работаем над ее исправлением :).");      
+    }
     $i = 0;
     foreach($result as $row) {
         if(!($i % 10)) {

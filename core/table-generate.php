@@ -55,11 +55,15 @@
                 <tr>
                     <th>ID</th>
                     <th>Название</th>
+                    <th>Наличие зала</th>
                     <th>ID Зала</th>
                     <th>Жанр</th>
+                    <th style='display: inline-block; word-break: break-word; min-width: 250px; max-width: 400px; width: 100%;'>Описание</th>
                     <th>Дата начала</th>
                     <th>Дата окончания</th>
                     <th>Статус</th>
+                    <th>Одобрено</th>
+                    <th>Цена билета</th>                    
                     <th></th>
                     <th></th>
                 </tr>
@@ -104,14 +108,14 @@
             if(in_array($key, $blockedKeys)) {
                 continue;
             }
-            if($key == "Status") {
-                if($row[$key] == 0)
-                    echo
-                    "
-                        <td>Не проведено</td>
-                    ";
-                continue;
-            }
+            // if($key == "Status") {
+            //     if($row[$key] == 0)
+            //         echo
+            //         "
+            //             <td>Не проведено</td>
+            //         ";
+            //     continue;
+            // }
             echo 
             "
                 <td>".$row[$key]."</td>
@@ -119,8 +123,8 @@
         }
         echo 
         "   
-                <td class='delete-button' style='text-align: right;'><i class='fa-solid fa-trash-can'></i></td>
-                <td class='edit-button' style='text-align: right;'><i class='fa-solid fa-pencil'></i></td>
+                <td id='delete-".$tableName."' class='delete-button' style='text-align: right;'><i class='fa-solid fa-trash-can'></i></td>
+                <td id='edit-".$tableName."' class='edit-button' style='text-align: right;'><i class='fa-solid fa-pencil'></i></td>
             </tr>
         ";
     }
