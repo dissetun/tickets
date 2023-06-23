@@ -122,7 +122,12 @@
                             }
                             echo 
                             '
-                                <a href="moderation.php" class="go-back-to-requests">Вернуться к заявкам</a>
+                                <div class="go-back-to-requests"">
+                                    <div style="display: flex;">
+                                        <i style="margin-top: 0px; font-size: 20px;" class="fa-solid fa-arrow-left-long"></i>
+                                        <a style="margin-left: 10px;">Вернуться к заявкам</a>
+                                    </div>
+                                </div>
                                 <div class="performance-thumbnail" style = "background: url('.$row["Image path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;">
                                     <div class="performance-thumbnail-elements">
                                         <div class="performance-thumbnail-name">
@@ -271,7 +276,7 @@
     $("#moderation-decline-button").click(function() {
         let performanceID = $(this).parent().attr("id");
         performanceID = performanceID.replace("performance-id=", "");
-        let query = "UPDATE performances SET `Approved` = '0' WHERE `Performance ID` = " + "'" + performanceID + "'";
+        let query = "UPDATE performances SET `Approved` = '-1' WHERE `Performance ID` = " + "'" + performanceID + "'";
         $.ajax({
             type: "POST",
             url: "core/moderation-verdict-query.php",
@@ -282,6 +287,10 @@
             }
         });
         window.location.replace("moderation-page.php?performance=" + performanceID + "&status=" + "Отклонена");
+    });
+
+    $(".go-back-to-requests").click(function() {
+        window.location.replace("moderation.php");
     });
 
     // -------- all burger-menus --------

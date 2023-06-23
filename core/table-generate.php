@@ -54,7 +54,9 @@
             <table>
                 <tr>
                     <th>ID</th>
+                    <th>Изображение</th>
                     <th>Название</th>
+                    <th>Площадка</th>
                     <th>Наличие зала</th>
                     <th>ID Зала</th>
                     <th>Жанр</th>
@@ -104,7 +106,17 @@
             <tr>
         ";
         $keys = array_keys($row);
+        $i = 1;
+        $imagePath = $row["Image path"];
         foreach($keys as $key) {
+            if($i == 2 and $tableName == "performances") {
+                echo 
+                "
+                    <td>
+                        <img style='border-radius: 10px; width: 250; height: 175px; object-fit: cover;' src='".$imagePath."'>
+                    </td>
+                "; 
+            }
             if(in_array($key, $blockedKeys)) {
                 continue;
             }
@@ -120,6 +132,7 @@
             "
                 <td>".$row[$key]."</td>
             ";
+            ++$i;
         }
         echo 
         "   

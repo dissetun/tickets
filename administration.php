@@ -165,8 +165,9 @@
                         <i class="fa-solid fa-xmark hide-dialog"></i>
                     </div>
                     <div class='dialog-content'>
-                        <p>Вы уверены, что хотите удалить запись из таблицы?</p>
-                        <div style="display: flex; margin-top: 20px; margin-left: auto;">
+                        <p id="data-object" data-tableName="" data-mainColumnValue="" style="display: hide;"></p>
+                        <p style="margin-top: auto; margin-bottom: auto;">Вы уверены, что хотите удалить запись из таблицы?</p>
+                        <div style="display: flex; margin-top: 20px; margin-left: auto; margin-top: auto;">
                             <div style="padding: 5px 10px; background-color: black; color: white; border-radius: 10px; cursor: pointer;" id='confirm-delete'>Да</div>
                             <div style="margin-left: 20px; padding: 5px 10px; background-color: black; color: white; border-radius: 10px; cursor: pointer;" id='decline-delete'>Нет</div>
                         <div>
@@ -286,30 +287,10 @@
 
     $(document).on("click", ".delete-button", function() {
         document.getElementById("delete-dialog").showModal();
-        // let tableName = $(this).attr("id").replace("delete-", "");
-        // let tableMainColumnValue = $(this).parent().find("td:first-child").text().trim();
-        // let query = "";
-        // if(tableName == "users") {
-        //     query = "DELETE FROM users WHERE `Login` = '" + tableMainColumnValue + "'"; 
-        // }
-        // else if(tableName == "performances") {
-        //     query = "DELETE FROM users WHERE `Login` = '" + tableMainColumnValue + "'"; 
-        // }
-        // else if(tableName == "platforms") {
-        //     query = "DELETE FROM users WHERE `Login` = '" + tableMainColumnValue + "'"; 
-        // }
-        // else if(tableName == "genres") {
-        //     query = "DELETE FROM users WHERE `Login` = '" + tableMainColumnValue + "'"; 
-        // }
-        // $.ajax({
-        //     type: "POST",
-        //     url: "core/table-delete-request.php",
-        //     data: {query: query},
-        //     context: document.body,
-        //     success: function(result) {
-        //         console.log(result);
-        //     }
-        // });
+        let tableName = $(this).attr("id").replace("delete-", "");
+        let tableMainColumnValue = $(this).parent().find("td:first-child").text().trim();
+        $("#data-object").attr("data-tableName", tableName);
+        $("#data-object").attr("data-mainColumnValue", tableMainColumnValue);
     });
 
     $(".hide-dialog").click(function() {
@@ -318,6 +299,47 @@
     });
 
     $("#decline-delete").click(function() {
+        let dialogID = $(this).parent().parent().parent().parent().attr("id");
+        document.getElementById(dialogID).close();
+    });
+
+    $("#confirm-delete").click(function() {
+        let tableName = $("#data-object").attr("data-tablename");
+        let tableMainColumnValue = $("#data-object").attr("data-maincolumnvalue");
+        let query = "";
+        if(tableName == "users") {
+            query = "DELETE FROM users WHERE `Login` = '" + tableMainColumnValue + "'"; 
+        }
+        else if(tableName == "performances") {
+            query = "DELETE FROM performances WHERE `Performance ID` = '" + tableMainColumnValue + "'"; 
+        }
+        else if(tableName == "platforms") {
+            query = "DELETE FROM platforms WHERE `Platform` = '" + tableMainColumnValue + "'"; 
+        }
+        else if(tableName == "genres") {
+            query = "DELETE FROM genres WHERE `Genre` = '" + tableMainColumnValue + "'"; 
+        }
+        $.ajax({
+            type: "POST",
+            url: "core/table-delete-request.php",
+            data: {query: query},
+            context: document.body,
+            success: function(result) {
+            }
+        });
+        // $(".table-container").load(self)
+        // let pageNumber = parseInt($(this).text());
+        tableName = $(".custom-scroller-selected-option").attr("id");
+        let searchField = $(".search-field").val();
+        $.ajax({
+            type: "POST",
+            url: "core/table-generate.php",
+            data: {tableName: tableName, pageNumber: pageNumber, searchField: searchField},
+            context: document.body,
+            success: function(result) {
+                $(".table-container").html(result);
+            }
+        });
         let dialogID = $(this).parent().parent().parent().parent().attr("id");
         document.getElementById(dialogID).close();
     });

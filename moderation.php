@@ -78,8 +78,8 @@
                 <?php 
                     include "connect.php";
                     $link = mysqli_connect($host, $user, $password, $db_name);
-                    $today = date("Y-m-d H:i:s");
-                    $query = "SELECT * FROM performances WHERE `Start date` > '$today'";
+                    $today = date("Y-m-d H:i:s", strtotime("+1 day"));
+                    $query = "SELECT * FROM performances WHERE `Start date` >= '$today'";
                     $result = mysqli_query($link, $query);
                     foreach($result as $row) {
                         $subclass = "";

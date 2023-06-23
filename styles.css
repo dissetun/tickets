@@ -838,10 +838,10 @@ table th, td {
 }
 
 .go-back-to-requests {
-    margin-bottom: 10px;
-    align-self: flex-start;
-    margin-left: 15px;
     display: flex;
+    margin-bottom: 10px;
+    margin-left: 15px;
+    align-self: flex-start;
     justify-content: center;
     flex-direction: column;
     cursor: pointer;
