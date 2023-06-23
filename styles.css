@@ -268,6 +268,7 @@ main {
 .dialog-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 5px 10px;
 }
 
@@ -287,6 +288,23 @@ main {
     font-size: 25px;
     color: black;
     cursor: pointer;
+}
+
+/* --- background-check p colors --- */
+
+.background--light {
+    color: black;
+}
+
+.background--dark {
+    color: white;
+    /* text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; */
+}
+
+.background--complex {
+    color: white;
+    /* color: rgb(201, 201, 201); */
+    /* text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; */
 }
 
 /* ===== personal-area.php ===== begin */
@@ -894,7 +912,7 @@ table th, td {
 .s-inner p {
     margin-top: auto;
     font-size: 20px;
-    color: white;
+    /* color: white; */
     font-weight: bold;
     padding: 5px 10px;
 }
@@ -998,14 +1016,21 @@ table th, td {
     display: flex;
     text-align: left;
     padding: 10px;
-    background-color: black;
 }
 
 .performance p {
-    font-size: 14px;
+    font-size: 16px;
     margin-top: auto;
     font-weight: bold;
-    color: white;
+    transition: 0.25s ease;
+}
+
+.performance-name-title {
+    transition: 0.25s ease;
+}
+
+.performance-thumbnail-title {
+    transition: 0.25s ease;
 }
 
 .sub {

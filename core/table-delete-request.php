@@ -10,5 +10,5 @@
     if(!$result) {
         die("Произошла ошибка. Мы уже работаем над ее исправлением :).");
     }
-    $link = mysqli_connect($host, $user, $password, $db_name); 
+    mysqli_close($link);
 ?>

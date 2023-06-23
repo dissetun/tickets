@@ -6,6 +6,7 @@
     }
     $link = mysqli_connect($host, $user, $password, $db_name);
     $performanceName = $_POST["performanceName"];
+    $platform = $_POST["platform"];
     $hallExistence = $_POST["hallExistence"];
     $hallID = $_POST["hallID"];
     $genre = $_POST["genre"];
@@ -14,16 +15,17 @@
     $status = 0;
     $approved = 0;
     $description = $_POST["description"];
+    $placesNumber = $_POST["placesNumber"];
     $ticketPrice = $_POST["ticketPrice"];
     $placesArray = json_decode($_POST["placesArray"]);
     $imagePath = $_POST["imagePath"];
     if(!$hallExistence) {
-        $query = "INSERT INTO performances (`Performance name`, `Hall existence`, `Genre`, `Description`, `Start date`, `End date`, `Status`, `Approved`, `Ticket price`, `Image path`) VALUES ('$performanceName', '$hallExistence', '$genre', '$description', '$startDate', '$endDate', '$status', '$approved', '$ticketPrice', '$imagePath')";
+        $query = "INSERT INTO performances (`Performance name`, `Platform`, `Hall existence`, `Genre`, `Description`, `Start date`, `End date`, `Status`, `Approved`, `Places number`, `Ticket price`, `Image path`) VALUES ('$performanceName', '$platform', '$hallExistence', '$genre', '$description', '$startDate', '$endDate', '$status', '$approved', '$placesNumber', '$ticketPrice', '$imagePath')";
         $result = mysqli_query($link, $query);
         echo mysqli_error($link);
     }
     else {
-        $query = "INSERT INTO performances (`Performance name`, `Hall existence`, `Hall ID`, `Genre`, `Description`, `Start date`, `End date`, `Status`, `Approved`, `Ticket price`, `Image path`) VALUES ('$performanceName', '$hallExistence', '$hallID', '$genre', '$description', '$startDate', '$endDate', '$status', '$approved', '-1', '$imagePath')";
+        $query = "INSERT INTO performances (`Performance name`, `Platform`, `Hall existence`, `Hall ID`, `Genre`, `Description`, `Start date`, `End date`, `Status`, `Approved`, `Places number`, `Ticket price`, `Image path`) VALUES ('$performanceName', '$platform', '$hallExistence', '$hallID', '$genre', '$description', '$startDate', '$endDate', '$status', '$approved', '-1', '-1', '$imagePath')";
         $result = mysqli_query($link, $query);
         echo mysqli_error($link);
 

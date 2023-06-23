@@ -132,16 +132,46 @@
     // mysqli_close($link);
 
 // ------- (текущая дата) + (1 год) -------
-    include "core/connect.php";
-    $link = mysqli_connect($host, $user, $password, $db_name);
-    $query = "SELECT * FROM performances";
-    $result = mysqli_query($link, $query);
-    foreach($result as $row) {
-        // $today = date("Y-m-d H:i:s", strtotime("+1 year"));
-        $description = "There is a species of humans called hobbits which were very short and lived on an island in Indonesia thousands of years ago. Our house is a historic building and protected monument. Lets all just take a moment to breathe, please!";
-        $otherQuery = "UPDATE performances SET `Description` = '$description'";
-        $otherResult = mysqli_query($link, $otherQuery);
-        echo mysqli_error($link);
-    }
-    mysqli_close($link);
+    // include "core/connect.php";
+    // $link = mysqli_connect($host, $user, $password, $db_name);
+    // $query = "SELECT * FROM performances";
+    // $result = mysqli_query($link, $query);
+    // foreach($result as $row) {
+    //     // $today = date("Y-m-d H:i:s", strtotime("+1 year"));
+    //     $description = "There is a species of humans called hobbits which were very short and lived on an island in Indonesia thousands of years ago. Our house is a historic building and protected monument. Lets all just take a moment to breathe, please!";
+    //     $otherQuery = "UPDATE performances SET `Description` = '$description'";
+    //     $otherResult = mysqli_query($link, $otherQuery);
+    //     echo mysqli_error($link);
+    // }
+    // mysqli_close($link);
+
+// ------- platform identify -------
+    // include "core/connect.php";
+    // $link = mysqli_connect($host, $user, $password, $db_name);
+    // $query = "SELECT * FROM performances";
+    // $result = mysqli_query($link, $query);
+    // foreach($result as $row) {
+    //     $hallExistence = $row["Hall ID"];
+    //     $performanceID = $row["Performance ID"];
+    //     if($hallExistence != '0') {
+    //         $hallID = $row["Hall ID"];
+    //         $sQuery = "SELECT * FROM halls WHERE `Hall ID` = '$hallID'";
+    //         $sQueryResult = mysqli_query($link, $sQuery);
+    //         foreach($sQueryResult as $sRow) {
+    //             $platform = $sRow["Platform"];
+    //             $rQuery = "UPDATE performances SET `Platform` = '$platform', `Hall existence` = '1' WHERE `Performance ID` = '$performanceID'";
+    //             $rQueryResult = mysqli_query($link, $rQuery);
+    //         }
+    //     }
+    //     else {
+    //         $dkaksion = "ДК \"Аксион\"";
+    //         $rQuery = "UPDATE performances SET `Platform` = '$dkaksion' WHERE `Performance ID` = '$performanceID'";
+    //         echo $rQuery;
+    //         echo "<br>";
+    //         $rQueryResult = mysqli_query($link, $rQuery);
+    //     }
+    //     echo mysqli_error($link);
+    //     echo "<br>";
+    // }
+    // mysqli_close($link);
 ?>

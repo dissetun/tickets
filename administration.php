@@ -104,7 +104,7 @@
                 </div>
                 <section class="table-container">
                     <?php 
-                        include "core/connect.php";
+                        require_once "core/connect.php";
                         $link = mysqli_connect($host, $user, $password, $db_name); 
                         $query = "SELECT * FROM users";
                         $result = mysqli_query($link, $query);
@@ -143,17 +143,23 @@
                 </section>
                 <div class="pagination">
                     <?php 
-                        include "core/connect.php";
+                        require_once "core/connect.php";
                         $link = mysqli_connect($host, $user, $password, $db_name);
                         $query = "SELECT * FROM users";
                         $result = mysqli_query($link, $query);
                         $numOfElements = mysqli_num_rows($result);
                         $numOfPages = $numOfElements / 8 + ($numOfElements % 8 != 0 and $numOfElements > 8);
                         for($i = 0; $i < $numOfPages; $i++) {
-                            echo 
-                            "   
-                                <div class='pagination-page'>".($i + 1)."</div>
-                            ";
+                            if(!$i)
+                                echo 
+                                "   
+                                    <div class='pagination-page pagination-page-active'>".($i + 1)."</div>
+                                ";
+                            else
+                                echo
+                                "
+                                    <div class='pagination-page'>".($i + 1)."</div>
+                                ";
                         }
                     ?>
                 </div>
@@ -293,6 +299,8 @@
         $("#data-object").attr("data-mainColumnValue", tableMainColumnValue);
     });
 
+    // -- dialog basic events --
+
     $(".hide-dialog").click(function() {
         let dialogID = $(this).parent().parent().parent().attr("id");
         document.getElementById(dialogID).close();
@@ -327,8 +335,7 @@
             success: function(result) {
             }
         });
-        // $(".table-container").load(self)
-        // let pageNumber = parseInt($(this).text());
+        let pageNumber = parseInt($(".pagination-page-active").text());
         tableName = $(".custom-scroller-selected-option").attr("id");
         let searchField = $(".search-field").val();
         $.ajax({
@@ -389,7 +396,9 @@
     $(".pagination").on('click', '.pagination-page', function() {
         $(".pagination").on('load', $('.pagination-page').each(function() {
             $(this).css({"background-color":"black", "color":"white"});
+            $(this).removeClass("pagination-page-active");
         }));
+        $(this).addClass("pagination-page-active");
         $(this).css({"background-color":"#cedcfb", "color":"black"});
         let pageNumber = parseInt($(this).text());
         let tableName = $(".custom-scroller-selected-option").attr("id");

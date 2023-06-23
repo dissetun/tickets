@@ -13,6 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <script type="text/javascript" src="background-check.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -83,15 +84,23 @@
                         <?php 
                             include 'core/connect.php';
                             $link = mysqli_connect($host, $user, $password, $db_name); 
-                            $query = "SELECT * FROM performances LIMIT 6";
+                            $today = date("Y-m-d H:i:s");
+                            $query = "SELECT * FROM performances WHERE `Approved` = '1' AND `Start date` > '$today' AND ((`Hall existence` = '0' AND `Places number` > '0') OR `Hall existence` = '1') LIMIT 6";
                             $result = mysqli_query($link, $query);
                             foreach($result as $row) {
                                 echo 
                                 '
                                     <a href="performance-page.php?performance='.$row["Performance ID"].'" style = "background: url('.$row["Image path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
-                                        <p>'.$row["Performance name"].'</p>
+                                        <p class="performance-name-title">'.$row["Performance name"].'</p>
                                     </a>
                                 ';
+                                // echo 
+                                // '
+                                //     <a href="performance-page.php?performance='.$row["Performance ID"].'" class="performance" style="padding: 0px;">
+                                //         <img class="performance-img" src="'.$row["Image path"].'" style="display: block; object-fit: cover; width: 100%; height: 100%;">
+                                //         <p style="position: absolute;" class="performance-name-title">'.$row["Performance name"].'</p>
+                                //     </a>
+                                // ';
                             }
                             mysqli_close($link);
                         ?>
@@ -139,6 +148,20 @@
         setTimeout(() => disablePreloader(), 500);
     }
 
+    // -------- background-check --------
+
+    $(document).ready(function() {
+        BackgroundCheck.init({
+            targets: ".performance-name-title",
+            images: ".performance"
+        });
+        const backgroundCheckInterval = setInterval(function() {
+            BackgroundCheck.refresh();
+        }, 250);
+    });
+
+    // ----- show more button -----
+
     const performancesCalculate = () => {
         $.ajax({
             type: "POST",
@@ -184,11 +207,7 @@
         setTimeout(() => loadPages(), 500);
     });
 
-    $(".user-name").click(function() {
-        $(".user-nav").css({
-            'display':'flex'
-        });
-    });
+    // ----- filters -----
 
     const filters = document.querySelectorAll(".filter");
 
@@ -206,6 +225,8 @@
             }
         });
     }
+
+    // ----- session -----
 
     let sessionLogin = '<?php echo json_encode($_SESSION["login"])?>';
     if(sessionLogin != "null") {
@@ -252,6 +273,12 @@
             $(".burger-list").addClass("burger-active");
         }
         else $(".burger-list").removeClass("burger-active");
+    });
+
+    $(".user-name").click(function() {
+        $(".user-nav").css({
+            'display':'flex'
+        });
     });
 
     $(".user-menu-button").click(function() {

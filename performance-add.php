@@ -17,6 +17,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script type="text/javascript" scr="background-check.js"></script>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <title>Билеты</title>
@@ -209,6 +210,12 @@
                         <p style="margin-bottom: 5px;">Описание</p>
                         <textarea></textarea>
                     </div>
+                    <div id="places-number-input" class="form-element">
+                        <label style="margin-bottom: 5px; margin-top: 15px;" for="input-5">Количество мест</label>
+                        <div style='display: flex; align-items: center; align-content: center;'>
+                            <input value="1" min="1" style="max-width: 300px; width: 100%; margin-bottom: 0px;" id="input-5" type="number" name="place-price">
+                        </div>
+                    </div>
                     <div id="price-input" class="form-element">
                         <label style="margin-bottom: 5px; margin-top: 15px;" for="input-4">Цена билета</label>
                         <div style='display: flex; align-items: center; align-content: center;'>
@@ -230,6 +237,23 @@
             </section>
         </main>
  
+        <dialog id='add-dialog' class="dialog">
+            <div class='dialog-wrapper'>
+                <div class='dialog-header'>
+                    <p>Подтвердите действие</p>
+                    <i class="fa-solid fa-xmark hide-dialog"></i>
+                </div>
+                <div class='dialog-content'>
+                    <p id="data-object" data-tableName="" data-mainColumnValue="" style="display: hide;"></p>
+                    <p style="margin-top: auto; margin-bottom: auto;">Вы уверены, что хотите отправить заявку на проведение представления?</p>
+                    <div style="display: flex; margin-top: 20px; margin-left: auto; margin-top: auto;">
+                        <div style="padding: 5px 10px; background-color: black; color: white; border-radius: 10px; cursor: pointer;" id='confirm-add-request'>Да</div>
+                        <div style="margin-left: 20px; padding: 5px 10px; background-color: black; color: white; border-radius: 10px; cursor: pointer;" id='decline-add-request'>Нет</div>
+                    <div>
+                </div>
+            </div>
+        </dialog>
+
         <footer>
             <div class="footer-info-container">
                 <div class="footer-info-subcontainer">
@@ -263,16 +287,21 @@
         setTimeout(() => disablePreloader(), 500);
     }
 
-    $(document).ready(function() {
-        $(".single-item").slick({
-            dots: false,
-            infinite: true,
-            speed: 500,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            adaptiveWidth: true
-        });
-    });
+    let tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow = tomorrow.toJSON().slice(0, 14);
+    tomorrow += "08:00";
+
+    $("#input-2").attr("min", tomorrow);
+    $("#input-3").attr("min", tomorrow);
+
+    tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 62);
+    tomorrow = tomorrow.toJSON().slice(0, 14);
+    tomorrow += "08:00";
+
+    $("#input-2").attr("max", tomorrow);
+    $("#input-3").attr("max", tomorrow);
 
     let sessionLogin = '<?php echo json_encode($_SESSION["login"])?>';
     if(sessionLogin != "null") {
@@ -420,8 +449,8 @@
             $("#custom-option-element-yes").addClass("custom-option-element-active");
             $("#custom-option-element-no").removeClass("custom-option-element-active");
             $("#price-input").css({"display":"none"});
+            $("#places-number-input").css({"display":"none"});
             if($("#hall-scroller").find(".custom-scroller-selected-option").text().trim() != "Выберите зал") {
-                // console.log($("#hall-scroller").find(".custom-scroller-selected-option").text().trim());
                 $("#places-config-menu-container").css({"display":"flex"});
             }
         } 
@@ -431,7 +460,7 @@
             $("#custom-option-element-yes").removeClass("custom-option-element-active");
             $("#places-config-menu-container").css({"display":"none"});
             $("#price-input").css({"display":"flex"});
-            // console.log($("#hall-scroller").find(".custom-scroller-selected-option").text().trim());
+            $("#places-number-input").css({"display":"flex"});
         }
     });
 
@@ -583,6 +612,7 @@
             let endDate = $("#input-3").val();
             var placesArray = ["undefined"];
             let ticketPrice = "undefined";
+            let placesNumber = "undefined";
             if(hallExistence) {
                 hallID = $("#hall-scroller").find(".custom-scroller-selected-option").attr("id");
                 hallID = hallID.replace("selected-hallID=", '');
@@ -590,21 +620,24 @@
                 $(".place").each(function() {
                     let placeName = $(this).find(".place-info-title").text().trim();
                     let placePrice = $(this).find("input[name='place-price']").val();
-                    if(placePrice == null || placePrice == NaN || placePrice == "")
+                    if(placePrice == null || placePrice == NaN || placePrice == "" || placePrice < 0)
                         placePrice = 0;
                     placesArray.push([placeName, placePrice]);
                 });
-                // console.log(placesArray);
             }
             else {
                 ticketPrice = $("#input-4").val();
+                placesNumber = $("#input-5").val();
+                if(ticketPrice == null || ticketPrice == NaN || ticketPrice == "" || ticketPrice < 0) 
+                    ticketPrice = 0;
+                if(placesNumber == null || placesNumber == NaN || placesNumber == "" || placesNumber < 0)
+                    placesNumber = 1;
             }
-            // console.log(performanceName + "\n" + platform + "\n" + hallExistence + "\n" + genre + "\n" + hallID + "\n" + description + "\n" + beginDate + "\n" + endDate + "\n" + ticketCost + "\n" + placesArray + "\n");
-            if(document.querySelector("#add-confirm") == null)
-                $("<div id='add-confirm' style='margin-left: auto; margin-top: 20px;'><p>Вы уверены?</p><div style='display: flex; margin-top: 10px; justify-content: space-between;'><p id='add-confirm-yes' style='padding: 5px 10px; background-color: black; color: white; cursor: pointer; border-radius: 10px; margin-right: 10px;'>Да</p><p id='add-confirm-no' style='padding: 5px 10px; background-color: black; color: white; cursor: pointer; border-radius: 10px;'>Нет</p></div></div>").insertAfter(".form-button");
             let form = document.querySelector("#file-form");
             let imagePath = "undefined";
-            $("#add-confirm-yes").click(function() {
+            document.getElementById("add-dialog").showModal();
+            $("#confirm-add-request").click(function() {
+                document.getElementById("add-dialog").close();
                 $.ajax({
                     type: "POST",
                     url: "core/performance-add-image-request.php",
@@ -620,7 +653,7 @@
                         $.ajax({
                             type: "POST",
                             url: "core/performance-add-request.php",
-                            data: {performanceName: performanceName, hallID: hallID, hallExistence: hallExistence, genre: genre, description: description, startDate: startDate, endDate: endDate, placesArray: JSON.stringify(placesArray), ticketPrice: ticketPrice, imagePath: imagePath},
+                            data: {performanceName: performanceName, platform: platform, hallID: hallID, hallExistence: hallExistence, genre: genre, description: description, startDate: startDate, endDate: endDate, placesArray: JSON.stringify(placesArray), placesNumber: placesNumber, ticketPrice: ticketPrice, imagePath: imagePath},
                             context: document.body,
                             success: function(otherResult) {
                                 console.log(otherResult);
@@ -628,9 +661,10 @@
                         });
                     }
                 });
+                // window.location.reload();
             });
-            $("#add-confirm-no").click(function() {
-                $("#add-confirm").remove();
+            $("#decline-add-request").click(function() {
+                document.getElementById("add-dialog").close();
             }); 
         }
         else {
@@ -638,7 +672,13 @@
                 scrollTop: $("#input-1").offset().top - 100
             }, 500);
         }
-        // console.log(next ? "success" : "failure");
+    });
+
+    // -------- dialog basic events --------
+
+    $(".hide-dialog").click(function() {
+        let dialogID = $(this).parent().parent().parent().attr("id");
+        document.getElementById(dialogID).close();
     });
 
     // -------- all burger-menus --------
@@ -675,12 +715,8 @@
 
 <!-- что осталось сделать:
 
-1) добавить дефолтное изображение в папку с изображениями
+1) добавить попуп виндоу (или че-нибудь похожее) при нажатии на кнопку отправить заявку, которое будет спрашивать пользователя, хочет ли он ее отправить
 
-2) добавить попуп виндоу (или че-нибудь похожее) при нажатии на кнопку отправить заявку, которое будет спрашивать пользователя, хочет ли он ее отправить
-
-[опционально] 3) выделение групп мест
+[опционально] 2) выделение групп мест
 
 -->
-
-<!-- А КТО ЕСЛИ НЕ Я? -->

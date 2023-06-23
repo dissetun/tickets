@@ -1,6 +1,20 @@
 <?php 
 
     session_start();
+    if(!isset($_SESSION["login"]) or $_SESSION["roleName"] != "Модератор") {
+        header("Location: index.php");
+    }
+    // include "connect.php";
+    // $link = mysqli_connect($host, $user, $password, $db_name); 
+    // $performanceID = $_GET["performance"];
+    // $query = "SELECT * FROM performances WHERE `Performance ID` = '$performanceID'";
+    // $today = date("Y-m-d H:i:s");
+    // $result = mysqli_query($link, $query);
+    // foreach($result as $row) {
+    //     if(((int)$row["Hall existence"] == 0 and (int)$row["Places number"] == 0) or (int)$row["Approved"] != 1 or $today > $row["Start date"]) {
+    //         header("Location: index.php");
+    //     }
+    // }
 
 ?>
 
@@ -13,6 +27,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <script type="text/javascript" src="background-check.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -72,7 +87,7 @@
         <main>
             <div class="performance-page-wrapper">
                 <?php 
-                    include 'core/connect.php';
+                    require_once 'core/connect.php';
                     $link = mysqli_connect($host, $user, $password, $db_name); 
                     $name = $_GET["performance"];
                     $query = "SELECT * FROM performances WHERE `Performance ID` = '$name'";
@@ -96,13 +111,7 @@
                             $endHours = $endDate->format('H');
                             $endMinutes = $endDate->format('i');
                             // получение площадки, на которой будет проведено представление
-                            $hall = $row["Hall ID"];
-                            $getPlatformQuery = "SELECT Platform FROM halls WHERE `Hall ID` = '$hall'";
-                            $getPlatformResult = mysqli_query($link, $getPlatformQuery);
-                            $platform = "";
-                            foreach($getPlatformResult as $getPlatformResultRow) {
-                                $platform = $getPlatformResultRow["Platform"];
-                            }
+                            $platform = $row["Platform"];
                             // поулчение адреса площадки, на которой будет проведено прсдетавление
                             $getAddressQuery = "SELECT Address from Platforms WHERE `Platform` = '$platform'";
                             $getAddressResult = mysqli_query($link, $getAddressQuery);
@@ -129,11 +138,7 @@
                                     </div>
                                 </div>
                                 <div class="performance-thumbnail" style = "background: url('.$row["Image path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;">
-                                    <div class="performance-thumbnail-elements">
-                                        <div class="performance-thumbnail-name">
-                                            <p>'.$row["Performance name"].'</p>
-                                        </div>
-                                    </div>
+                                <p style="margin-top: auto; font-size: 30px;" class="performance-thumbnail-title">'.$row["Performance name"].'</p>
                                 </div>
                                 <p class="performance-description-title">Описание представления</p>
                                 <p style="display: inline-block; word-break: break-all;" class="performance-description">'.$row["Description"].'</p>
@@ -225,6 +230,20 @@
         setTimeout(() => disablePreloader(), 500);
     }
 
+    // -------- background-check --------
+
+    $(document).ready(function() {
+        BackgroundCheck.init({
+            targets: ".performance-thumbnail-title",
+            images: ".performance-thumbnail"
+        });
+        const backgrouncCheckInterval = setInterval(function() {
+            BackgroundCheck.refresh();
+        }, 250); 
+    });
+    
+    // -------- session --------
+
     let sessionLogin = '<?php echo json_encode($_SESSION["login"])?>';
     if(sessionLogin != "null") {
         sessionLogin = sessionLogin.substring(1, sessionLogin.length - 1);
@@ -240,7 +259,6 @@
                 "border-radius":"10px",
                 "color":"black"
             });
-            // $("<a href='moderation.php'>Модерация</a>").insertAfter("#personal-area");
             $(".user-menu").css({"margin-top":"211px"});
         }
         let imagePath = '<?php echo json_encode($_SESSION["imagePath"])?>';

@@ -76,9 +76,9 @@
             <div class="requests-container">
                 <p class="requests-logo">Заявки</p>
                 <?php 
-                    include "connect.php";
+                    require_once "core/connect.php";
                     $link = mysqli_connect($host, $user, $password, $db_name);
-                    $today = date("Y-m-d H:i:s", strtotime("+1 day"));
+                    $today = date("Y-m-d H:i:s");
                     $query = "SELECT * FROM performances WHERE `Start date` >= '$today'";
                     $result = mysqli_query($link, $query);
                     foreach($result as $row) {

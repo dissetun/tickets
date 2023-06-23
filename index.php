@@ -13,6 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <script type="text/javascript" src="background-check.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -72,16 +73,17 @@
             <div class="slider-container">
                 <div class="slider single-item">
                     <?php 
-                        include 'core/connect.php';
+                        require_once 'core/connect.php';
                         $link = mysqli_connect($host, $user, $password, $db_name); 
-                        $query = "SELECT * FROM performances LIMIT 7";
+                        $today = date("Y-m-d H:i:s");
+                        $query = "SELECT * FROM performances WHERE `Approved` = '1' and `Start date` > '$today' LIMIT 30";
                         $result = mysqli_query($link, $query);
                         foreach($result as $row) {
                             echo 
                             '
                                 <a href="performance-page.php?performance='.$row["Performance ID"].'" class = "s-item">
                                     <div style = "background: url('.$row["Image path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="s-inner">
-                                        <p style="text-align: left;">'.$row["Performance name"].'</p>
+                                        <p class="performance-name-title" style="text-align: left;">'.$row["Performance name"].'</p>
                                     </div>
                                 </a>
                             ';
@@ -136,6 +138,20 @@
             adaptiveWidth: true
         });
     });
+
+    // -------- background-check --------
+
+    $(document).ready(function() {
+        BackgroundCheck.init({
+            targets: ".performance-name-title",
+            images: ".s-inner"
+        });
+        const backgroundCheckInterval = setInterval(function() {
+            BackgroundCheck.refresh();
+        }, 250);
+    });
+
+    // -------- session --------
 
     let sessionLogin = '<?php echo json_encode($_SESSION["login"])?>';
     if(sessionLogin != "null") {

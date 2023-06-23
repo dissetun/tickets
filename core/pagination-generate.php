@@ -30,10 +30,16 @@
     $numOfElements = mysqli_num_rows($result);
     $numOfPages = $numOfElements / 8 + ($numOfElements > 8 ? $numOfPages % 8 != 0 : 0);
     for($i = 0; $i < ceil($numOfPages); $i++) {
-        echo 
-        "   
-            <div class='pagination-page'>".($i + 1)."</div>
-        ";
+        if(!$i) 
+            echo 
+            "   
+                <div class='pagination-page pagination-page-active'>".($i + 1)."</div>
+            ";
+        else
+            echo 
+            "   
+                <div class='pagination-page'>".($i + 1)."</div>
+            ";
     }
     mysqli_close($link);
 ?>
