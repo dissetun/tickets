@@ -169,9 +169,12 @@
                         }
                         foreach($result as $row) {
                             $hallExistence = $row["Hall existence"];
+                            $ticketsNumber = $row["Places number"];
                             if((int)$hallExistence == 0) {
                                 $style = "font-weight: bold; margin-left: 5px; padding: 5px 10px; border-radius: 10px;";
                                 $ticketPrice = $row["Ticket price"];
+                                $ticketName = "Б-".$performanceID.'-'.$ticketsNumber;
+                                $login = $_SESSION["login"];
                                 if($ticketPrice <= 249) {
                                     $style = $style." background-color: gray;";
                                 }
@@ -202,7 +205,7 @@
                                         <p style=''>Стоимость билета <span style='".$style."'>".$row["Ticket price"]." руб.</span></p>
                                         <p style='margin-top: 15px;'>Вы уверены, что хотите приобрести билет?</p>
                                         <div style='margin-top: 15px; display: flex; justify-content: right;'>
-                                            <div style='padding: 5px 10px; background-color: black; color: white; border-radius: 10px; cursor: pointer;' id='confirm-ticket-buy'>Да</div>
+                                            <div data-performanceID='".$performanceID."' data-ticketName='".$ticketName."' data-hallExistence='".$hallExistence."' data-ticketsNumber='".$ticketsNumber."' data-login='".$login."' style='padding: 5px 10px; background-color: black; color: white; border-radius: 10px; cursor: pointer;' id='confirm-ticket-buy'>Да</div>
                                             <div style='margin-left: 20px; padding: 5px 10px; background-color: black; color: white; border-radius: 10px; cursor: pointer;' id='decline-ticket-buy'>Нет</div>
                                         </div>
                                     </div>
@@ -318,7 +321,33 @@
     });
 
     $("#confirm-ticket-buy").click(function() {
-        console.log("ДОДЕЛАТЬ");
+        let performanceID = $(this).attr("data-performanceID");
+        let ticketName = $(this).attr("data-ticketName");
+        let hallExistence = parseInt($(this).attr("data-hallExistence"));
+        let ticketsNumber = parseInt($(this).attr("data-ticketsNumber"));
+        let login = $(this).attr("data-login");
+        if(!hallExistence) {
+            ticketsNumber = ticketsNumber - 1;
+            let firstQuery = "INSERT INTO purchases (`Login`, `Ticket name`, `Performance ID`, `Date`) VALUES ('" + login + "', '" + ticketName + "', '" + performanceID + "')";
+            let secondQuery = "UPDATE performances SET `Places number` = '" + ticketsNumber + "' WHERE `Performance ID` = '" + performanceID + "'";
+            console.log(firstQuery + "\n\n\n" + secondQuery);
+            // $.ajax({
+            //     type: "POST",
+            //     url: "core/ticket-buy-query.php",
+            //     data: {firstQuery: firstQuery, secondQuery: secondQuery},
+            //     context: document.body,
+            //     success: function(result) {
+            //         $("#dialog-content").html(result);
+            //     }
+            // });
+        }
+        else {
+            
+        }
+    });
+
+    $("#decline-ticket-buy").click(function() {
+        document.getElementById("ticket-buy-dialog").close();
     });
 
     // -------- all burger-menus --------

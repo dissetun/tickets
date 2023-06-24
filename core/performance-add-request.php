@@ -19,22 +19,38 @@
     $ticketPrice = $_POST["ticketPrice"];
     $placesArray = json_decode($_POST["placesArray"]);
     $imagePath = $_POST["imagePath"];
-    if(!$hallExistence) {
+    if($hallExistence == '0') {
         $query = "INSERT INTO performances (`Performance name`, `Platform`, `Hall existence`, `Genre`, `Description`, `Start date`, `End date`, `Status`, `Approved`, `Places number`, `Ticket price`, `Image path`) VALUES ('$performanceName', '$platform', '$hallExistence', '$genre', '$description', '$startDate', '$endDate', '$status', '$approved', '$placesNumber', '$ticketPrice', '$imagePath')";
         $result = mysqli_query($link, $query);
-        echo mysqli_error($link);
     }
     else {
-        $query = "INSERT INTO performances (`Performance name`, `Platform`, `Hall existence`, `Hall ID`, `Genre`, `Description`, `Start date`, `End date`, `Status`, `Approved`, `Places number`, `Ticket price`, `Image path`) VALUES ('$performanceName', '$platform', '$hallExistence', '$hallID', '$genre', '$description', '$startDate', '$endDate', '$status', '$approved', '-1', '-1', '$imagePath')";
+        $query = "INSERT INTO performances (`Performance name`, `Platform`, `Hall existence`, `Hall ID`, `Genre`, `Description`, `Start date`, `End date`, `Status`, `Approved`, `Places number`, `Ticket price`, `Image path`) VALUES ('$performanceName', '$platform', '$hallExistence', '$hallID', '$genre', '$description', '$startDate', '$endDate', '$status', '$approved', '$placesNumber', '-1', '$imagePath')";
         $result = mysqli_query($link, $query);
-        echo mysqli_error($link);
+        $lastID = mysqli_insert_id($link);
 
         // following code will generate places with defined price for each place and insert it into database ticket-db[performances]:
 
-        // for($i = 0; $i < count($placesArray); $i++) {
-        //     $placeQuery = "INSERT INTO `performance-place`";
-        // }
+        for($i = 0; $i < count($placesArray); $i++) {
+            $placeName = $placesArray[$i][0];
+            $placePrice = $placesArray[$i][1];
+            $placeIDQuery = "SELECT * FROM places WHERE `Hall ID` = '$hallID' and `Place name` = '$placeName'";
+            $placeIDQueryResult = mysqli_query($link, $placeIDQuery);
+            $placeID = "";
+            foreach($placeIDQueryResult as $placeIDQueryResultRow) {
+                $placeID = $placeIDQueryResultRow["Place ID"];
+            }
+            $insertQuery = "INSERT INTO `performance-places` (`Performance ID`, `Place ID`, `Price`, `Status`) VALUES ('$lastID', '$placeID', '$placePrice', '0')";
+            $insertQueryResult = mysqli_query($link, $insertQuery);
+            echo mysqli_error($link);
+        }
     }
+    echo 
+    "
+        <div style='display: flex; justify-content: center; align-items: center;'>
+            <p style='text-align: center;'>Заявка на проведение представления отправлена</p>
+            <i style='margin-left: 10px; font-size: 30px;' class='fa-regular fa-circle-check'></i>
+        </div>
+    ";
     mysqli_close($link);
     // echo $performanceName."\n".$hallExistence."\n".$hallID."\n".$genre."\n".$startDate."\n".$endDate."\n".$status."\n".$description."\n".$ticketCost."\n".$placesArray."\n".$imagePath;
 ?>

@@ -612,7 +612,8 @@
             let endDate = $("#input-3").val();
             var placesArray = ["undefined"];
             let ticketPrice = "undefined";
-            let placesNumber = "undefined";
+            let placesNumber = $(".place").length;
+            console.log(placesNumber);
             if(hallExistence) {
                 hallID = $("#hall-scroller").find(".custom-scroller-selected-option").attr("id");
                 hallID = hallID.replace("selected-hallID=", '');
@@ -637,7 +638,6 @@
             let imagePath = "undefined";
             document.getElementById("add-dialog").showModal();
             $("#confirm-add-request").click(function() {
-                document.getElementById("add-dialog").close();
                 $.ajax({
                     type: "POST",
                     url: "core/performance-add-image-request.php",
@@ -656,12 +656,11 @@
                             data: {performanceName: performanceName, platform: platform, hallID: hallID, hallExistence: hallExistence, genre: genre, description: description, startDate: startDate, endDate: endDate, placesArray: JSON.stringify(placesArray), placesNumber: placesNumber, ticketPrice: ticketPrice, imagePath: imagePath},
                             context: document.body,
                             success: function(otherResult) {
-                                console.log(otherResult);
+                                $(".dialog-content").html(otherResult);
                             }
                         });
                     }
                 });
-                // window.location.reload();
             });
             $("#decline-add-request").click(function() {
                 document.getElementById("add-dialog").close();
