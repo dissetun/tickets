@@ -76,7 +76,7 @@
                         require_once 'core/connect.php';
                         $link = mysqli_connect($host, $user, $password, $db_name); 
                         $today = date("Y-m-d H:i:s");
-                        $query = "SELECT * FROM performances WHERE `Approved` = '1' and `Start date` > '$today' LIMIT 30";
+                        $query = "SELECT * FROM performances WHERE `Approved` = '1' AND `Places number` > '0' AND `Start date` > '$today' LIMIT 7";
                         $result = mysqli_query($link, $query);
                         foreach($result as $row) {
                             echo 

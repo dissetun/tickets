@@ -70,7 +70,7 @@
             </div>
         </header>
 
-        <main>
+        <main style="margin-top: 150px; margin-bottom: 90px;">
             <div class='purchases-list-container'>
                 <?php 
                     require_once "core/connect.php";
@@ -91,8 +91,99 @@
                         ";
                     }
                     foreach($result as $row) {
-
+                        $performanceID = $row["Performance ID"];
+                        $performancePlaceID = $row["Performance-place ID"];
+                        $ticketPrice = "";
+                        $performanceName = "";
+                        $hall = "";
+                        $platform = "";
+                        $placeName = "";
+                        $hallName = "";
+                        if(!is_null($performancePlaceID)) {
+                            $performanceID = "";
+                            $placeID = "";
+                            $query = mysqli_query($link, "SELECT * FROM `performance-places` WHERE `Performance-place ID` = '$performancePlaceID'");
+                            foreach($query as $queryRow) {
+                                $ticketPrice = $queryRow["Price"];
+                                $performanceID = $queryRow["Performance ID"];
+                                $placeID = $queryRow["Place ID"];
+                            }
+                            $hallID = "";
+                            $placeQuery = mysqli_query($link, "SELECT * FROM places WHERE `Place ID` = '$placeID'");
+                            foreach($placeQuery as $placeQueryRow) {
+                                $placeName = $placeQueryRow["Place name"];
+                                $hallID = $placeQueryRow["Hall ID"];
+                            }
+                            $hallQuery = mysqli_query($link, "SELECT * FROM halls WHERE `Hall ID` = '$hallID'");
+                            foreach($hallQuery as $hallQueryRow) {
+                                $hallName = $hallQueryRow["Hall name"];
+                            }
+                        }
+                        else {
+                            $query = mysqli_query($link, "SELECT * FROM performances WHERE `Performance ID` = '$performanceID'");
+                            foreach($query as $queryRow) {
+                                $ticketPrice = $queryRow["Ticket price"];
+                                $platform = $queryRow["Platform"];
+                            }
+                        }
+                        $getPerformanceNameQuery = mysqli_query($link, "SELECT * FROM performances WHERE `Performance ID` = '$performanceID'");
+                        foreach($getPerformanceNameQuery as $getPerformanceNameQueryRow) {
+                            $performanceName = $getPerformanceNameQueryRow["Performance name"];
+                            $platform = $getPerformanceNameQueryRow["Platform"];
+                        }
+                        $ticketPrice = (int)$ticketPrice;
+                        $style = "padding: 5px 10px; border-radius: 10px;";
+                        if($ticketPrice <= 249) {
+                            $style = $style." background-color: gray; color: white;";
+                        }
+                        else if($ticketPrice <= 450) {
+                            $style = $style." background-color: #8aff73;";
+                        }
+                        else if($ticketPrice <= 650) {
+                            $style = $style." background-color: #80b1ff;";
+                        }
+                        else if($ticketPrice <= 1000) {
+                            $style = $style." background-color: #2e6dff; color: white;";
+                        }
+                        else if($ticketPrice <= 1300) {
+                            $style = $style." background-color: #ffe873;";
+                        }
+                        else if($ticketPrice <= 1700) {
+                            $style = $style." background-color: #ff9c38;";
+                        }
+                        else if($ticketPrice <= 2000) {
+                            $style = $style." background-color: #ff6363; color: white;";
+                        }
+                        else if($ticketPrice <= 2500 || $ticketPrice > 2500) {
+                            $style = $style." background-color: crimson; color: white;";
+                        }
+                        if(!is_null($performancePlaceID))
+                            echo
+                            "   
+                                <div class='purchase'>
+                                    <p style='text-align: center; align-self: flex-start; padding-bottom: 10px; border-bottom: 2px solid black;'>Билет <span style='font-weight: bold;'>".$row["Ticket name"]."</span></p>
+                                    <p style='margin-top: 20px;'>Представление <span style='font-weight: bold;'>".$performanceName."</span></p>
+                                    <p style='margin-top: 20px;'>Площадка <span style='font-weight: bold;'>".$platform."</span></p>
+                                    <p style='margin-top: 20px;'>Место <span style='font-weight: bold;'>".$placeName."</span></p>
+                                    <p style='margin-top: 20px;'>Зал <span style='font-weight: bold;'>".$hallName."</span></p>
+                                    <p style='margin-top: 20px;'>Цена билета <span style='".$style."font-weight: bold;'>".$ticketPrice." руб.</span></p>
+                                    <p style='margin-top: 20px;'>Дата покупки билета <span style='font-weight: bold;'>".$row["Date"]."</span></p>
+                                </div>
+                            ";
+                        else {
+                            echo
+                            "   
+                                <div class='purchase'>
+                                    <p style='text-align: center; align-self: flex-start; padding-bottom: 10px; border-bottom: 2px solid black;'>Билет <span style='font-weight: bold;'>".$row["Ticket name"]."</span></p>
+                                    <p style='margin-top: 20px;'>Представление <span style='font-weight: bold;'>".$performanceName."</span></p>
+                                    <p style='margin-top: 20px;'>Площадка <span style='font-weight: bold;'>".$platform."</span></p>
+                                    <p style='margin-top: 20px;'>Цена билета <span style='".$style."font-weight: bold;'>".$ticketPrice." руб.</span></p>
+                                    <p style='margin-top: 20px;'>Дата покупки билета <span style='font-weight: bold;'>".$row["Date"]."</span></p>
+                                </div>
+                            ";
+                        }
                     }
+                    mysqli_close($link);
                 ?>
             </div>
         </main>
