@@ -12,6 +12,7 @@
         die("Произошла ошибка. Мы уже работаем над ее исправлением :).");      
     }
     $i = 0;
+    $num_rows = mysqli_num_rows($result);
     foreach($result as $row) {
         if(!($i % 10)) {
             echo
@@ -32,7 +33,7 @@
                 </div>
             </div>
         ";
-        if(!(($i + 1) % 10)) {
+        if(!(($i + 1) % 10) or $i == $num_rows - 1) {
             echo 
             "   
                 </div>

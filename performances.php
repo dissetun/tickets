@@ -85,7 +85,7 @@
                             include 'core/connect.php';
                             $link = mysqli_connect($host, $user, $password, $db_name); 
                             $today = date("Y-m-d H:i:s");
-                            $query = "SELECT * FROM performances WHERE `Approved` = '1' AND `Start date` > '$today' AND ((`Hall existence` = '0' AND `Places number` > '0') OR `Hall existence` = '1') LIMIT 6";
+                            $query = "SELECT * FROM performances WHERE `Approved` = '1' AND `Start date` > '$today' AND `Places number` > '0' LIMIT 6";
                             $result = mysqli_query($link, $query);
                             foreach($result as $row) {
                                 echo 

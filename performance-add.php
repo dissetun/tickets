@@ -467,7 +467,6 @@
     // -------- place-config --------
 
     $(".places-config-menu-wrapper").on("click", ".places-row .place", function(event) {
-        // console.log("something");
         if(event.target != event.currentTarget) {
             return;
         }
@@ -484,7 +483,6 @@
 
     $(".places-config-menu-wrapper").on("input", ".places-row .place .place-info input", function() {
         let price = parseInt($(this).val());
-        // console.log(price);
         if(price <= 249 || price == NaN) {
             $(this).parent().parent().parent().css({"background-color":"gray"});
         }
