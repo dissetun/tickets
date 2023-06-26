@@ -251,6 +251,9 @@
             $("<a href='moderation.php'>Модерация</a>").insertAfter("#personal-area");
             $(".user-menu").css({"margin-top":"211px"});
         }
+        else {
+            $(".user-menu").css({"margin-top":"195px"});
+        }
         let imagePath = '<?php echo json_encode($_SESSION["imagePath"])?>';
         imagePath = "url(" + imagePath.substring(1, imagePath.length - 1) + ")";
         $(".user").css({"min-width":"165px"});

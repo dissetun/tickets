@@ -39,7 +39,7 @@
             foreach($placeIDQueryResult as $placeIDQueryResultRow) {
                 $placeID = $placeIDQueryResultRow["Place ID"];
             }
-            $insertQuery = "INSERT INTO `performance-places` (`Performance ID`, `Place ID`, `Price`, `Status`) VALUES ('$lastID', '$placeID', '$placePrice', '0')";
+            $insertQuery = "INSERT INTO `performance-places` (`Performance ID`, `Place ID`, `Price`) VALUES ('$lastID', '$placeID', '$placePrice')";
             $insertQueryResult = mysqli_query($link, $insertQuery);
             echo mysqli_error($link);
         }

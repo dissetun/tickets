@@ -1551,6 +1551,7 @@ textarea {
 
 /* ===== signin.php, signup.php ===== begin */
 .sign-container {
+    max-width: 586px;
     width: 100%;
     height: 100%;
     display: flex;
@@ -1589,8 +1590,7 @@ textarea {
 }
 
 .sign-special {
-    max-width: 200px;
-    width: 100%;
+    width: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1667,6 +1667,34 @@ input {
 .to-main-button:hover::after {
     width: 100%;
 }
+
+@media screen and (max-width: 630px) {
+    .sign-form-container {
+        flex-direction: column;
+    }
+    .sign-special {
+        width: 100%;
+        text-align: center;
+    }
+    .sign-form-container {
+        max-width: 400px;
+        width: 100%;
+    }
+    .sign-container {
+        max-width: 400px;
+        width: 100%;
+    }
+    /* .footer-info-container, .footer-info-subcontainer {
+        flex-direction: column;
+    }
+    .footer-info-item:first-child {
+        padding-bottom: 0px;
+    }
+    .wrapper {
+        min-height: calc(100% + 308px);
+    } */
+}
+
 /* ===== signin.php, signup.php ===== end */
 
 /* --- Footer --- */

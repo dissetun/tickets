@@ -5,7 +5,7 @@
     }
     $path = 'img/'.time().str_replace(' ', '', $_FILES["user-profile-image"]["name"]);
     if(!move_uploaded_file($_FILES["user-profile-image"]["tmp_name"], "../".$path)) {
-        die("Изображение не выбрано");
+        $path = $_SESSION["imagePath"];
     }
     echo $path;
 ?>

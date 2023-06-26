@@ -36,7 +36,7 @@
     <div class="wrapper">
 
         <main style = "margin-top: 0px;">
-            <div style = "max-width: 510.14px;" class="sign-container">
+            <div class="sign-container">
                 <div class="sign-form-container">
                     <div class="sign-special">
                         <p>Посещайте новинки из мира театра, кино и музыки.</p>
@@ -127,19 +127,19 @@
                 $("#" + this.id.toString()).css({"border":"1px solid black"}); 
         }); 
         // проверка логина
-        if($("input[name='login']").val().length < 8) {
+        if($("input[name='login']").val().length == 0) {
             $("input[name='login']").css({"border":"1px solid red"});
-            if(document.querySelector(".login-message") == null) {
-                $("<div style = 'color: red; margin-bottom: 15px;' class = 'login-message'></div>").insertAfter($("input[name='login']"));
-                $(".login-message").text("Минимальная длина логина составляет 8 символов");
-            }
+            // if(document.querySelector(".login-message") == null) {
+            //     $("<div style = 'color: red; margin-bottom: 15px;' class = 'login-message'></div>").insertAfter($("input[name='login']"));
+            //     $(".login-message").text("Минимальная длина логина составляет 2 символа");
+            // }
             nextStep = false;
         }
         else {
             if(document.querySelector(".login-message") != null) {
                 $(".login-message").remove();
-                $("input[name='login']").css({"border":"1px solid black"});
             }
+            $("input[name='login']").css({"border":"1px solid black"});
         }
         // проверка почты
         if(!isEmail($("input[name='email']").val())) {
@@ -153,8 +153,8 @@
         else {
             if(document.querySelector(".email-message") != null) {
                 $(".email-message").remove();
-                $("input[name='email']").css({"border":"1px solid black"});
             }
+            $("input[name='email']").css({"border":"1px solid black"});
         }
         // проверка пароля
         if($("input[name='password'").val().length < 8) {
@@ -168,8 +168,8 @@
         else {
             if(document.querySelector(".password-message") != null) {
                 $(".password-message").remove();
-                $("input[name='password']").css({"border":"1px solid black"});
             }
+            $("input[name='password']").css({"border":"1px solid black"});
         }
         // проверка повтора пароля
         if($("input[name='password'").val() != $("input[name='password-confirm']").val()) {

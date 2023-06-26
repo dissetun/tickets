@@ -36,7 +36,7 @@
     <div class="wrapper">
 
         <main style = "margin-top: 0px;">
-            <div style = "max-width: 543.39px;" class="sign-container">
+            <div class="sign-container">
                 <div class="sign-form-container">
                     <div class="sign-special">
                         <p>Посещайте новинки из мира театра, кино и музыки.</p>

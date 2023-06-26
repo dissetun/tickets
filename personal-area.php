@@ -83,7 +83,7 @@
                             <div class='image-login-container'>
                                 <img src='".$_SESSION["imagePath"]."' class='user-profile-image'>
                                 <form id='file-form' enctype='multipart/form-data'>
-                                    <input id='file-input' name='user-profile-image' type='file' allow='image/png, image/gif, image/jpeg' style='display: none;'></input>
+                                    <input value='".$_SESSION["imagePath"]."' id='file-input' name='user-profile-image' type='file' allow='image/png, image/gif, image/jpeg' style='display: none;'></input>
                                 </form>
                                 <p style='margin: 10px 0px;' class='user-profile-login'>".$_SESSION["login"]."</p>
                             </div>
@@ -180,6 +180,9 @@
             $("<a href='moderation.php'>Модерация</a>").insertAfter("#personal-area");
             $(".user-menu").css({"margin-top":"211px"});
         }
+        else {
+            $(".user-menu").css({"margin-top":"194px"});
+        }
         let imagePath = '<?php echo json_encode($_SESSION["imagePath"])?>';
         imagePath = "url(" + imagePath.substring(1, imagePath.length - 1) + ")";
         $(".user").css({"min-width":"165px"});
@@ -239,10 +242,10 @@
                     context: document.body,
                     success: function(result) {
                         let imagePath = result;
-                        console.log(imagePath);
-                        if(imagePath == "Изображение не выбрано") {
-                            imagePath = "img/default-image.jpg";
-                        }
+                        // console.log(imagePath);
+                        // if(imagePath == "Изображение не выбрано") {
+                        //     imagePath = "img/default-image.jpg";
+                        // }
                         $.ajax({
                             type: "POST",
                             url: "core/user-profile-change.php",
