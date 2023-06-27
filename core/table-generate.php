@@ -120,14 +120,6 @@
             if(in_array($key, $blockedKeys)) {
                 continue;
             }
-            // if($key == "Status") {
-            //     if($row[$key] == 0)
-            //         echo
-            //         "
-            //             <td>Не проведено</td>
-            //         ";
-            //     continue;
-            // }
             echo 
             "
                 <td>".$row[$key]."</td>
@@ -143,3 +135,17 @@
     }
     mysqli_close($link);
 ?>
+
+
+
+
+
+
+<!-- // if($key == "Status") {
+//     if($row[$key] == 0)
+//         echo
+//         "
+//             <td>Не проведено</td>
+//         ";
+//     continue;
+// } -->

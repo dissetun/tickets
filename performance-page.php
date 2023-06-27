@@ -117,6 +117,7 @@
                                 $address = $getAddressResultRow["Address"];
                             }
                             $login = $_SESSION["login"];
+                            $hallExistence = $row["Hall existence"];
                             echo 
                             '                                
                                 <div data-login="'.$login.'" class="performance-thumbnail" style="background: url('.$row["Image path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;">
@@ -142,9 +143,47 @@
                                         <div class="performance-data-item-element"><span>'.$platform.'</span></div>
                                         <div class="performance-data-item-element"><span>'.$address.'</span></div>
                                     </div>
+                            ';
+                            if(!((int)$hallExistence)) {
+                                $infoTicketPrice = $row["Ticket price"];
+                                $style = "";
+                                $priceStyle = "padding: 5px 10px; border-radius: 10px; font-weight: bold;";
+                                if($infoTicketPrice <= 249) {
+                                    $priceStyle = $priceStyle."background-color: gray; color: white;";
+                                }
+                                else if($infoTicketPrice <= 450) {
+                                    $priceStyle = $priceStyle."background-color: #8aff73;";
+                                }
+                                else if($infoTicketPrice <= 650) {
+                                    $priceStyle = $priceStyle."background-color: #80b1ff;";
+                                }
+                                else if($infoTicketPrice <= 1000) {
+                                    $priceStyle = $priceStyle."background-color: #2e6dff; color: white;";
+                                }
+                                else if($infoTicketPrice <= 1300) {
+                                    $priceStyle = $priceStyle."background-color: #ffe873;";
+                                }
+                                else if($infoTicketPrice <= 1700) {
+                                    $priceStyle = $priceStyle."background-color: #ff9c38;";
+                                }
+                                else if($infoTicketPrice <= 2000) {
+                                    $priceStyle = $priceStyle."background-color: #ff6363; color: white;";
+                                }
+                                else if($infoTicketPrice <= 2500 || $infoTicketPrice > 2500) {
+                                    $priceStyle = $priceStyle."background-color: crimson; color: white;";
+                                }
+                                echo
+                                '
+                                    <div class="performance-data-item">
+                                        <p>Цена билета</p>
+                                        <div style="'.$priceStyle.'" class="performance-data-item-element"><span>'.$infoTicketPrice.' ₽</span></div>
+                                    </div>
+                                ';
+                            }
+                            echo 
+                            '
                                 </div>
                             ';
-                            $hallExistence = $row["Hall existence"];
                             $ticketBuyButtonStyle = "";
                             if((int)$hallExistence) {
                                 $ticketBuyButtonStyle = "display: none;";

@@ -239,9 +239,9 @@
                 "color":"white"
             });
             $("<a href='administration.php'>Управление</a>").insertAfter("#personal-area");
-            $(".user-menu").css({"margin-top":"211px"});
+            $(".user-menu").css({"margin-top":"222px"});
         }
-        if(roleName == "Модератор") {
+        else if(roleName == "Модератор") {
             $(".user-login").css({
                 "padding":"3px 10px",
                 "background-color":"#cedcfb",
@@ -249,7 +249,7 @@
                 "color":"black"
             });
             $("<a href='moderation.php'>Модерация</a>").insertAfter("#personal-area");
-            $(".user-menu").css({"margin-top":"211px"});
+            $(".user-menu").css({"margin-top":"222px"});
         }
         else {
             $(".user-menu").css({"margin-top":"195px"});

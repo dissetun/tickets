@@ -12,7 +12,6 @@
     $genre = $_POST["genre"];
     $startDate = $_POST["startDate"];
     $endDate = $_POST["endDate"];
-    $status = 0;
     $approved = 0;
     $description = $_POST["description"];
     $placesNumber = $_POST["placesNumber"];
@@ -20,11 +19,11 @@
     $placesArray = json_decode($_POST["placesArray"]);
     $imagePath = $_POST["imagePath"];
     if($hallExistence == '0') {
-        $query = "INSERT INTO performances (`Performance name`, `Platform`, `Hall existence`, `Genre`, `Description`, `Start date`, `End date`, `Status`, `Approved`, `Places number`, `Ticket price`, `Image path`) VALUES ('$performanceName', '$platform', '$hallExistence', '$genre', '$description', '$startDate', '$endDate', '$status', '$approved', '$placesNumber', '$ticketPrice', '$imagePath')";
+        $query = "INSERT INTO performances (`Performance name`, `Platform`, `Hall existence`, `Genre`, `Description`, `Start date`, `End date`, `Approved`, `Places number`, `Ticket price`, `Image path`) VALUES ('$performanceName', '$platform', '$hallExistence', '$genre', '$description', '$startDate', '$endDate', '$approved', '$placesNumber', '$ticketPrice', '$imagePath')";
         $result = mysqli_query($link, $query);
     }
     else {
-        $query = "INSERT INTO performances (`Performance name`, `Platform`, `Hall existence`, `Hall ID`, `Genre`, `Description`, `Start date`, `End date`, `Status`, `Approved`, `Places number`, `Ticket price`, `Image path`) VALUES ('$performanceName', '$platform', '$hallExistence', '$hallID', '$genre', '$description', '$startDate', '$endDate', '$status', '$approved', '$placesNumber', '-1', '$imagePath')";
+        $query = "INSERT INTO performances (`Performance name`, `Platform`, `Hall existence`, `Hall ID`, `Genre`, `Description`, `Start date`, `End date`, `Approved`, `Places number`, `Ticket price`, `Image path`) VALUES ('$performanceName', '$platform', '$hallExistence', '$hallID', '$genre', '$description', '$startDate', '$endDate', '$approved', '$placesNumber', '-1', '$imagePath')";
         $result = mysqli_query($link, $query);
         $lastID = mysqli_insert_id($link);
 
