@@ -220,7 +220,7 @@
                         <label style="margin-bottom: 5px; margin-top: 15px;" for="input-4">Цена билета</label>
                         <div style='display: flex; align-items: center; align-content: center;'>
                             <input value="0" min="0" style="max-width: 300px; width: 100%; margin-bottom: 0px;" id="input-4" type="number" name="place-price">
-                            <p style="margin-left: 5px;">руб.</p>
+                            <p style="margin-left: 5px;">₽</p>
                         </div>
                     </div>
                     <div id="places-config-menu-container" style="margin-top: 30px; display: none;" class="form-element">

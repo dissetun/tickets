@@ -88,11 +88,38 @@
                             $query = "SELECT * FROM performances WHERE `Approved` = '1' AND `Start date` > '$today' AND `Places number` > '0' LIMIT 6";
                             $result = mysqli_query($link, $query);
                             foreach($result as $row) {
+                                $performanceID = $row["Performance ID"];
+                                $monthName = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа",
+                                "Сентября", "Октября", "Ноября", "Декабря"];
+                                // отформатированные данные даты начала представления
+                                $startDate = new DateTime((string)$row["Start date"]);
+                                $startDay = $startDate->format('d');
+                                $startMonth = $startDate->format('m');
+                                $startHours = $startDate->format('H');
+                                $startMinutes = $startDate->format('i');
+                                $minPrice = "undefined";
+                                if(!((int)$row["Hall existence"])) {
+                                    $minPrice = $row["Ticket price"];
+                                }
+                                else {
+                                    $minPriceQuery = "SELECT MIN(`Price`) AS `Min price` FROM `performance-places` WHERE `Performance ID` = '$performanceID'";
+                                    $minPriceQueryResult = mysqli_query($link, $minPriceQuery);
+                                    foreach($minPriceQueryResult as $minPriceQueryRow) {
+                                        $minPrice = "от ".$minPriceQueryRow["Min price"];
+                                    }
+                                }
                                 echo 
                                 '
-                                    <a href="performance-page.php?performance='.$row["Performance ID"].'" style = "background: url('.$row["Image path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
-                                        <p class="performance-name-title">'.$row["Performance name"].'</p>
-                                    </a>
+                                    <div>
+                                        <a href="performance-page.php?performance='.$row["Performance ID"].'" style = "background: url('.$row["Image path"].'); background-size: cover; background-repeat: no-repeat; background-position: center;" class="performance">
+                                            <p class="performance-name-title">'.$row["Performance name"].'</p>
+                                        </a>
+                                        <div style="display: flex; margin-top: 10px; margin-bottom: 10px; align-items: center;">
+                                        <p>'.(int)$startDay." ".$monthName[(int)$startMonth - 1].", ".$startHours.":".$startMinutes.'</p>
+                                        <p style="margin-left: 5px;">●</p>
+                                        <p style="padding: 2px 10px; background-color: #4a4a4a; color: white; margin-left: 5px; border-radius: 10px;">'.$minPrice.' ₽</p>
+                                        </div>
+                                    </div>
                                 ';
                                 // echo 
                                 // '
@@ -110,7 +137,10 @@
                     <div class="show-more-animation">
                         <div class="load-square"></div>
                     </div>
-                    <button class="show-more">Показать еще</button>
+                    <div class="show-more">
+                        <button style="cursor: pointer; outline: none; border: none; padding: 5px 10px; background-color: black; color: white; border-radius: 10px;">Показать еще</button>
+                        <i style="font-size: 25px;" class="fa-solid fa-caret-down"></i>
+                    </div>
                 </div>
             </div>
         </section>
@@ -190,7 +220,7 @@
                 'display':'none'
             });
             $(".show-more").css({
-                'display':'block'
+                'display':'flex'
             });
             $.ajax({
                 type: "POST",
@@ -267,6 +297,8 @@
             "display":"block"
         });
     }
+
+    // -------- all burger-menus --------
 
     $(".burger-icon").click(function() {
         if(!$(".burger-list").hasClass("burger-active")) {

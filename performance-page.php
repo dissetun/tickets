@@ -230,7 +230,7 @@
                                                 <div class='place-info'>
                                                     <p class='place-info-title'>".$placeName."</p>
                                                     <div style='display: flex; justify-content: center; align-items: center;'>
-                                                        <p style='text-align: center; ".$priceStyle."'>".$price." руб.</p>
+                                                        <p style='text-align: center; ".$priceStyle."'>".$price." ₽</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -340,7 +340,7 @@
                                 echo 
                                 "
                                     <div>
-                                        <p style=''>Стоимость билета <span style='".$style."'>".$row["Ticket price"]." руб.</span></p>
+                                        <p style=''>Стоимость билета <span style='".$style."'>".$row["Ticket price"]." ₽</span></p>
                                         <p style='margin-top: 15px;'>Вы уверены, что хотите приобрести билет?</p>
                                         <div style='margin-top: 15px; display: flex; justify-content: right;'>
                                             <div data-performanceID='".$performanceID."' data-ticketName='".$ticketName."' data-hallExistence='".$hallExistence."' data-ticketsNumber='".$ticketsNumber."' data-login='".$login."' style='padding: 5px 10px; background-color: black; color: white; border-radius: 10px; cursor: pointer;' id='confirm-ticket-buy'>Да</div>
@@ -354,7 +354,7 @@
                                 echo 
                                 "
                                     <div>
-                                        <p style=''>Стоимость билета <span style='".$style."'>".$row["Ticket price"]." руб.</span></p>
+                                        <p style=''>Стоимость билета <span style='".$style."'>".$row["Ticket price"]." ₽</span></p>
                                         <p style='margin-top: 15px;'>Вы уверены, что хотите приобрести билет?</p>
                                         <div style='margin-top: 15px; display: flex; justify-content: right;'>
                                             <div data-login='".$login."' style='padding: 5px 10px; background-color: black; color: white; border-radius: 10px; cursor: pointer;' id='confirm-ticket-buy'>Да</div>
@@ -515,7 +515,7 @@
                 let htmlToLoad = 
                 `   
                     <div>
-                        <p style=''>Стоимость билета <span style='` + placePriceStyle + `'>` + placePrice +` руб.</span></p>
+                        <p style=''>Стоимость билета <span style='` + placePriceStyle + `'>` + placePrice +` ₽</span></p>
                         <p style='margin-top: 15px;'>Вы уверены, что хотите приобрести билет?</p>
                         <div style='margin-top: 15px; display: flex; justify-content: right;'>
                             <div data-login='` + login +  `' style='padding: 5px 10px; background-color: black; color: white; border-radius: 10px; cursor: pointer;' id='confirm-ticket-buy'>Да</div>
@@ -640,7 +640,7 @@
                     </div>
                     <div style='display: flex; align-self: flex-start; align-items: center;'>
                         <p style='margin-left: auto;'>Цена</p>
-                        <p style='margin-left: auto;` + placePriceStyle + `'>` + placePrice + ` руб.</p>
+                        <p style='margin-left: auto;` + placePriceStyle + `'>` + placePrice + ` ₽</p>
                     </div>
                 `;
                 $(".selected-place-info div").html(htmlToLoad);

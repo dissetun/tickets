@@ -28,7 +28,7 @@
                     <label>Цена</label>
                     <div style='display: flex; justify-content: center; align-items: center; align-content: center;'>
                         <input value='0' name='place-price' type='number' min='0'></input>
-                        <p style='margin-left: 5px;'>руб.</p>
+                        <p style='margin-left: 5px;'>₽</p>
                     </div>
                 </div>
             </div>

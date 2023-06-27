@@ -166,7 +166,7 @@
                                     <p style='margin-top: 20px;'>Площадка <span style='font-weight: bold;'>".$platform."</span></p>
                                     <p style='margin-top: 20px;'>Место <span style='font-weight: bold;'>".$placeName."</span></p>
                                     <p style='margin-top: 20px;'>Зал <span style='font-weight: bold;'>".$hallName."</span></p>
-                                    <p style='margin-top: 20px;'>Цена билета <span style='".$style."font-weight: bold;'>".$ticketPrice." руб.</span></p>
+                                    <p style='margin-top: 20px;'>Цена билета <span style='".$style."font-weight: bold;'>".$ticketPrice." ₽</span></p>
                                     <p style='margin-top: 20px;'>Дата покупки билета <span style='font-weight: bold;'>".$row["Date"]."</span></p>
                                 </div>
                             ";
@@ -177,7 +177,7 @@
                                     <p style='text-align: center; align-self: flex-start; padding-bottom: 10px; border-bottom: 2px solid black;'>Билет <span style='font-weight: bold;'>".$row["Ticket name"]."</span></p>
                                     <p style='margin-top: 20px;'>Представление <span style='font-weight: bold;'>".$performanceName."</span></p>
                                     <p style='margin-top: 20px;'>Площадка <span style='font-weight: bold;'>".$platform."</span></p>
-                                    <p style='margin-top: 20px;'>Цена билета <span style='".$style."font-weight: bold;'>".$ticketPrice." руб.</span></p>
+                                    <p style='margin-top: 20px;'>Цена билета <span style='".$style."font-weight: bold;'>".$ticketPrice." ₽</span></p>
                                     <p style='margin-top: 20px;'>Дата покупки билета <span style='font-weight: bold;'>".$row["Date"]."</span></p>
                                 </div>
                             ";
