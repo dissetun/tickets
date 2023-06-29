@@ -6,7 +6,7 @@
     include 'connect.php';
     $link = mysqli_connect($host, $user, $password, $db_name); 
     $login = $_POST["login"];
-    $password = $_POST["password"];
+    $password = md5($_POST["password"]);
     $query = "SELECT * FROM Users WHERE `Login` = '$login' and `Password` = '$password'";
     $result = mysqli_query($link, $query); 
     if($result) {

@@ -15,7 +15,7 @@
     }
     $name = $_POST["name"];
     $surname = $_POST["surname"];
-    $password = $_POST["password"];
+    $password = md5($_POST["password"]);
     $email = $_POST["email"];
     $roleName = "Пользователь";
     $imagePath = "img/user-profile.png";

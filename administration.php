@@ -106,7 +106,7 @@
                     <?php 
                         require_once "core/connect.php";
                         $link = mysqli_connect($host, $user, $password, $db_name); 
-                        $query = "SELECT * FROM users";
+                        $query = "SELECT * FROM users LIMIT 8";
                         $result = mysqli_query($link, $query);
                         echo 
                         "
@@ -148,7 +148,8 @@
                         $query = "SELECT * FROM users";
                         $result = mysqli_query($link, $query);
                         $numOfElements = mysqli_num_rows($result);
-                        $numOfPages = $numOfElements / 8 + ($numOfElements % 8 != 0 and $numOfElements > 8);
+                        $numOfPages = $numOfElements / 8 + ($numOfElements > 8 ? $numOfElements % 8 != 0 : 0);
+                        $numOfPages = (int)$numOfPages;
                         for($i = 0; $i < $numOfPages; $i++) {
                             if(!$i)
                                 echo 
@@ -333,6 +334,8 @@
             data: {query: query},
             context: document.body,
             success: function(result) {
+                console.log(result);
+                console.log(query);
             }
         });
         let pageNumber = parseInt($(".pagination-page-active").text());
@@ -438,7 +441,9 @@
             success: function(result) {
             }
         });
-        window.location.reload();
+        setTimeout(() => {
+            window.location.reload();
+        }, 150);
     });
 
     $(".user-profile-form-button").click(function(event) {

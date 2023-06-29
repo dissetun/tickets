@@ -96,6 +96,7 @@
                         die("error occured");
                     else 
                         foreach($result as $row) {
+                            $performanceID = $_GET["performance"];
                             $monthName = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа",
                                     "Сентября", "Октября", "Ноября", "Декабря"];
                             // отформатированные данные даты начала представления
@@ -160,36 +161,226 @@
                                         <div class="performance-data-item-element"><span>'.$platform.'</span></div>
                                         <div class="performance-data-item-element"><span>'.$address.'</span></div>
                                     </div>
+                            ';
+                            $hallExistence = $row["Hall existence"];
+                            if(!((int)$hallExistence)) {
+                                $infoTicketPrice = $row["Ticket price"];
+                                $style = "";
+                                $priceStyle = "padding: 5px 10px; border-radius: 10px; font-weight: bold;";
+                                if($infoTicketPrice <= 249) {
+                                    $priceStyle = $priceStyle."background-color: gray; color: white;";
+                                }
+                                else if($infoTicketPrice <= 450) {
+                                    $priceStyle = $priceStyle."background-color: #8aff73;";
+                                }
+                                else if($infoTicketPrice <= 650) {
+                                    $priceStyle = $priceStyle."background-color: #80b1ff;";
+                                }
+                                else if($infoTicketPrice <= 1000) {
+                                    $priceStyle = $priceStyle."background-color: #2e6dff; color: white;";
+                                }
+                                else if($infoTicketPrice <= 1300) {
+                                    $priceStyle = $priceStyle."background-color: #ffe873;";
+                                }
+                                else if($infoTicketPrice <= 1700) {
+                                    $priceStyle = $priceStyle."background-color: #ff9c38;";
+                                }
+                                else if($infoTicketPrice <= 2000) {
+                                    $priceStyle = $priceStyle."background-color: #ff6363; color: white;";
+                                }
+                                else if($infoTicketPrice <= 2500 || $infoTicketPrice > 2500) {
+                                    $priceStyle = $priceStyle."background-color: crimson; color: white;";
+                                }
+                                echo
+                                '
+                                    <div class="performance-data-item">
+                                        <p>Цена билета</p>
+                                        <div style="'.$priceStyle.'" class="performance-data-item-element"><span>'.$infoTicketPrice.' ₽</span></div>
+                                    </div>
+                                ';
+                                echo 
+                                '
                                     <div class="performance-data-item">
                                         <p>Статус заявки</p>
                                         <div class="'.$statusSubclass.'"><span>'.$_GET["status"].'</span></div>
                                     </div>
-                                </div>
-                            ';
-                            if($_GET["status"] == "Одобрена") {
-                                echo 
-                                '
-                                    <div id="performance-id='.$_GET["performance"].'" class="moderation-verdict-buttons">
-                                        <p style="margin-left: auto;" id="moderation-decline-button">Отклонить заявку</p>
-                                    </div>
                                 ';
-                            }
-                            else if($_GET["status"] == "Отклонена") {
-                                echo 
-                                '
-                                    <div id="performance-id='.$_GET["performance"].'" class="moderation-verdict-buttons">
-                                        <p style="margin-left: auto;" id="moderation-approve-button">Одобрить заявку</p>
-                                    </div>
-                                ';
+                                echo "</div>";
+                                if($_GET["status"] == "Одобрена") {
+                                    echo 
+                                    '
+                                        <div id="performance-id='.$_GET["performance"].'" class="moderation-verdict-buttons">
+                                            <p style="margin-left: auto;" id="moderation-decline-button">Отклонить заявку</p>
+                                        </div>
+                                    ';
+                                }
+                                else if($_GET["status"] == "Отклонена") {
+                                    echo 
+                                    '
+                                        <div id="performance-id='.$_GET["performance"].'" class="moderation-verdict-buttons">
+                                            <p style="margin-left: auto;" id="moderation-approve-button">Одобрить заявку</p>
+                                        </div>
+                                    ';
+                                }
+                                else {
+                                    echo 
+                                    '
+                                        <div id="performance-id='.$_GET["performance"].'" class="moderation-verdict-buttons">
+                                            <p id="moderation-decline-button">Отклонить заявку</p>
+                                            <p id="moderation-approve-button">Одобрить заявку</p>
+                                        </div>
+                                    ';
+                                }
                             }
                             else {
                                 echo 
                                 '
-                                    <div id="performance-id='.$_GET["performance"].'" class="moderation-verdict-buttons">
-                                        <p id="moderation-decline-button">Отклонить заявку</p>
-                                        <p id="moderation-approve-button">Одобрить заявку</p>
+                                    <div class="performance-data-item">
+                                        <p>Статус заявки</p>
+                                        <div class="'.$statusSubclass.'"><span>'.$_GET["status"].'</span></div>
                                     </div>
                                 ';
+                                echo "</div>";
+                                echo 
+                                '
+                                    <div id="places-config-menu-container" style="margin-top: 30px; display: flex;" class="form-element">
+                                        <p style="font-size: 25px; font-weight: bold;" class="form-element-title">Схема зала</p>
+                                        <div class="places-config-menu">
+                                            <div class="places-config-menu-wrapper">
+                                            
+                                ';
+                                $placesQuery = "SELECT * FROM `performance-places` WHERE `Performance ID` = '$performanceID'";
+                                $placesResult = mysqli_query($link, $placesQuery);
+                                if(!$placesResult) {
+                                    die("Произошла ошибка. Мы уже работаем над ее исправлением :).");      
+                                }
+                                $i = 0;
+                                $num_rows = mysqli_num_rows($placesResult);
+                                foreach($placesResult as $placesRow) {
+                                    if(!($i % 10)) {
+                                        echo
+                                        "   
+                                            <div class='places-row'>
+                                        ";
+                                    }   
+                                    $price = (int)$placesRow["Price"];
+                                    $style = "";
+                                    $priceStyle = "padding: 5px 10px; border-radius: 10px; font-weight: bold;";
+                                    if($price <= 249) {
+                                        $style = "background-color: gray;";
+                                        $priceStyle = $priceStyle."background-color: gray; color: white;";
+                                    }
+                                    else if($price <= 450) {
+                                        $style = "background-color: #8aff73;";
+                                        $priceStyle = $priceStyle."background-color: #8aff73;";
+                                    }
+                                    else if($price <= 650) {
+                                        $style = "background-color: #80b1ff;";
+                                        $priceStyle = $priceStyle."background-color: #80b1ff;";
+                                    }
+                                    else if($price <= 1000) {
+                                        $style = "background-color: #2e6dff;";
+                                        $priceStyle = $priceStyle."background-color: #2e6dff; color: white;";
+                                    }
+                                    else if($price <= 1300) {
+                                        $style = "background-color: #ffe873;";
+                                        $priceStyle = $priceStyle."background-color: #ffe873;";
+                                    }
+                                    else if($price <= 1700) {
+                                        $style = "background-color: #ff9c38;";
+                                        $priceStyle = $priceStyle."background-color: #ff9c38;";
+                                    }
+                                    else if($price <= 2000) {
+                                        $style = "background-color: #ff6363;";
+                                        $priceStyle = $priceStyle."background-color: #ff6363; color: white;";
+                                    }
+                                    else if($price <= 2500 || $price > 2500) {
+                                        $style = "background-color: crimson;";
+                                        $priceStyle = $priceStyle."background-color: crimson; color: white;";
+                                    }
+                                    $placeholder = $placesRow["Placeholder"];
+                                    if($placeholder != null) {
+                                        $style = "background-color: black;";
+                                    }
+                                    $placeName = "";
+                                    $placeID = $placesRow["Place ID"];
+                                    $performancePlaceID = $placesRow["Performance-place ID"];
+                                    $performanceID = $_GET["performance"];
+                                    $placeNameQuery = "SELECT * FROM places WHERE `Place ID` = '$placeID'";
+                                    $placeNameQueryResult = mysqli_query($link, $placeNameQuery);
+                                    foreach($placeNameQueryResult as $placeNameQueryResultRow) {
+                                        $placeName = $placeNameQueryResultRow["Place name"];
+                                    }
+                                    if($placeholder == null)
+                                        echo 
+                                        "
+                                            <div data-ticketsNumber='".$ticketsNumber."' data-placeholder='".$placeholder."' data-performanceID='".$performanceID."' data-performancePlaceID='".$performancePlaceID."' data-placeName='".$placeName."' data-placePrice='".$price."' style='".$style."' class='place'>
+                                                <div class='place-info'>
+                                                    <p class='place-info-title'>".$placeName."</p>
+                                                    <div style='display: flex; justify-content: center; align-items: center;'>
+                                                        <p style='text-align: center; ".$priceStyle."'>".$price." ₽</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ";
+                                    else 
+                                        echo 
+                                        "
+                                            <div data-placeholder='".$placeholder."' style='".$style."' class='place'>
+                                                <div class='place-info'>
+                                                    <p class='place-info-title'>".$placeName."</p>
+                                                    <div>
+                                                        <p style='text-align: center;'>Место занято</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ";
+
+                                    if(!(($i + 1) % 10) or $i == $num_rows - 1) {
+                                        echo 
+                                        "   
+                                            </div>
+                                        ";
+                                    }
+                                    $i++;
+                                }
+                                echo
+                                "
+                                    <div class='scene'>
+                                        <p>Сцена</p>
+                                    </div>
+                                ";
+                                echo 
+                                '
+                                            </div>
+                                        </div>
+                                    </div>
+                                ';
+                                if($_GET["status"] == "Одобрена") {
+                                    echo 
+                                    '
+                                        <div style="margin-top: 25px;" id="performance-id='.$_GET["performance"].'" class="moderation-verdict-buttons">
+                                            <p style="margin-left: auto;" id="moderation-decline-button">Отклонить заявку</p>
+                                        </div>
+                                    ';
+                                }
+                                else if($_GET["status"] == "Отклонена") {
+                                    echo 
+                                    '
+                                        <div style="margin-top: 25px;" id="performance-id='.$_GET["performance"].'" class="moderation-verdict-buttons">
+                                            <p style="margin-left: auto;" id="moderation-approve-button">Одобрить заявку</p>
+                                        </div>
+                                    ';
+                                }
+                                else {
+                                    echo 
+                                    '
+                                        <div style="margin-top: 25px;" id="performance-id='.$_GET["performance"].'" class="moderation-verdict-buttons">
+                                            <p id="moderation-decline-button">Отклонить заявку</p>
+                                            <p id="moderation-approve-button">Одобрить заявку</p>
+                                        </div>
+                                    ';
+                                }
                             }
                         }
                     mysqli_close($link);
@@ -327,6 +518,24 @@
         else $(".user-menu").removeClass("user-menu-active");
     });
 
+    $(".places-config-menu-wrapper").on("mouseover", ".places-row .place", function(event) {
+        let current = $(this);
+        if(!current.hasClass("place-active")) {
+            current.find(".place-info").css({"display":"flex"});
+            current.addClass("place-active");
+        }
+        else {
+            current.removeClass("place-active");
+            current.find(".place-info").css({"display":"none"});
+        }
+    });
+
+    $(".places-config-menu-wrapper").on("mouseout", ".places-row .place", function(event) {
+        let current = $(this);
+        current.removeClass("place-active");
+        current.find(".place-info").css({"display":"none"});
+    });
+
     $("#logout").click(function() {
         $.ajax({
             type: "POST",
@@ -335,7 +544,9 @@
             success: function(result) {
             }
         });
-        window.location.reload();
+        setTimeout(() => {
+            window.location.reload();
+        }, 150);
     });
 
 </script>

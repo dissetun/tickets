@@ -215,7 +215,9 @@
             success: function(result) {
             }
         });
-        window.location.reload();
+        setTimeout(() => {
+            window.location.reload();
+        }, 150);
     });
 
 </script>

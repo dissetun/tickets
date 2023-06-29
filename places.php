@@ -174,4 +174,17 @@
     //     echo "<br>";
     // }
     // mysqli_close($link);
+
+//  -------- password change --------
+    // include "core/connect.php";
+    // $link = mysqli_connect($host, $user, $password, $db_name);
+    // $query = "SELECT * FROM users";
+    // $result = mysqli_query($link, $query);
+    // foreach($result as $row) {
+    //     $password = $row["Password"];
+    //     $newPassword = md5($password);
+    //     $login = $row["Login"];
+    //     $updateQuery = "UPDATE users SET `Password` = '$newPassword' WHERE `Login` = '$login'";
+    //     $updateResult = mysqli_query($link, $updateQuery);
+    // }
 ?>

@@ -76,12 +76,14 @@
                     require_once "core/connect.php";
                     $link = mysqli_connect($host, $user, $password, $db_name);
                     $login = $_SESSION["login"];
-                    $query = "SELECT * FROM purchases WHERE `Login` = '$login'";
+                    $query = "SELECT * FROM purchases WHERE `Login` = '$login' ORDER BY `Date` DESC";
                     $result = mysqli_query($link, $query);
                     if(!mysqli_num_rows($result)) {
                         echo 
                         "
-                            <p class='purchases-list-logo'>История покупок пуста</p>
+                            <p class='purchases-list-logo'>История покупок</p>
+                            <p style='text-align: center;'>Здесь будут отображаться купленные вами билеты</p>
+                            <a href='performances.php' style='margin-left: auto; margin-right: auto;  margin-top: 10px; align-self: flex-start; padding: 5px 10px; background-color: black; color: white; border-radius: 10px; cursor: pointer;'>Купить билеты</a>
                         ";
                     }
                     else {
@@ -290,7 +292,9 @@
             success: function(result) {
             }
         });
-        window.location.reload();
+        setTimeout(() => {
+            window.location.reload();
+        }, 150);
     });
 
 </script>

@@ -28,8 +28,9 @@
     }
     $result = mysqli_query($link, $query);
     $numOfElements = mysqli_num_rows($result);
-    $numOfPages = $numOfElements / 8 + ($numOfElements > 8 ? $numOfPages % 8 != 0 : 0);
-    for($i = 0; $i < ceil($numOfPages); $i++) {
+    $numOfPages = $numOfElements / 8 + ($numOfElements > 8 ? $numOfElements % 8 != 0 : 0);
+    $numOfPages = (int)$numOfPages;
+    for($i = 0; $i < $numOfPages; $i++) {
         if(!$i) 
             echo 
             "   

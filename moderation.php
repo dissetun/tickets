@@ -195,7 +195,9 @@
             success: function(result) {
             }
         });
-        window.location.reload();
+        setTimeout(() => {
+            window.location.reload();
+        }, 150);
     });
 
     $(".user-profile-form-button").click(function(event) {
